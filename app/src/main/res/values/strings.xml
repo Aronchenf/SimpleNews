@@ -39,7 +39,7 @@
     <string name="city_choose">选择城市</string>
 
     <string name="type_symbol">#</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="watch_history">观看记录</string>
     <string name="clear">清除</string>
