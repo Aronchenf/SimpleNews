@@ -73,3 +73,8 @@ fun videoDetailList(recyclerView: RecyclerView,list: List<Item>?){
 fun watchRecordList(recyclerView: RecyclerView,list:List<Data>?){
     (recyclerView.adapter as? WatchHistoryAdapter)?.setList(list)
 }
+
+@BindingAdapter("cityList")
+fun cityList(recyclerView: RecyclerView,list:List<CityManageBean>?){
+    (recyclerView.adapter as? CityManageAdapter)?.setList(list)
+}

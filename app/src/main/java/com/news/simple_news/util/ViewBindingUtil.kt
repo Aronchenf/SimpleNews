@@ -1,8 +1,10 @@
 package com.news.simple_news.util
 
 import android.annotation.SuppressLint
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.news.simple_news.R
@@ -100,5 +102,11 @@ fun bindHistoryTag(appCompatTextView: AppCompatTextView, data: Data){
     val author=data.author.name?:""
     appCompatTextView.text = "#${data.category}/$author"
 }
+
+@BindingAdapter("isGone")
+fun bindHasGone(appCompatTextView: AppCompatTextView,data:String?){
+    appCompatTextView.visibility=if (data.isNullOrEmpty()) View.GONE else View.VISIBLE
+}
+
 
 

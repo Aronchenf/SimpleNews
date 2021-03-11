@@ -25,15 +25,4 @@ interface SearchDao {
     @Query("delete from search")
     suspend fun deleteAllSearch()
 
-//    duration
-//    category
-//    cover.feed
-//    title
-//    author.name
-//    id
-//
-//    playinfo.type
-//    playurl
-//    cover.blurred
-//    description
 }

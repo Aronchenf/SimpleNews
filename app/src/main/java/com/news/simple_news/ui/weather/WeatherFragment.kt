@@ -1,8 +1,7 @@
 package com.news.simple_news.ui.weather
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
@@ -16,12 +15,13 @@ import com.news.simple_news.util.loge
 import com.news.simple_news.util.toJson
 import com.news.simple_news.R
 import com.news.simple_news.databinding.FragmentWeatherBinding
+import com.news.simple_news.ui.weather.city.CityManagerActivity
+import com.news.simple_news.util.startActivity
 
 class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     companion object {
-        const val chooseCity = 0x01
-        const val cityName = "cityName"
+
         fun newInstance() = WeatherFragment()
     }
 
@@ -29,14 +29,6 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     private val todayListAdapter by lazy { WeatherTodayListAdapter() }
     private val weekListAdapter by lazy { WeatherWeekListAdapter() }
     private val indexListAdapter by lazy { WeatherIndexListAdapter() }
-
-    private val startActivity =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            if (activityResult.resultCode == chooseCity) {
-                val cityName = activityResult.data?.getStringExtra(cityName)
-                mViewModel.getCityData(cityName!!)
-            }
-        }
 
     override fun initLayout(): Int = R.layout.fragment_weather
 
@@ -58,8 +50,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         }
 
         mBinding.toolbar.setOnMenuItemClickListener {
-            val intent = Intent(requireActivity(), CityChooseActivity::class.java)
-            startActivity.launch(intent)
+            startActivity<CityManagerActivity>()
             true
         }
     }
@@ -71,6 +62,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             }
             emptyStatus.observe(viewLifecycleOwner) {
                 mBinding.emptyView.root.isVisible=it
+                mBinding.line.isGone=it
             }
         }
     }

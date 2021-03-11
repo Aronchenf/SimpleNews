@@ -1,6 +1,7 @@
 package com.news.simple_news.model.room
 
 import androidx.room.Room
+import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.model.bean.Data
 import com.news.simple_news.model.bean.SearchHistoryBean
 import com.news.simple_news.model.bean.WatchRecordBean
@@ -22,6 +23,7 @@ object RoomHelper {
 
     private val searchDao by lazy { appDatabase.search() }
     private val watchDao by lazy { appDatabase.watch() }
+    private val cityDao by lazy { appDatabase.cityManage() }
 
     suspend fun queryAllSearchHistory(): MutableList<SearchHistoryBean> {
         val list = searchDao.queryAllSearch()
@@ -66,4 +68,12 @@ object RoomHelper {
     }
 
     suspend fun deleteAllWatch()= watchDao.deleteAllWatch()
+
+    suspend fun addCity(bean:CityManageBean)= cityDao.insertCityManage(bean)
+
+    suspend fun deleteCity(city:String){
+        val bean= cityDao.getCity(city)
+        cityDao.deleteCity(bean)
+    }
+    suspend fun getCityList()= cityDao.getCityList()
 }
