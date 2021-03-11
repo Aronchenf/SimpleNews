@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.news.simple_news.model.bean.SearchHistoryBean" />
+    </data>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_words"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/search_bg"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@{bean.searchKey}"
+        android:padding="@dimen/dp_10"
+        android:gravity="center"
+        android:textColor="@color/black"
+        tools:text="@string/search" />
+
+</layout>

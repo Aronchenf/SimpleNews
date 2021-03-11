@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.news.simple_news.ui.news.child.NewsChildViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.news.simple_news.adapter.NewsAdapter" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshStatus="@{viewModel.isRefresh()}">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.news.simple_news.view.RecyclerViewAtViewPager2
+                    android:id="@+id/rvNews"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none"
+                    app:adapter="@{adapter}"
+                    app:entData="@{viewModel}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:newsData="@{viewModel.newsList}" />
+
+                <include
+                    android:id="@+id/reloadView"
+                    layout="@layout/reload_view"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/emptyView"
+                    layout="@layout/empty_view"
+                    android:visibility="visible" />
+
+            </FrameLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="bean"
+            type="com.news.simple_news.model.bean.Item" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#44000000"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_15">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:maxLines="1"
+                android:textColor="@color/color_lighter_gray"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="这家解忧杂货铺，用音乐治愈你"
+                android:text="@{bean.data.title}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:maxLines="1"
+                android:textColor="@color/color_lighter_gray"
+                android:textSize="@dimen/sp_14"
+                app:videoSearchTag="@{bean}"
+                tools:text="#广告/精选" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/expandable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:textColor="@color/color_lighter_gray"
+                android:textSize="12sp"
+                android:text="@{bean.data.description}"
+                tools:text="亚当是个喜欢在学校惹是生非的青少年，但他的内心其实很混沌，因为家庭成员不不能说的秘密，所以才导致他如此夸张" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_lighter_gray" />
+    </LinearLayout>
+</layout>

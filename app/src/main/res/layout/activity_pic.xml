@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fl_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:scaleType="fitXY" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/pic_tool"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:background="@color/half_gray">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tool_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_left_white" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu_float"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_80"
+            app:fab_addButtonColorNormal="@color/color_translucent"
+            app:fab_addButtonColorPressed="@color/color_lighter_gray"
+            app:fab_addButtonPlusIconColor="@color/light_gray"
+            app:fab_addButtonSize="mini"
+            app:fab_expandDirection="up">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/float_set_wall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/white"
+                app:fab_colorPressed="@color/light_gray"
+                app:fab_icon="@drawable/wallpaper"
+                app:fab_size="mini"
+                app:fab_title="设置壁纸" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/float_save_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/white"
+                app:fab_colorPressed="@color/light_gray"
+                app:fab_icon="@drawable/save"
+                app:fab_size="mini"
+                app:fab_title="保存图片"
+                app:rippleColor="@color/white" />
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">SimpleNews</string>
+
+    <string name="news">新闻</string>
+    <string name="weather">天气</string>
+    <string name="video">视频</string>
+    <string name="mine">我的</string>
+
+    <string name="search_hint">帮你找到感兴趣的视频</string>
+    <string name="cancel">取消</string>
+    <string name="search">搜索</string>
+    <string name="search_title_tip">输入标题或描述中的关键词找到更多视频</string>
+    <string name="search_hot_keywords_tip">一 热门搜索词 一</string>
+    <string name="search_hot_keywords_history">一 搜索历史 一</string>
+    <string name="search_result_count">一〖%1$s〗搜索结果共☞%2$d个 一</string>
+
+    <string name="copy_right_notice">内容部分数据归原公司《开眼Eyepetizer》、新浪新闻 版权所有</string>
+    <string name="not_use_commercial">本APP只供学习交流和研究之用，\n请勿用作商业用途！</string>
+    <string name="since">copyright ©2021 CC.</string>
+
+    <string name="introduce_one">1.此app使用kotlin语言进行编写</string>
+    <string name="introduce_two">2.今日美图中点击悬浮按钮可以设置壁纸与保存图片</string>
+    <string name="introduce_three">（从上往下为设置壁纸与保存图片）</string>
+    <string name="introduce_four">4.查看新闻详情时，若遇到问题，请返回再重新打开</string>
+
+    <string name="network_not_available">网络似乎出了点问题</string>
+    <string name="http_not_available">服务器出了问题</string>
+    <string name="no_data">没有相关数据</string>
+    <string name="network_connection_failed">网络连接失败</string>
+    <string name="network_request_timeout">网络请求超时</string>
+    <string name="api_data_parse_error">数据解析错误</string>
+    <string name="reload">重新加载</string>
+
+    <string name="air">空气</string>
+    <string name="center_line">~</string>
+    <string name="center_vertical"> | </string>
+    <string name="add_city">添加城市</string>
+    <string name="hot_city">热门城市</string>
+    <string name="city_choose">选择城市</string>
+
+    <string name="type_symbol">#</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="watch_history">观看记录</string>
+    <string name="clear">清除</string>
+    <string name="today_pic">今日美图</string>
+    <string name="mine_host"><![CDATA[查看个人主页>]]></string>
+    <string name="version">V 1.0</string>
+    <string name="about">关于</string>
+    <string name="personal_page">个人主页</string>
+    <string name="web_host">https://github.com/Aronchenf/MyKotlin</string>
+</resources>

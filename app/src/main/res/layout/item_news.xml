@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.news.simple_news.model.bean.NewsData" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item_news"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_news"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:layout_margin="@dimen/dp_10"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher_round"
+            app:newsPic="@{bean}"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/iv_news"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_toEndOf="@id/iv_news"
+            android:layout_alignParentTop="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{bean.wap_title}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_15"
+            tools:text="被质疑为事业假离婚 蔡卓宜辟谣：我离的很干净" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_alignStart="@id/title"
+            android:layout_marginTop="@dimen/dp_5"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingEnd="@dimen/dp_20"
+            android:text="@{bean.intro}"
+            android:textColor="#333333"
+            android:textSize="13sp"
+            tools:ignore="RtlSymmetry"
+            tools:text="被质疑为事业假离婚 蔡卓宜辟谣：我离的很干净" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="@{bean.news_date}"
+            android:textColor="@color/black"
+            android:layout_above="@id/line"
+            android:textSize="12sp"
+            tools:text="2019-12-12" />
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/color_darker_gray"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</layout>

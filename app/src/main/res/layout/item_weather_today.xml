@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.news.simple_news.model.bean.HoursBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/hoursDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{bean.hours}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="厦门" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/hoursImg"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            app:layout_constraintEnd_toEndOf="@id/hoursDay"
+            app:layout_constraintStart_toStartOf="@id/hoursDay"
+            app:layout_constraintTop_toBottomOf="@id/hoursDay"
+            app:weatherImg="@{bean.wea}"
+            tools:src="@drawable/weather_heavy_snow"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/hoursWea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{bean.wea}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/hoursDay"
+            app:layout_constraintStart_toStartOf="@id/hoursDay"
+            app:layout_constraintTop_toBottomOf="@id/hoursImg"
+            tools:text="@string/air"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{bean.tem}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/hoursDay"
+            app:layout_constraintStart_toStartOf="@id/hoursDay"
+            app:layout_constraintTop_toBottomOf="@id/hoursWea"
+            tools:text="@string/air"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
