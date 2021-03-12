@@ -1,70 +1,76 @@
 package com.news.simple_news.ui.weather
 
+import android.net.Uri
 import android.os.Bundle
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import com.news.simple_news.adapter.WeatherIndexListAdapter
-import com.news.simple_news.adapter.WeatherTodayListAdapter
-import com.news.simple_news.adapter.WeatherWeekListAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.news.simple_news.base.BaseFragment
-import com.news.simple_news.ui.MainActivity
-import com.news.simple_news.util.loge
-import com.news.simple_news.util.toJson
 import com.news.simple_news.R
+import com.news.simple_news.adapter.ViewPagerAdapter
 import com.news.simple_news.databinding.FragmentWeatherBinding
-import com.news.simple_news.ui.weather.city.CityManagerActivity
+import com.news.simple_news.ui.weather.child.WeatherChildFragment
+import com.news.simple_news.ui.weather.citymanage.CityManagerActivity
+import com.news.simple_news.util.getWeatherVideo
+import com.news.simple_news.util.loge
 import com.news.simple_news.util.startActivity
+import com.news.simple_news.util.toJson
 
 class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     companion object {
-
         fun newInstance() = WeatherFragment()
     }
 
     private val mViewModel by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
-    private val todayListAdapter by lazy { WeatherTodayListAdapter() }
-    private val weekListAdapter by lazy { WeatherWeekListAdapter() }
-    private val indexListAdapter by lazy { WeatherIndexListAdapter() }
 
     override fun initLayout(): Int = R.layout.fragment_weather
 
     override fun initView(savedInstanceState: Bundle?) {
-        mBinding.apply {
-            todayAdapter = todayListAdapter
-            weekAdapter = weekListAdapter
-            indexAdapter = indexListAdapter
-            viewModel = mViewModel
-        }
-
-        loge(todayListAdapter.data.toJson(),"TodayAdapter的数据")
-
+        super.initView(savedInstanceState)
         mBinding.swipeLayout.setOnRefreshListener {
             mViewModel.getCityData()
         }
-        mBinding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
-            (requireActivity() as MainActivity).animateBottomNavigationView(scrollY < 800 && oldScrollY > scrollY)
-        }
-
         mBinding.toolbar.setOnMenuItemClickListener {
             startActivity<CityManagerActivity>()
             true
         }
+
+    }
+
+//    private fun setVideoStart(wea: String?) {
+//        mBinding.videoView.setVideoURI(Uri.parse(getWeatherVideo(wea)))
+//        mBinding.videoView.start()
+//    }
+
+    private val fragments = mutableListOf<Fragment>()
+
+    override fun onResume() {
+        mViewModel.getCityList()
+        super.onResume()
     }
 
     override fun observe() {
-        mViewModel.run {
-            reloadStatus.observe(viewLifecycleOwner) {
-                mBinding.reloadView.root.isVisible=it
+        mViewModel.cityList.observe(viewLifecycleOwner) {
+            for (i in it.indices) {
+                fragments.add(WeatherChildFragment.newInstance(it[i].data!!))
             }
-            emptyStatus.observe(viewLifecycleOwner) {
-                mBinding.emptyView.root.isVisible=it
-                mBinding.line.isGone=it
+            val mAdapter = ViewPagerAdapter(requireActivity(), fragments)
+            mBinding.viewpager.apply {
+                adapter = mAdapter
+                currentItem = 0
             }
+            mBinding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mBinding.title.text = it[position].city
+                    loge(it[position].wea.toString())
+//                    setVideoStart(it[position].wea)
+                }
+            })
         }
     }
+
 
 }

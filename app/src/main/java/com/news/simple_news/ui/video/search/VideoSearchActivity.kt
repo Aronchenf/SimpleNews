@@ -21,9 +21,6 @@ class VideoSearchActivity : BaseActivity<ActivityVideoSearchBinding>() {
     override fun initLayout(): Int = R.layout.activity_video_search
 
     override fun initView(savedInstanceState: Bundle?) {
-        mBinding.apply {
-            viewModel = mViewModel
-        }
         loadHotWordsView()
         mBinding.run {
             viewModel = mViewModel

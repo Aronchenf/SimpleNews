@@ -3,13 +3,19 @@ package com.news.simple_news.ui.weather
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.news.simple_news.base.BaseViewModel
-import com.news.simple_news.model.bean.HoursBean
-import com.news.simple_news.model.bean.IndexBean
-import com.news.simple_news.model.bean.WeatherBean
-import com.news.simple_news.model.bean.WeatherDataBean
 import com.news.simple_news.util.getString
 import com.news.simple_news.R
+import com.news.simple_news.model.api.API
+import com.news.simple_news.model.api.API.appId
+import com.news.simple_news.model.api.API.appSecret
+import com.news.simple_news.model.api.API.weatherType
+import com.news.simple_news.model.bean.*
+import com.news.simple_news.model.room.RoomHelper
+import com.news.simple_news.util.toBean
+import com.news.simple_news.util.toJson
+import kotlinx.coroutines.async
 
 class WeatherViewModel : BaseViewModel() {
 
@@ -23,10 +29,6 @@ class WeatherViewModel : BaseViewModel() {
         R.drawable.index_washcar,
         R.drawable.index_sun
     )
-
-    private val type = "v1"
-    private val appId = "52839151"
-    private val appSecret = "Kb4iRkaY"
 
     private val _city = MutableLiveData<String>()
     val city: LiveData<String>
@@ -67,22 +69,47 @@ class WeatherViewModel : BaseViewModel() {
     val reloadStatus = MutableLiveData<Boolean>()
     val emptyStatus=MutableLiveData<Boolean>()
 
+    private val _cityList = MutableLiveData<List<CityManageBean>>()
+
+    val cityList: LiveData<List<CityManageBean>>
+        get() = _cityList
+
     init {
-        getCityData()
+        getCityList()
+    }
+
+    fun getCityList() {
+        val list= mutableListOf<CityManageBean>()
+        val deffer=async {
+            _cityList.value = RoomHelper.getCityList()
+//            for (i in cityList.value!!.indices){
+//                val bean=cityList.value!![i]
+//                val weatherBean=repository.getData(weatherType,bean.city, appId, appSecret)
+//                val dataBean=weatherBean.data[0]
+//                val cityBean=CityManageBean(bean.city,dataBean.wea_day,dataBean.tem,weatherBean.toJson())
+//                list.add(cityBean)
+//            }
+
+        }
+        launch({
+            deffer.await()
+            _cityList.value=list
+        })
+    }
+
+    fun setWeatherBean(bean: WeatherBean){
+        setData(bean)
     }
 
     fun getCityData(city: String = "福州") {
         refreshStatus.set(true)
         emptyStatus.value=true
         launch({
-            val weather = repository.getData(type, city, appId, appSecret)
+            val weather = repository.getData(weatherType, city, appId, appSecret)
             setData(weather)
             if (weather.data.isNotEmpty()){
                 emptyStatus.value=false
             }
-            _weekList.value = weather.data
-            _hoursList.value = weather.data[0].hours
-            setIndexData(weather)
             refreshStatus.set(false)
             reloadStatus.value=false
         }, {
@@ -96,11 +123,14 @@ class WeatherViewModel : BaseViewModel() {
         _city.value = weatherBean.city
         val dataBean = weatherBean.data[0]
         _tem.value = dataBean.tem
-        _wea.value = dataBean.wea
+        _wea.value = dataBean.wea_day
         _airLevel.value = if (dataBean.air_level.isEmpty()) " "
         else "${getString(R.string.air)}${dataBean.air_level}"
         _air.value = dataBean.air
         _airTips.value = "\u3000\u3000${dataBean.air_tips}"
+        _weekList.value = weatherBean.data
+        _hoursList.value = weatherBean.data[0].hours
+        setIndexData(weatherBean)
     }
 
     private fun setIndexData(weatherBean: WeatherBean) {

@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.news.simple_news.ui.weather.city.CityManageViewModel" />
+            type="com.news.simple_news.ui.weather.citymanage.CityManageViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

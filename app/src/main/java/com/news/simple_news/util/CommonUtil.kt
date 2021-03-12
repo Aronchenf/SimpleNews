@@ -3,6 +3,7 @@ package com.news.simple_news.util
 import android.view.View
 import com.news.simple_news.R
 import com.news.simple_news.application.App
+import java.io.File
 import java.util.*
 
 fun getInstance()= App.instance
@@ -74,4 +75,38 @@ fun getWeatherImages(weather: String): Int = when (weather) {
     "阵雪" -> R.drawable.weather_snow_shower
     "中雪" -> R.drawable.weather_moderate_snow
     else -> R.drawable.weather_cloudy
+}
+
+fun getWeatherVideo(wea:String?):String{
+    val resourceId=when(wea){
+        "多云" -> R.raw.cloud
+        "多云转阴" -> R.raw.cloud
+        "多云转晴" -> R.raw.cloud
+        "中雨" -> R.raw.rain
+        "中到大雨" -> R.raw.rain
+        "雷阵雨" -> R.raw.thundershowers
+        "阵雨" -> R.raw.rain
+        "阵雨转多云" -> R.raw.rain
+        "暴雪" -> R.raw.snow
+        "暴雨" -> R.raw.rain
+        "大暴雨" -> R.raw.rain
+        "大雪" -> R.raw.snow
+        "大雨" -> R.raw.rain
+        "大雨转中雨" -> R.raw.rain
+        "雷阵雨冰雹" -> R.raw.haze
+        "晴" -> R.raw.sun
+        "沙尘暴" -> R.raw.sand
+        "特大暴雨" -> R.raw.rain
+        "雾" -> R.raw.fog
+        "雾霾" -> R.raw.fog
+        "小雪" -> R.raw.snow
+        "小雨" -> R.raw.rain
+        "阴" -> R.raw.cloud
+        "雨夹雪" -> R.raw.rain
+        "阵雪" -> R.raw.snow
+        "中雪" -> R.raw.snow
+        else -> R.raw.cloud
+    }
+
+    return "android.resource://${getInstance().packageName}/$resourceId"
 }

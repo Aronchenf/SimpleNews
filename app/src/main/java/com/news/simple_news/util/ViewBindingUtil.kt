@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.news.simple_news.R
@@ -31,8 +30,11 @@ fun bindRefresh(swipeRefreshLayout: SwipeRefreshLayout, isRefresh: Boolean) {
 }
 
 @BindingAdapter("weatherImg")
-fun bindWeatherImg(appCompatImageView: AppCompatImageView, weather: String) {
-    appCompatImageView.setImageResource(getWeatherImages(weather))
+fun bindWeatherImg(appCompatImageView: AppCompatImageView, weather: String?) {
+    if (!weather.isNullOrEmpty()){
+        appCompatImageView.setImageResource(getWeatherImages(weather))
+    }
+
 }
 
 @SuppressLint("SetTextI18n")

@@ -1,11 +1,12 @@
 package com.news.simple_news.model.api
 
 object API {
-    //天气api appid
-    const val appid = "52839151"
-
-    //天气api appsecret
-    const val appsecret = "Kb4iRkaY"
+    //天气type
+    const val weatherType="v1"
+    //天气api appId
+    const val appId = "52839151"
+    //天气api appSecret
+    const val appSecret = "Kb4iRkaY"
 
     //新浪新闻主页
     val NEWS_SINA = "https://interface.sina.cn/"
