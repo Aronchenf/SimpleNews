@@ -15,18 +15,19 @@ import com.news.simple_news.databinding.FragmentWeatherChildBinding
 import com.news.simple_news.model.bean.WeatherBean
 import com.news.simple_news.ui.MainActivity
 import com.news.simple_news.ui.weather.WeatherViewModel
+import com.news.simple_news.util.loge
 import com.news.simple_news.util.toBean
 
-class WeatherChildFragment :BaseFragment<FragmentWeatherChildBinding>() {
+class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
 
-    override fun initLayout()= R.layout.fragment_weather_child
+    override fun initLayout() = R.layout.fragment_weather_child
 
-    companion object{
-        const val weatherData="Data"
-        fun newInstance(dataInfo:String):WeatherChildFragment{
+    companion object {
+        const val weatherData = "Data"
+        fun newInstance(dataInfo: String): WeatherChildFragment {
             return WeatherChildFragment().apply {
-                arguments=Bundle().apply {
-                    putString(weatherData,dataInfo)
+                arguments = Bundle().apply {
+                    putString(weatherData, dataInfo)
                 }
             }
         }
@@ -38,7 +39,7 @@ class WeatherChildFragment :BaseFragment<FragmentWeatherChildBinding>() {
     private val indexListAdapter by lazy { WeatherIndexListAdapter() }
 
     override fun initView(savedInstanceState: Bundle?) {
-        val argument=Bundle().getString(weatherData)
+        val argument = arguments?.getString(weatherData).toString()
         val bean=argument!!.toBean<WeatherBean>()
         mViewModel.setWeatherBean(bean)
         mBinding.apply {
@@ -56,14 +57,14 @@ class WeatherChildFragment :BaseFragment<FragmentWeatherChildBinding>() {
 
     override fun observe() {
         mViewModel.run {
-            reloadStatus.observe(viewLifecycleOwner) {
-                mBinding.reloadView.root.isVisible=it
-            }
+//            reloadStatus.observe(viewLifecycleOwner) {
+//                mBinding.reloadView.root.isVisible=it
+//            }
             emptyStatus.observe(viewLifecycleOwner) {
-                mBinding.emptyView.root.isVisible=it
+//                mBinding.emptyView.root.isVisible=it
                 mBinding.line.isGone=it
             }
-            wea.observe(viewLifecycleOwner){
+            wea.observe(viewLifecycleOwner) {
 
             }
         }

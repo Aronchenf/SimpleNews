@@ -8,13 +8,13 @@
 </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
-<!--        <VideoView-->
-<!--            android:id="@+id/videoView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
+        <com.news.simple_news.view.CustomVideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,9 +32,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="@color/white"
-                    tools:text="wowowowo"/>
+                    android:textSize="@dimen/sp_20"
+                    android:textColor="@color/black"
+                    tools:text="深圳"/>
             </androidx.appcompat.widget.Toolbar>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -42,14 +42,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:refreshStatus="@{viewModel.refreshStatus}">
-                <com.youth.banner.indicator.CircleIndicator
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <com.zhpan.indicator.IndicatorView
+                        android:id="@+id/indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/dp_5"/>
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewpager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>

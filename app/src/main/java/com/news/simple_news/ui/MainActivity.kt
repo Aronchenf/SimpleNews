@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewPropertyAnimator
 import androidx.fragment.app.Fragment
+import androidx.navigation.ui.AppBarConfiguration
 import com.blankj.utilcode.util.ActivityUtils
 import com.news.simple_news.ui.news.NewsFragment
 import com.news.simple_news.ui.setting.SettingFragment
@@ -25,11 +26,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private var bottomNavigationViewAnimator: ViewPropertyAnimator? = null
     private var currentBottomNavigationState = true
 
+    private val appBarConfiguration by lazy {
+        AppBarConfiguration(
+            setOf(
+                R.id.news,
+                R.id.weather,
+                R.id.video,
+                R.id.mine
+            )
+        )
+    }
+
     override fun initLayout(): Int = R.layout.activity_main
 
     override fun initWindow() {
         overridePendingTransition(0,0)
     }
+
+
     override fun initView(savedInstanceState: Bundle?) {
         window?.setBackgroundDrawable(null)
         initFragment()

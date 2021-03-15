@@ -1,6 +1,8 @@
 package com.news.simple_news.util
 
+import android.content.Context
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.news.simple_news.R
 import com.news.simple_news.application.App
 import java.io.File
@@ -9,6 +11,8 @@ import java.util.*
 fun getInstance()= App.instance
 
 fun getString(resId:Int)= getInstance().getString(resId)
+
+fun getColor(color: Int)= ContextCompat.getColor(getInstance(),color)
 
 fun getSystemAssets()= getInstance().assets
 

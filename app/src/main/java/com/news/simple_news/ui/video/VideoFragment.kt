@@ -86,9 +86,9 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
         mBinding.rvVideo.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             val layoutManager = mBinding.rvVideo.layoutManager as LinearLayoutManager
             val currentVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-            (requireActivity() as MainActivity).animateBottomNavigationView(
-                currentVisibleItemPosition <= 3 || oldScrollY > scrollY
-            )
+//            (requireActivity() as MainActivity).animateBottomNavigationView(
+//                currentVisibleItemPosition <= 3 || oldScrollY > scrollY
+//            )
         }
 
         mBinding.ivSearch.setOnClickListener { startActivity<VideoSearchActivity>() }

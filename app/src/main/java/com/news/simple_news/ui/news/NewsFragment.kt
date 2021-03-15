@@ -10,6 +10,7 @@ import com.news.simple_news.ui.news.child.NewsChildFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.news.simple_news.R
 import com.news.simple_news.databinding.FragmentNewsBinding
+import com.news.simple_news.util.toast
 
 
 class NewsFragment : BaseFragment<FragmentNewsBinding>(){

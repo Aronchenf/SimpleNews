@@ -25,14 +25,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleNews"
         tools:targetApi="n">
-        <activity android:name=".ui.WelcomeActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"/>
+<!--        <activity android:name=".ui.MainActivity"/>-->
         <activity android:name=".ui.news.NewsDetailActivity"/>
         <activity android:name=".ui.weather.citymanage.CityManagerActivity"/>
         <activity android:name=".ui.video.search.VideoSearchActivity"/>
