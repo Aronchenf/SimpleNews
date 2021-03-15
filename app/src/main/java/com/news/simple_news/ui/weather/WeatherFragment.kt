@@ -1,7 +1,6 @@
 package com.news.simple_news.ui.weather
 
 import android.graphics.Color
-import android.media.MediaParser
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -18,7 +17,6 @@ import com.news.simple_news.ui.weather.child.WeatherChildFragment
 import com.news.simple_news.ui.weather.citymanage.CityManagerActivity
 import com.news.simple_news.util.getColor
 import com.news.simple_news.util.getWeatherVideo
-import com.news.simple_news.util.loge
 import com.news.simple_news.util.startActivity
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
@@ -35,22 +33,10 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mBinding.swipeLayout.setOnRefreshListener {
-            mViewModel.getCityList()
-        }
         mBinding.toolbar.setOnMenuItemClickListener {
             startActivity<CityManagerActivity>()
             true
         }
-        mBinding.indicator.setSliderColor(
-            getColor(R.color.half_gray),
-            getColor(R.color.blue)
-        )
-            .setSliderWidth(resources.getDimension(R.dimen.dp_8))
-            .setSliderHeight(resources.getDimension(R.dimen.dp_8))
-            .setSlideMode(IndicatorSlideMode.WORM)
-            .setIndicatorStyle(IndicatorStyle.CIRCLE)
-            .setupWithViewPager(mBinding.viewpager)
     }
 
     private fun setVideoStart(wea: String?) {
@@ -69,11 +55,10 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     }
 
     override fun onResume() {
-        mViewModel.getCityList()
         super.onResume()
+        mViewModel.getCityList()
     }
 
-    private val fragments = mutableListOf<Fragment>()
     override fun observe() {
         mViewModel.cityList.observe(viewLifecycleOwner) {
             initViewPager(it)
@@ -83,6 +68,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
 
     private fun initViewPager(list: List<CityManageBean>) {
+        val fragments = mutableListOf<Fragment>()
         for (bean in list) {
             fragments.add(WeatherChildFragment.newInstance(bean.data!!))
         }
@@ -91,12 +77,20 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             adapter = mAdapter
             currentItem = 0
         }
+        mBinding.indicator.setSliderColor(
+                getColor(R.color.gray),
+                getColor(R.color.dim_gray))
+                .setSliderWidth(resources.getDimension(R.dimen.dp_8))
+                .setSliderHeight(resources.getDimension(R.dimen.dp_8))
+                .setSlideMode(IndicatorSlideMode.WORM)
+                .setIndicatorStyle(IndicatorStyle.CIRCLE)
+                .setupWithViewPager(mBinding.viewpager)
     }
 
     private fun setOnPageChangeCallback(list: List<CityManageBean>) {
         mBinding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                if (list.isNotEmpty()) {
+                if (list.isNotEmpty() && position <= list.size) {
                     setTitle(list[position].city)
                     setVideoStart(list[position].wea)
                 }
@@ -105,7 +99,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     }
 
     private fun setTitle(title: String) {
-        mBinding.title.text = title
+        mBinding.toolbar.title = title
     }
 
 

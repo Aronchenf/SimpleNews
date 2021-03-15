@@ -40,13 +40,16 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         val argument = arguments?.getString(weatherData).toString()
-        val bean=argument!!.toBean<WeatherBean>()
+        val bean= argument.toBean<WeatherBean>()
         mViewModel.setWeatherBean(bean)
         mBinding.apply {
             todayAdapter = todayListAdapter
             weekAdapter = weekListAdapter
             indexAdapter = indexListAdapter
             viewModel = mViewModel
+        }
+        mBinding.swipeLayout.setOnRefreshListener {
+            mViewModel.getCityData(bean.city)
         }
 
         mBinding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->

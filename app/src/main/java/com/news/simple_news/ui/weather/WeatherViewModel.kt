@@ -79,25 +79,16 @@ class WeatherViewModel : BaseViewModel() {
     }
 
     fun getCityList() {
-        refreshStatus.set(true)
-        val list= mutableListOf<CityManageBean>()
-        val deffer=async {
-            _cityList.value = RoomHelper.getCityList()
-            for (i in cityList.value!!.indices){
-                val bean=cityList.value!![i]
+        launch({
+            val list= mutableListOf<CityManageBean>()
+            val oldList = RoomHelper.getCityList()
+            for (bean in oldList){
                 val weatherBean=repository.getData(weatherType,bean.city, appId, appSecret)
                 val dataBean=weatherBean.data[0]
                 val cityBean=CityManageBean(bean.city,dataBean.wea_day,dataBean.tem,weatherBean.toJson())
                 list.add(cityBean)
             }
-
-        }
-        launch({
-            deffer.await()
-            refreshStatus.set(true)
             _cityList.value=list
-        },{
-            refreshStatus.set(true)
         })
     }
 

@@ -30,10 +30,11 @@
             type="com.news.simple_news.ui.weather.WeatherViewModel" />
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshStatus="@{viewModel.refreshStatus}">
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -150,7 +151,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-    </FrameLayout>
-
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
