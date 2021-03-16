@@ -27,4 +27,8 @@
         <item name="cornerSize">@dimen/dp_4</item>
     </style>
 
+    <style name="title" parent="Widget.AppCompat.Toolbar">
+        <item name="android:textSize">25sp</item>
+    </style>
+
 </resources>

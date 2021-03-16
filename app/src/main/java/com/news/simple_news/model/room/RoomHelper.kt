@@ -1,10 +1,7 @@
 package com.news.simple_news.model.room
 
 import androidx.room.Room
-import com.news.simple_news.model.bean.CityManageBean
-import com.news.simple_news.model.bean.Data
-import com.news.simple_news.model.bean.SearchHistoryBean
-import com.news.simple_news.model.bean.WatchRecordBean
+import com.news.simple_news.model.bean.*
 import com.news.simple_news.util.getInstance
 import com.news.simple_news.util.toBean
 
@@ -71,6 +68,12 @@ object RoomHelper {
 
     suspend fun addCity(bean:CityManageBean)= cityDao.insertCityManage(bean)
 
+    suspend fun updateCityInfo(bean: CityManageBean)= cityDao.updateCityInfo(bean)
+
+    suspend fun getCityInfoByName(cityName:String):WeatherBean{
+        val json= cityDao.getInfoByName(cityName)
+        return json.toBean()
+    }
     suspend fun deleteCity(city:String){
         val bean= cityDao.getCity(city)
         cityDao.deleteCity(bean)

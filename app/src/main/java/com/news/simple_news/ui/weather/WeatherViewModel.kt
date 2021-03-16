@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.news.simple_news.base.BaseViewModel
-import com.news.simple_news.util.getString
 import com.news.simple_news.R
 import com.news.simple_news.model.api.API
 import com.news.simple_news.model.api.API.appId
@@ -13,8 +12,7 @@ import com.news.simple_news.model.api.API.appSecret
 import com.news.simple_news.model.api.API.weatherType
 import com.news.simple_news.model.bean.*
 import com.news.simple_news.model.room.RoomHelper
-import com.news.simple_news.util.toBean
-import com.news.simple_news.util.toJson
+import com.news.simple_news.util.*
 import kotlinx.coroutines.async
 
 class WeatherViewModel : BaseViewModel() {
@@ -70,49 +68,49 @@ class WeatherViewModel : BaseViewModel() {
     val emptyStatus=MutableLiveData<Boolean>()
 
     private val _cityList = MutableLiveData<List<CityManageBean>>()
-
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
     init {
-//        getCityList()
+        getCityList()
     }
 
-    fun getCityList() {
+     fun getCityList() {
         launch({
-            val list= mutableListOf<CityManageBean>()
-            val oldList = RoomHelper.getCityList()
-            for (bean in oldList){
-                val weatherBean=repository.getData(weatherType,bean.city, appId, appSecret)
-                val dataBean=weatherBean.data[0]
-                val cityBean=CityManageBean(bean.city,dataBean.wea_day,dataBean.tem,weatherBean.toJson())
-                list.add(cityBean)
+            val list=RoomHelper.getCityList()
+            if (list.isNotEmpty()){
+                _cityList.value=list
             }
-            _cityList.value=list
+//            val list= mutableListOf<CityManageBean>()
+//            val oldList = RoomHelper.getCityList()
+//            for (bean in oldList){
+//                val weatherBean=repository.getData(weatherType,bean.city, appId, appSecret)
+//                val dataBean=weatherBean.data[0]
+//                val cityBean=CityManageBean(bean.city,dataBean.wea_day,dataBean.tem,weatherBean.toJson())
+//                list.add(cityBean)
+//            }
+//            _cityList.value=list
         })
     }
-
-    fun setWeatherBean(bean: WeatherBean){
-        setData(bean)
-    }
-
     fun getCityData(city: String = "福州") {
         refreshStatus.set(true)
-        emptyStatus.value=true
         launch({
             val weather = repository.getData(weatherType, city, appId, appSecret)
+            val dataBean=weather.data[0]
+            RoomHelper.updateCityInfo(CityManageBean(city,dataBean.wea_day,dataBean.tem,weather.toJson()) )
             setData(weather)
             if (weather.data.isNotEmpty()){
                 emptyStatus.value=false
             }
             refreshStatus.set(false)
-            reloadStatus.value=false
         }, {
             refreshStatus.set(false)
-            emptyStatus.value=false
-            reloadStatus.value=true
+            val weather=RoomHelper.getCityInfoByName(city)
+            setData(weather)
         })
     }
+
+
 
     private fun setData(weatherBean: WeatherBean) {
         _city.value = weatherBean.city

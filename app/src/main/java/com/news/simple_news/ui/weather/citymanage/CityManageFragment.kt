@@ -39,8 +39,8 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
     override fun observe() {
         mViewModel.cityList.observe(viewLifecycleOwner) {
-            for (i in it.indices){
-                loge(it[i].city)
+            for (bean in it){
+                loge(bean.city,"CityManageFragment")
             }
         }
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -42,9 +43,12 @@
                 android:textSize="@dimen/sp_15" />
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/ly_about"
+        <fragment
+            android:id="@+id/nav_about_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation_about"/>
     </LinearLayout>
 </layout>

@@ -98,4 +98,5 @@ dependencies {
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     implementation 'com.github.zhpanvip:viewpagerindicator:1.0.4'
+
 }

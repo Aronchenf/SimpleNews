@@ -2,8 +2,8 @@ package com.news.simple_news.ui.setting.about.content
 
 import android.graphics.Typeface
 import android.os.Bundle
+import androidx.navigation.fragment.findNavController
 import com.news.simple_news.base.BaseFragment
-import com.news.simple_news.ui.setting.about.AboutActivity
 import com.news.simple_news.R
 import com.news.simple_news.databinding.FragmentAboutContentBinding
 import com.news.simple_news.util.getSystemAssets
@@ -20,7 +20,7 @@ class ContentFragment : BaseFragment<FragmentAboutContentBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
 
         mBinding.backAbout.setOnClickListener {
-            (requireActivity() as AboutActivity).onBackPressed()
+            findNavController().popBackStack()
         }
 
         val tf1=Typeface.createFromAsset(getSystemAssets(),"fonts/SIMLI.TTF")

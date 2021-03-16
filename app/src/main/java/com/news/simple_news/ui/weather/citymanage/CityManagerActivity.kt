@@ -23,26 +23,32 @@ class CityManagerActivity : BaseActivity<ActivityCityManageBinding>() {
         loadFragment()
     }
 
-    private fun loadFragment(){
+    private fun loadFragment() {
         supportFragmentManager.beginTransaction()
-                .add(R.id.cityContainer,cityManageFragment)
-                .add(R.id.cityContainer,cityChooseFragment)
-                .show(cityManageFragment)
-                .hide(cityChooseFragment)
-                .commit()
+            .add(R.id.cityContainer, cityManageFragment)
+            .add(R.id.cityContainer, cityChooseFragment)
+            .show(cityManageFragment)
+            .hide(cityChooseFragment)
+            .commit()
     }
 
-     fun showChooseFragment(){
-        supportFragmentManager.beginTransaction().show(cityChooseFragment).commit()
+    fun showChooseFragment() {
+        supportFragmentManager.beginTransaction().setCustomAnimations(
+            R.anim.slide_in_right,
+            R.anim.slide_out_left,
+            R.anim.slide_in_left,
+            R.anim.slide_out_right
+        ).show(cityChooseFragment).commit()
     }
-      fun hideChooseFragment(){
+
+    fun hideChooseFragment() {
         supportFragmentManager.beginTransaction().hide(cityChooseFragment).commit()
     }
 
     override fun onBackPressed() {
-        if (cityChooseFragment.isVisible){
+        if (cityChooseFragment.isVisible) {
             hideChooseFragment()
-        }else{
+        } else {
             super.onBackPressed()
         }
 

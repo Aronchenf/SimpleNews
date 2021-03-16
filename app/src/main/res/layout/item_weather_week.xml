@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="60dp"
             tools:src="@drawable/weather_heavy_snow"
-            app:weatherImg="@{bean.wea}" />
+            app:weatherImg="@{bean.wea_day}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
