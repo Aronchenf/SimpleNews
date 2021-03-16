@@ -27,7 +27,7 @@
 
         <variable
             name="viewModel"
-            type="com.news.simple_news.ui.weather.WeatherViewModel" />
+            type="com.news.simple_news.ui.weather.child.WeatherChildViewModel" />
     </data>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

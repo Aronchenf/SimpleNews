@@ -19,53 +19,9 @@ class CityManageViewModel : BaseViewModel() {
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
-    private val _allCities = MutableLiveData<List<CityModel>>()
-    val allCities: LiveData<List<CityModel>>
-        get() = _allCities
-
-    private val _hotCities = MutableLiveData<List<CityModel>>()
-    val hotCities: LiveData<List<CityModel>>
-        get() = _hotCities
-
-    init {
-        getAllCities()
-        getHotCities()
-    }
-
-    private fun getAllCities() {
-        val allCities = mutableListOf<CityModel>()
-        val jsonDeffer = async { ResourceUtils.readAssets2String("city.json") }
+     fun getCityList() {
         launch({
-            val cityJson = jsonDeffer.await()
-            val cityResponse = cityJson.toBean<CityResponse>()
-            val data = cityResponse.data
-            for (item in data) {
-                if (item.sons == null) {
-                    allCities.add(CityModel(item.name, item.areaId))
-                } else {
-                    for (son in item.sons) {
-                        allCities.add(CityModel(son.name, son.areaId))
-                    }
-                }
-            }
-            _allCities.value = allCities
-        })
-    }
-
-    private fun getHotCities() {
-        val hotCities = mutableListOf<CityModel>()
-        hotCities.add(CityModel("深圳", "0x01"))
-        hotCities.add(CityModel("广州", "0x02"))
-        hotCities.add(CityModel("北京", "0x03"))
-        hotCities.add(CityModel("武汉", "0x04"))
-        hotCities.add(CityModel("上海", "0x05"))
-        hotCities.add(CityModel("杭州", "0x06"))
-        _hotCities.value = hotCities
-    }
-
-
-    fun getCityList() {
-        launch({
+            loge("我在请求数据","ViewModel")
             _cityList.value = RoomHelper.getCityList()
         })
     }
@@ -74,20 +30,8 @@ class CityManageViewModel : BaseViewModel() {
         val cityName = cityList.value!![position].city
         launch({
             RoomHelper.deleteCity(cityName)
+            getCityList()
         })
     }
 
-    fun addCityToDatabase(cityName: String) {
-        launch({
-            val weather = repository.getData(API.weatherType, cityName, API.appId, API.appSecret)
-            val dataBean = weather.data[0]
-            val bean = CityManageBean(cityName, dataBean.wea_day, dataBean.tem, weather.toJson())
-            RoomHelper.addCity(bean)
-            _cityList.value = RoomHelper.getCityList()
-        }, {
-            val bean = CityManageBean(city = cityName)
-            RoomHelper.addCity(bean)
-            _cityList.value = RoomHelper.getCityList()
-        })
-    }
 }

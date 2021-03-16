@@ -1,15 +1,14 @@
-package com.news.simple_news.ui.weather.citymanage
+package com.news.simple_news.ui.weather.citychoose
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.cretin.tools.cityselect.callback.OnCitySelectListener
 import com.cretin.tools.cityselect.model.CityModel
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityChooseBinding
-import com.news.simple_news.util.loge
-import com.news.simple_news.util.toJson
-import com.news.simple_news.util.toast
+import com.news.simple_news.ui.weather.citymanage.CityManageViewModel
 
 
 class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
@@ -20,7 +19,7 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
         }
     }
 
-    private val viewModel by lazy { ViewModelProvider(requireActivity())[CityManageViewModel::class.java] }
+    private val viewModel by lazy { ViewModelProvider(this)[CityChooseViewModel::class.java] }
 
     override fun initLayout(): Int = R.layout.fragment_city_choose
 
@@ -29,11 +28,11 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
         mBinding.cityView.setOnCitySelectListener(object : OnCitySelectListener {
             override fun onCitySelect(cityModel: CityModel?) {
                 viewModel.addCityToDatabase(cityModel!!.cityName)
-                (activity as CityManagerActivity).hideChooseFragment()
+                findNavController().popBackStack()
             }
 
             override fun onSelectCancel() {
-                (activity as CityManagerActivity).hideChooseFragment()
+                findNavController().popBackStack()
             }
         })
     }

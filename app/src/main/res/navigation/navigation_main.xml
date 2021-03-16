@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/news">
+
+    <fragment
+        android:id="@+id/news"
+        android:name="com.news.simple_news.ui.news.NewsFragment"
+        android:label="NewsFragment"
+        tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/weather"
+        android:name="com.news.simple_news.ui.weather.WeatherFragment"
+        android:label="WeatherFragment"
+        tools:layout="@layout/fragment_weather" >
+    </fragment>
+    <fragment
+        android:id="@+id/video"
+        android:name="com.news.simple_news.ui.video.VideoFragment"
+        android:label="VideoFragment"
+        tools:layout="@layout/fragment_video" />
+    <fragment
+        android:id="@+id/mine"
+        android:name="com.news.simple_news.ui.setting.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting" />
+</navigation>

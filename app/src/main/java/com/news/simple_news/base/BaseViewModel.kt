@@ -1,5 +1,6 @@
 package com.news.simple_news.base
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.news.simple_news.model.repository.Repository
@@ -7,6 +8,8 @@ import com.news.simple_news.util.loge
 import com.news.simple_news.util.toast
 import com.google.gson.JsonParseException
 import com.news.simple_news.R
+import com.news.simple_news.model.bean.CityManageBean
+import com.news.simple_news.model.room.RoomHelper
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -23,6 +26,19 @@ typealias Block<T> = suspend()->T
 typealias Error = suspend (e:Exception)->Unit
 
 open class BaseViewModel :ViewModel(){
+
+    var mCurrentCity=MutableLiveData<Int>()
+    var mChooseCity=MutableLiveData<List<CityManageBean>>()
+
+    fun changeCurrentCity(position:Int){
+        mCurrentCity.value=position
+    }
+
+    fun queryChooseCity(){
+        launch({RoomHelper.getCityList()})
+    }
+
+
 
     protected val repository by lazy { Repository() }
 

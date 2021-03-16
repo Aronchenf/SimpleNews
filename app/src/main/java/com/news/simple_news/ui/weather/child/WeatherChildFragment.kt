@@ -33,11 +33,10 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
             }
         }
     }
-    private val mViewModel by lazy { ViewModelProvider(requireActivity())[WeatherViewModel::class.java] }
+    private val mViewModel by lazy { ViewModelProvider(this)[WeatherChildViewModel::class.java] }
     private val todayListAdapter by lazy { WeatherTodayListAdapter() }
     private val weekListAdapter by lazy { WeatherWeekListAdapter() }
     private val indexListAdapter by lazy { WeatherIndexListAdapter() }
-    private val weatherFragment by lazy { WeatherFragment.newInstance() }
 
     override fun initView(savedInstanceState: Bundle?) {
         mBinding.apply {
@@ -46,9 +45,9 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
             indexAdapter = indexListAdapter
             viewModel = mViewModel
         }
-        mBinding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
-            (requireActivity() as MainActivity).animateBottomNavigationView(scrollY < 800 && oldScrollY > scrollY)
-        }
+//        mBinding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
+//            (requireActivity() as MainActivity).animateBottomNavigationView(scrollY < 800 && oldScrollY > scrollY)
+//        }
     }
 
     override fun lazyLoadData() {
@@ -69,9 +68,6 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
             emptyStatus.observe(viewLifecycleOwner) {
 //                mBinding.emptyView.root.isVisible=it
                 mBinding.line.isGone=it
-            }
-            wea.observe(viewLifecycleOwner) {
-                weatherFragment.setVideoStart(it)
             }
         }
     }

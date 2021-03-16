@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.news.simple_news.util.getAppViewModel
 
 
-abstract class BaseFragment<DB:ViewDataBinding> : Fragment() {
+abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
 
-    protected lateinit var mBinding:DB
+    protected lateinit var mBinding: DB
+
+    val appViewModel: BaseViewModel by lazy { getAppViewModel() }
 
     //懒加载
     private var lazyLoaded = false
@@ -21,8 +24,8 @@ abstract class BaseFragment<DB:ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBinding=DataBindingUtil.inflate(inflater,initLayout(),container,false)
-        mBinding.lifecycleOwner=this
+        mBinding = DataBindingUtil.inflate(inflater, initLayout(), container, false)
+        mBinding.lifecycleOwner = this
         return mBinding.root
     }
 
@@ -34,9 +37,9 @@ abstract class BaseFragment<DB:ViewDataBinding> : Fragment() {
 //        getBaseActicity()?.fragmentAnimator = DefaultHorizontalAnimator()
     }
 
-    open fun initLayout()=0
-    open fun initView(savedInstanceState: Bundle?){}
-    open fun observe(){}
+    open fun initLayout() = 0
+    open fun initView(savedInstanceState: Bundle?) {}
+    open fun observe() {}
     open fun lazyLoadData() {}
 
     override fun onResume() {

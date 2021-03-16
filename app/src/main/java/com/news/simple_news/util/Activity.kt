@@ -1,7 +1,13 @@
 package com.news.simple_news.util
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.news.simple_news.application.AppEventViewModel
+import com.news.simple_news.base.BaseViewModel
 import com.news.simple_news.ui.MainActivity
 
 fun launchMainActivity() {
@@ -25,4 +31,15 @@ fun startIntentWithUrl(url:String){
 
 inline fun <reified T> startActivity(){
     startActivity<T> {  }
+}
+
+fun Fragment.getAppViewModel():BaseViewModel{
+    getInstance().let {
+        return it.getAppViewModelProvider().get(BaseViewModel::class.java)
+    }
+}
+fun Activity.getEventViewModel():AppEventViewModel{
+    getInstance().let {
+        return it.getAppViewModelProvider().get(AppEventViewModel::class.java)
+    }
 }
