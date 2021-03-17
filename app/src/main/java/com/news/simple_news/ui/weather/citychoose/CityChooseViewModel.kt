@@ -9,10 +9,11 @@ import com.news.simple_news.base.BaseViewModel
 import com.news.simple_news.model.api.API
 import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.model.room.RoomHelper
+import com.news.simple_news.util.loge
 import com.news.simple_news.util.toBean
 import com.news.simple_news.util.toJson
 
-class CityChooseViewModel :BaseViewModel() {
+class CityChooseViewModel : BaseViewModel() {
 
     private val _allCities = MutableLiveData<List<CityModel>>()
     val allCities: LiveData<List<CityModel>>
@@ -57,12 +58,16 @@ class CityChooseViewModel :BaseViewModel() {
         hotCities.add(CityModel("杭州", "0x06"))
         _hotCities.value = hotCities
     }
+
     fun addCityToDatabase(cityName: String) {
+        val weatherDeffer =
+            async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
         launch({
-            val weather = repository.getData(API.weatherType, cityName, API.appId, API.appSecret)
+            val weather = weatherDeffer.await()
             val dataBean = weather.data[0]
             val bean = CityManageBean(cityName, dataBean.wea_day, dataBean.tem, weather.toJson())
             RoomHelper.addCity(bean)
+            loge("添加数据成功", "CityChooseViewModel")
         }, {
             val bean = CityManageBean(city = cityName)
             RoomHelper.addCity(bean)

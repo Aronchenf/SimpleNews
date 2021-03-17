@@ -2,6 +2,7 @@ package com.news.simple_news.ui.weather
 
 
 import androidx.navigation.findNavController
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityCityManageBinding
@@ -12,6 +13,9 @@ class CityManagerActivity : BaseActivity<ActivityCityManageBinding>() {
 
     override fun onSupportNavigateUp()=findNavController(R.id.nav_city_manage).navigateUp()
 
-
+    fun onBack(position:Int){
+        LiveEventBus.get("refresh").postDelay(position,100)
+        super.onBackPressed()
+    }
 
 }

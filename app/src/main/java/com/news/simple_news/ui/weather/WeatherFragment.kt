@@ -5,9 +5,11 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.R
 import com.news.simple_news.adapter.ViewPagerAdapter
@@ -24,9 +26,9 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         fun newInstance() = WeatherFragment()
     }
 
-
     private val mViewModel by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
 
+    private lateinit var cityList:List<CityManageBean>
     override fun initLayout(): Int = R.layout.fragment_weather
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -35,8 +37,10 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             startActivity<CityManagerActivity>()
             true
         }
+        mBinding.viewpager.currentItem=0
     }
-     fun setVideoStart(wea: String?="多云") {
+
+    fun setVideoStart(wea: String? = "多云") {
         mBinding.videoView.setVideoURI(Uri.parse(getWeatherVideo(wea)))
         mBinding.videoView.setOnPreparedListener {
             //将videoView的背景设置为透明
@@ -53,62 +57,52 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     override fun observe() {
         mViewModel.cityList.observe(viewLifecycleOwner) {
-            for(bean in it){
-                loge(it.size.toString(),"现在List的长度为")
-                loge(bean.city,"WeatherFragment")
-            }
-            setTitle(it[it.size-1].city)
+            cityList=it
             initViewPager(it)
-            setOnPageChangeCallback(it)
+            setOnPageChangeCallback()
         }
-        requireActivity().getEventViewModel().addChooseCity.observe(this){
-            it?.let {
+        LiveEventBus.get("refresh", Int::class.java).observe(this,
+            Observer<Int> { t ->
+                loge("我已经接受到了来自Manage的消息$t")
+                mBinding.viewpager.setCurrentItem(t-1,true)
                 mViewModel.getCityList()
-            }
-
-        }
-        requireActivity().getEventViewModel().changeCurrentCity.observe(this){
-            it?.let {
-                mBinding.viewpager.setCurrentItem(appViewModel.mCurrentCity.value!!,true)
-            }
-        }
+            })
     }
 
     private fun initViewPager(list: List<CityManageBean>) {
         val fragments = mutableListOf<Fragment>()
         for (bean in list) {
-            loge(bean.city,"已存入的城市有")
             fragments.add(WeatherChildFragment.newInstance(bean.city))
         }
         val mAdapter = ViewPagerAdapter(requireActivity(), fragments)
         mBinding.viewpager.apply {
             adapter = mAdapter
-            currentItem = 0
-            offscreenPageLimit=list.size
+            offscreenPageLimit = list.size
         }
         mBinding.indicator.setSliderColor(
-                getColor(R.color.gray),
-                getColor(R.color.dim_gray))
-                .setSliderWidth(resources.getDimension(R.dimen.dp_8))
-                .setSliderHeight(resources.getDimension(R.dimen.dp_8))
-                .setSlideMode(IndicatorSlideMode.WORM)
-                .setIndicatorStyle(IndicatorStyle.CIRCLE)
-                .setupWithViewPager(mBinding.viewpager)
+            getColor(R.color.gray),
+            getColor(R.color.dim_gray)
+        )
+            .setSliderWidth(resources.getDimension(R.dimen.dp_8))
+            .setSliderHeight(resources.getDimension(R.dimen.dp_8))
+            .setSlideMode(IndicatorSlideMode.WORM)
+            .setIndicatorStyle(IndicatorStyle.CIRCLE)
+            .setupWithViewPager(mBinding.viewpager)
     }
 
-    private fun setOnPageChangeCallback(list: List<CityManageBean>) {
-        mBinding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                if (list.isNotEmpty()) {
-                    loge(list.size.toString(),"List的长度为")
-                    for(bean in list){
-                        loge(bean.city,"OnPageChangeCallback")
-                    }
-                    setTitle(list[position].city)
-                    setVideoStart(list[position].wea)
-                }
+    private fun setOnPageChangeCallback() {
+        mBinding.viewpager.unregisterOnPageChangeCallback(pageSelectedCallBack)
+        mBinding.viewpager.registerOnPageChangeCallback(pageSelectedCallBack)
+    }
+
+    private val pageSelectedCallBack=object :ViewPager2.OnPageChangeCallback(){
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            if (cityList.isNotEmpty()){
+                setTitle(cityList[position].city)
+                setVideoStart(cityList[position].wea)
             }
-        })
+        }
     }
 
     private fun setTitle(title: String) {

@@ -101,10 +101,13 @@ class WeatherChildViewModel :BaseViewModel() {
     }
 
     private fun setIndexData(weatherBean: WeatherBean) {
-        val indexList = weatherBean.data[0].index
-        for (i in 0 ..5) {
-            indexList[i].image = indexImageList[i]
+        if (!weatherBean.data[0].index.isNullOrEmpty()){
+            val indexList = weatherBean.data[0].index
+            for (i in 0 ..5) {
+                indexList[i].image = indexImageList[i]
+            }
+            _indexList.value = indexList
         }
-        _indexList.value = indexList
+
     }
 }

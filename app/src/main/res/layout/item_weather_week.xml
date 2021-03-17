@@ -41,7 +41,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{bean.wea}"
+            android:text="@{bean.wea_day}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/weatherImg"
             app:layout_constraintTop_toTopOf="parent"

@@ -10,6 +10,7 @@ import com.news.simple_news.R
 
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
     protected lateinit var mBinding: DB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -36,5 +37,6 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
+
 
 }

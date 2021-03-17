@@ -1,15 +1,16 @@
 package com.news.simple_news.ui.weather.citymanage
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.news.simple_news.R
 import com.news.simple_news.adapter.CityManageAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityManagerBinding
 import com.news.simple_news.ui.weather.CityManagerActivity
-import com.news.simple_news.util.getEventViewModel
 import com.news.simple_news.util.loge
 class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
@@ -23,9 +24,12 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+
         mBinding.toolbar.run {
             setNavigationIcon(R.drawable.arrow_left_black)
-            setNavigationOnClickListener { (requireActivity() as CityManagerActivity).onBackPressed() }
+            setNavigationOnClickListener {
+                (requireActivity() as CityManagerActivity).onBack(mAdapter.data.size)
+            }
             title = getString(R.string.city_manage)
         }
         mBinding.viewModel = mViewModel
@@ -41,25 +45,17 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
         }
     }
 
-    override fun observe() {
-        mViewModel.cityList.observe(this) {
-            loge(it.size.toString(),"Manage的List长度为")
-            for (bean in it){
-                loge(bean.city,"CityManageFragment")
-            }
-        }
-
-        appViewModel.mCurrentCity.observe(this){
-            it?.let {
-                requireActivity().getEventViewModel().changeCurrentCity.postValue(true)
-            }
-        }
-    }
-
     override fun onResume() {
         super.onResume()
+        LiveEventBus.get("added",Boolean::class.java).observe(this,
+            Observer<Boolean> { t ->
+                if (t){
+                    getCityList()
+                }
+            })
+    }
+    private fun getCityList(){
         mViewModel.getCityList()
-        loge("我们又见面啦")
     }
 
 }

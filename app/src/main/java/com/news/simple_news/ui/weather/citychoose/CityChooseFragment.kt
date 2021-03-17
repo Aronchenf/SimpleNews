@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.cretin.tools.cityselect.callback.OnCitySelectListener
 import com.cretin.tools.cityselect.model.CityModel
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityChooseBinding
+import com.news.simple_news.ui.weather.citymanage.CityManageFragment
 import com.news.simple_news.ui.weather.citymanage.CityManageViewModel
 
 
@@ -29,6 +31,7 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
             override fun onCitySelect(cityModel: CityModel?) {
                 viewModel.addCityToDatabase(cityModel!!.cityName)
                 findNavController().popBackStack()
+                LiveEventBus.get("added").postDelay(true,200)
             }
 
             override fun onSelectCancel() {

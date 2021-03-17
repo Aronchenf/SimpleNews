@@ -19,9 +19,11 @@ class CityManageViewModel : BaseViewModel() {
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
+    init {
+        getCityList()
+    }
      fun getCityList() {
         launch({
-            loge("我在请求数据","ViewModel")
             _cityList.value = RoomHelper.getCityList()
         })
     }
