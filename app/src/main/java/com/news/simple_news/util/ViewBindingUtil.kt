@@ -24,6 +24,11 @@ fun bindNewsImage(appCompatImageView: AppCompatImageView, newsData: NewsData) {
     }
 }
 
+@BindingAdapter("isGone")
+fun bingVisible(view: View, isGone: Boolean) {
+    view.visibility = if (isGone) View.GONE else View.VISIBLE
+}
+
 @BindingAdapter("refreshStatus")
 fun bindRefresh(swipeRefreshLayout: SwipeRefreshLayout, isRefresh: Boolean) {
     swipeRefreshLayout.isRefreshing = isRefresh
@@ -31,7 +36,7 @@ fun bindRefresh(swipeRefreshLayout: SwipeRefreshLayout, isRefresh: Boolean) {
 
 @BindingAdapter("weatherImg")
 fun bindWeatherImg(appCompatImageView: AppCompatImageView, weather: String?) {
-    if (!weather.isNullOrEmpty()){
+    if (!weather.isNullOrEmpty()) {
         appCompatImageView.setImageResource(getWeatherImages(weather))
     }
 
@@ -84,31 +89,32 @@ fun bindSearchTag(appCompatTextView: AppCompatTextView, item: Item) {
 }
 
 @BindingAdapter("img")
-fun bindSearchImg(appCompatImageView: AppCompatImageView,url:String){
+fun bindSearchImg(appCompatImageView: AppCompatImageView, url: String) {
     appCompatImageView.setImage(url)
 }
 
 @BindingAdapter("roundImg")
-fun bindRoundImg(appCompatImageView: AppCompatImageView,url: String){
+fun bindRoundImg(appCompatImageView: AppCompatImageView, url: String) {
     appCompatImageView.setRoundImage(url)
 }
 
 @BindingAdapter("backImg")
-fun bindBackImg(appCompatImageView: AppCompatImageView,url: String){
+fun bindBackImg(appCompatImageView: AppCompatImageView, url: String) {
     appCompatImageView.setBackground(url)
 }
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("historyTag")
-fun bindHistoryTag(appCompatTextView: AppCompatTextView, data: Data){
-    val author=data.author.name?:""
+fun bindHistoryTag(appCompatTextView: AppCompatTextView, data: Data) {
+    val author = data.author.name ?: ""
     appCompatTextView.text = "#${data.category}/$author"
 }
 
 @BindingAdapter("isGone")
-fun bindHasGone(appCompatTextView: AppCompatTextView,data:String?){
-    appCompatTextView.visibility=if (data.isNullOrEmpty()) View.GONE else View.VISIBLE
+fun bindHasGone(appCompatTextView: AppCompatTextView, data: String?) {
+    appCompatTextView.visibility = if (data.isNullOrEmpty()) View.GONE else View.VISIBLE
 }
+
 
 
 

@@ -2,6 +2,7 @@ package com.news.simple_news.ui.weather.citychoose
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.cretin.tools.cityselect.callback.OnCitySelectListener
 import com.cretin.tools.cityselect.model.CityModel
@@ -11,6 +12,7 @@ import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityChooseBinding
 import com.news.simple_news.ui.weather.citymanage.CityManageFragment
 import com.news.simple_news.ui.weather.citymanage.CityManageViewModel
+import com.news.simple_news.util.getEventViewModel
 
 
 class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
@@ -30,8 +32,6 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
         mBinding.cityView.setOnCitySelectListener(object : OnCitySelectListener {
             override fun onCitySelect(cityModel: CityModel?) {
                 viewModel.addCityToDatabase(cityModel!!.cityName)
-                findNavController().popBackStack()
-                LiveEventBus.get("added").postDelay(true,200)
             }
 
             override fun onSelectCancel() {
@@ -42,6 +42,11 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
 
     override fun observe() {
         mBinding.cityView.bindData(viewModel.allCities.value, viewModel.hotCities.value, null)
+        viewModel.mChooseCityInsertResult.observe(this){
+            requireActivity().getEventViewModel().addChooseCity.postValue(true)
+            requireActivity().getEventViewModel().addCity.postValue(true)
+            findNavController().popBackStack()
+        }
     }
 
 }

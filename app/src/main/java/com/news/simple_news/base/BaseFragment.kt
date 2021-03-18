@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.news.simple_news.util.getAppViewModel
 
 
 abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
 
+    val appViewModel by lazy { getAppViewModel() }
     protected lateinit var mBinding: DB
 
     //懒加载

@@ -14,8 +14,7 @@
         android:id="@+id/weather"
         android:name="com.news.simple_news.ui.weather.WeatherFragment"
         android:label="WeatherFragment"
-        tools:layout="@layout/fragment_weather" >
-    </fragment>
+        tools:layout="@layout/fragment_weather" />
     <fragment
         android:id="@+id/video"
         android:name="com.news.simple_news.ui.video.VideoFragment"

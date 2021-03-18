@@ -10,7 +10,9 @@ import com.news.simple_news.R
 import com.news.simple_news.adapter.CityManageAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityManagerBinding
+import com.news.simple_news.ui.MainActivity
 import com.news.simple_news.ui.weather.CityManagerActivity
+import com.news.simple_news.util.getEventViewModel
 import com.news.simple_news.util.loge
 class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
@@ -28,7 +30,8 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
         mBinding.toolbar.run {
             setNavigationIcon(R.drawable.arrow_left_black)
             setNavigationOnClickListener {
-                (requireActivity() as CityManagerActivity).onBack(mAdapter.data.size)
+
+                (requireActivity() as CityManagerActivity).onBackPressed()
             }
             title = getString(R.string.city_manage)
         }
@@ -42,20 +45,24 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
         mAdapter.setOnItemChildClickListener { _, _, position ->
             mViewModel.deleteCity(position)
             mAdapter.removeAt(position)
+            requireActivity().getEventViewModel().deleteCity.postValue(true)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        LiveEventBus.get("added",Boolean::class.java).observe(this,
-            Observer<Boolean> { t ->
-                if (t){
-                    getCityList()
-                }
-            })
-    }
-    private fun getCityList(){
-        mViewModel.getCityList()
+    override fun observe() {
+        requireActivity().getEventViewModel().addChooseCity.observe(this){
+            it.let {
+                mViewModel.getCityList()
+                loge("整个列表的长度为${mAdapter.data.size}","CityManageFragment")
+//                appViewModel.changeCurrentCity(mAdapter.data.size)
+            }
+        }
+//        mViewModel.cityList.observe(this){
+//            appViewModel.changeCurrentCity(it.size-1)
+//        }
+//        appViewModel.mCurrentCity.observe(this){
+//            requireActivity().getEventViewModel().changeCurrentCity.postValue(true)
+//        }
     }
 
 }

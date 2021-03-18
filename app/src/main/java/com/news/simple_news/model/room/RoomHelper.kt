@@ -66,14 +66,21 @@ object RoomHelper {
 
     suspend fun deleteAllWatch()= watchDao.deleteAllWatch()
 
-    suspend fun addCity(bean:CityManageBean)= cityDao.insertCityManage(bean)
+    suspend fun addCity(bean:CityManageBean):Long?= cityDao.insertCityManage(bean)
 
     suspend fun updateCityInfo(bean: CityManageBean)= cityDao.updateCityInfo(bean)
 
     suspend fun getCityInfoByName(cityName:String):WeatherBean{
-        val json= cityDao.getInfoByName(cityName)
-        return json.toBean()
+        val cityManageBean=cityDao.getInfoByName(cityName)
+        if (!cityManageBean.data.isNullOrEmpty()) {
+            val json=cityManageBean.data
+            val weatherBean=json.toBean<WeatherBean>()
+            weatherBean.city=cityName
+            return weatherBean
+        }
+        return WeatherBean(city = cityName)
     }
+
     suspend fun deleteCity(city:String){
         val bean= cityDao.getCity(city)
         cityDao.deleteCity(bean)

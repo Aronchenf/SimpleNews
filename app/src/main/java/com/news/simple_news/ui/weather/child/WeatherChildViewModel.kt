@@ -9,6 +9,7 @@ import com.news.simple_news.model.api.API
 import com.news.simple_news.model.bean.*
 import com.news.simple_news.model.room.RoomHelper
 import com.news.simple_news.util.getString
+import com.news.simple_news.util.loge
 import com.news.simple_news.util.toJson
 
 class WeatherChildViewModel :BaseViewModel() {
@@ -62,6 +63,10 @@ class WeatherChildViewModel :BaseViewModel() {
     val reloadStatus = MutableLiveData<Boolean>()
     val emptyStatus= MutableLiveData<Boolean>()
 
+    init {
+        emptyStatus.value=true
+    }
+
     private val _cityList = MutableLiveData<List<CityManageBean>>()
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
@@ -70,12 +75,9 @@ class WeatherChildViewModel :BaseViewModel() {
         refreshStatus.set(true)
         launch({
             val weather = repository.getData(API.weatherType, city, API.appId, API.appSecret)
-            val dataBean=weather.data[0]
+            val dataBean=weather.data!![0]
             RoomHelper.updateCityInfo(CityManageBean(city,dataBean.wea_day,dataBean.tem,weather.toJson()) )
             setData(weather)
-            if (weather.data.isNotEmpty()){
-                emptyStatus.value=false
-            }
             refreshStatus.set(false)
         }, {
             refreshStatus.set(false)
@@ -85,23 +87,25 @@ class WeatherChildViewModel :BaseViewModel() {
     }
 
 
-
     private fun setData(weatherBean: WeatherBean) {
         _city.value = weatherBean.city
-        val dataBean = weatherBean.data[0]
-        _tem.value = dataBean.tem
-        _wea.value = dataBean.wea_day
-        _airLevel.value = if (dataBean.air_level.isEmpty()) " "
-        else "${getString(R.string.air)}${dataBean.air_level}"
-        _air.value = dataBean.air
-        _airTips.value = "\u3000\u3000${dataBean.air_tips}"
-        _weekList.value = weatherBean.data
-        _hoursList.value = weatherBean.data[0].hours
-        setIndexData(weatherBean)
+        if (!weatherBean.data.isNullOrEmpty()){
+            emptyStatus.value=false
+            val dataBean = weatherBean.data[0]
+            _tem.value = dataBean.tem
+            _wea.value = dataBean.wea_day
+            _airLevel.value = if (dataBean.air_level.isEmpty()) " "
+            else "${getString(R.string.air)}${dataBean.air_level}"
+            _air.value = dataBean.air
+            _airTips.value = "\u3000\u3000${dataBean.air_tips}"
+            _weekList.value = weatherBean.data
+            _hoursList.value = weatherBean.data[0].hours
+            setIndexData(weatherBean)
+        }
     }
 
     private fun setIndexData(weatherBean: WeatherBean) {
-        if (!weatherBean.data[0].index.isNullOrEmpty()){
+        if (!weatherBean.data!![0].index.isNullOrEmpty()){
             val indexList = weatherBean.data[0].index
             for (i in 0 ..5) {
                 indexList[i].image = indexImageList[i]

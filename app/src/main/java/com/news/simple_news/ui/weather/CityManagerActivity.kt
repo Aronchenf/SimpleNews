@@ -13,9 +13,4 @@ class CityManagerActivity : BaseActivity<ActivityCityManageBinding>() {
 
     override fun onSupportNavigateUp()=findNavController(R.id.nav_city_manage).navigateUp()
 
-    fun onBack(position:Int){
-        LiveEventBus.get("refresh").postDelay(position,100)
-        super.onBackPressed()
-    }
-
 }

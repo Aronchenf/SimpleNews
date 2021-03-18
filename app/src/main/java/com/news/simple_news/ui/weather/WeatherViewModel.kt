@@ -29,6 +29,7 @@ class WeatherViewModel : BaseViewModel() {
 
      fun getCityList() {
         launch({
+            loge("我获取了整个列表","WeatherViewModel")
             _cityList.value = RoomHelper.getCityList()
         })
     }

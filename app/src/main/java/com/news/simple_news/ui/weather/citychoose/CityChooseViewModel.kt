@@ -23,6 +23,10 @@ class CityChooseViewModel : BaseViewModel() {
     val hotCities: LiveData<List<CityModel>>
         get() = _hotCities
 
+    private val _mChooseCityInsertResult = MutableLiveData<Long>()
+    val mChooseCityInsertResult: LiveData<Long>
+        get() = _mChooseCityInsertResult
+
     init {
         getAllCities()
         getHotCities()
@@ -60,17 +64,18 @@ class CityChooseViewModel : BaseViewModel() {
     }
 
     fun addCityToDatabase(cityName: String) {
+
         val weatherDeffer =
-            async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
+                async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
         launch({
             val weather = weatherDeffer.await()
-            val dataBean = weather.data[0]
+            val dataBean = weather.data!![0]
             val bean = CityManageBean(cityName, dataBean.wea_day, dataBean.tem, weather.toJson())
-            RoomHelper.addCity(bean)
+            _mChooseCityInsertResult.value = RoomHelper.addCity(bean)
             loge("添加数据成功", "CityChooseViewModel")
         }, {
             val bean = CityManageBean(city = cityName)
-            RoomHelper.addCity(bean)
+            _mChooseCityInsertResult.value = RoomHelper.addCity(bean)
         })
     }
 }

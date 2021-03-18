@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -26,6 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityMainBinding
+import com.news.simple_news.util.gone
 import com.news.simple_news.util.setupWithNavController
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -59,6 +61,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             navGraphIds,supportFragmentManager,
             R.id.nav_main_fragment)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_main_fragment).navigateUp()
+    }
+
+
 //    private fun setDefaultFragment() {
 //        val initialItemId = R.id.news
 //        mBinding.bottomView.selectedItemId = initialItemId

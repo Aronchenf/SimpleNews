@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.news.simple_news.R
+import com.news.simple_news.util.getAppViewModel
 
 abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
     protected lateinit var mBinding: DB
+
+    val appViewModel by lazy { getAppViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

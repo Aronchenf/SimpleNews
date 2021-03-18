@@ -53,7 +53,6 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
     override fun lazyLoadData() {
         super.lazyLoadData()
         val cityName=arguments?.getString(city).toString()
-        loge(cityName,"WeatherChildFragment")
         mViewModel.getCityData(cityName)
         mBinding.swipeLayout.setOnRefreshListener {
             mViewModel.getCityData(cityName)

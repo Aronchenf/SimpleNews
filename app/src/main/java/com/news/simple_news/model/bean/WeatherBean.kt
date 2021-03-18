@@ -1,13 +1,16 @@
 package com.news.simple_news.model.bean
 
+import androidx.annotation.NonNull
+
 data class WeatherBean(
-    val cityid: String, // 101230101
-    val city: String, // 福州
-    val cityEn: String, // fuzhou
-    val country: String, // 中国
-    val countryEn: String, // China
-    val update_time: String, // 2021-03-01 08:59:44
-    val data: List<WeatherDataBean>
+        val cityid: String?="", // 101230101
+        @NonNull
+        var city: String, // 福州
+        val cityEn: String?="", // fuzhou
+        val country: String?="", // 中国
+        val countryEn: String?="", // China
+        val update_time: String?="", // 2021-03-01 08:59:44
+        val data: List<WeatherDataBean>?= mutableListOf()
 )
 
 data class WeatherDataBean(

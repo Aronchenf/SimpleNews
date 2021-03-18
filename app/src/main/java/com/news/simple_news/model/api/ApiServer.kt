@@ -44,9 +44,9 @@ private val httpLoggingInterceptor =HttpLoggingInterceptor().apply {
 private val okHttpClient = OkHttpClient.Builder()
     .addInterceptor(httpLoggingInterceptor)
     .retryOnConnectionFailure(true)
-    .connectTimeout(60L, TimeUnit.SECONDS)
-    .readTimeout(60L, TimeUnit.SECONDS)
-    .writeTimeout(60L, TimeUnit.SECONDS)
+    .connectTimeout(5, TimeUnit.SECONDS)
+    .readTimeout(5, TimeUnit.SECONDS)
+    .writeTimeout(5, TimeUnit.SECONDS)
     .build()
 
 fun getRetrofit(url: String): ApiService {
