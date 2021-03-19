@@ -32,7 +32,6 @@ abstract class BaseFragment<DB : ViewDataBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView(savedInstanceState)
         observe()
-
 //        getBaseActicity()?.fragmentAnimator = DefaultHorizontalAnimator()
     }
 

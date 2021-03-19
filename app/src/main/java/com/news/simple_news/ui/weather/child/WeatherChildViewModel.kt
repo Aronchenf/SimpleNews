@@ -8,11 +8,11 @@ import com.news.simple_news.base.BaseViewModel
 import com.news.simple_news.model.api.API
 import com.news.simple_news.model.bean.*
 import com.news.simple_news.model.room.RoomHelper
+import com.news.simple_news.util.NetUtil
 import com.news.simple_news.util.getString
-import com.news.simple_news.util.loge
 import com.news.simple_news.util.toJson
 
-class WeatherChildViewModel :BaseViewModel() {
+class WeatherChildViewModel : BaseViewModel() {
     val refreshStatus = ObservableBoolean(false)
 
     private val indexImageList = listOf(
@@ -59,29 +59,30 @@ class WeatherChildViewModel :BaseViewModel() {
     private val _indexList = MutableLiveData<List<IndexBean>>()
     val indexList: LiveData<List<IndexBean>>
         get() = _indexList
-
-    val reloadStatus = MutableLiveData<Boolean>()
-    val emptyStatus= MutableLiveData<Boolean>()
+    val emptyStatus = MutableLiveData<Boolean>()
 
     init {
-        emptyStatus.value=true
+        emptyStatus.value = true
     }
-
-    private val _cityList = MutableLiveData<List<CityManageBean>>()
-    val cityList: LiveData<List<CityManageBean>>
-        get() = _cityList
 
     fun getCityData(city: String = "福州") {
         refreshStatus.set(true)
         launch({
             val weather = repository.getData(API.weatherType, city, API.appId, API.appSecret)
-            val dataBean=weather.data!![0]
-            RoomHelper.updateCityInfo(CityManageBean(city,dataBean.wea_day,dataBean.tem,weather.toJson()) )
+            val dataBean = weather.data!![0]
+            RoomHelper.updateCityInfo(
+                CityManageBean(
+                    city,
+                    dataBean.wea_day,
+                    dataBean.tem,
+                    weather.toJson()
+                )
+            )
             setData(weather)
             refreshStatus.set(false)
         }, {
             refreshStatus.set(false)
-            val weather= RoomHelper.getCityInfoByName(city)
+            val weather = RoomHelper.getCityInfoByName(city)
             setData(weather)
         })
     }
@@ -89,8 +90,8 @@ class WeatherChildViewModel :BaseViewModel() {
 
     private fun setData(weatherBean: WeatherBean) {
         _city.value = weatherBean.city
-        if (!weatherBean.data.isNullOrEmpty()){
-            emptyStatus.value=false
+        if (!weatherBean.data.isNullOrEmpty()) {
+            emptyStatus.value = false
             val dataBean = weatherBean.data[0]
             _tem.value = dataBean.tem
             _wea.value = dataBean.wea_day
@@ -105,9 +106,9 @@ class WeatherChildViewModel :BaseViewModel() {
     }
 
     private fun setIndexData(weatherBean: WeatherBean) {
-        if (!weatherBean.data!![0].index.isNullOrEmpty()){
+        if (!weatherBean.data!![0].index.isNullOrEmpty()) {
             val indexList = weatherBean.data[0].index
-            for (i in 0 ..5) {
+            for (i in 0..5) {
                 indexList[i].image = indexImageList[i]
             }
             _indexList.value = indexList

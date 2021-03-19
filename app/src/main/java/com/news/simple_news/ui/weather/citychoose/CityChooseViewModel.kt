@@ -64,18 +64,17 @@ class CityChooseViewModel : BaseViewModel() {
     }
 
     fun addCityToDatabase(cityName: String) {
-
+        loge("addCityToDatabase", "CityChooseViewModel")
         val weatherDeffer =
-                async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
+            async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
         launch({
             val weather = weatherDeffer.await()
             val dataBean = weather.data!![0]
             val bean = CityManageBean(cityName, dataBean.wea_day, dataBean.tem, weather.toJson())
-            _mChooseCityInsertResult.value = RoomHelper.addCity(bean)
-            loge("添加数据成功", "CityChooseViewModel")
+            _mChooseCityInsertResult.value=RoomHelper.addCity(bean)
         }, {
             val bean = CityManageBean(city = cityName)
-            _mChooseCityInsertResult.value = RoomHelper.addCity(bean)
+            _mChooseCityInsertResult.value=RoomHelper.addCity(bean)
         })
     }
 }

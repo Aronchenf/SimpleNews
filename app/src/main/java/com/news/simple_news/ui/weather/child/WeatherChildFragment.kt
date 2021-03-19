@@ -2,7 +2,6 @@ package com.news.simple_news.ui.weather.child
 
 import android.os.Bundle
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -12,12 +11,7 @@ import com.news.simple_news.adapter.WeatherTodayListAdapter
 import com.news.simple_news.adapter.WeatherWeekListAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentWeatherChildBinding
-import com.news.simple_news.model.bean.WeatherBean
-import com.news.simple_news.ui.MainActivity
-import com.news.simple_news.ui.weather.WeatherFragment
-import com.news.simple_news.ui.weather.WeatherViewModel
-import com.news.simple_news.util.loge
-import com.news.simple_news.util.toBean
+import com.news.simple_news.ui.main.MainActivity
 
 class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
 
@@ -45,9 +39,9 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
             indexAdapter = indexListAdapter
             viewModel = mViewModel
         }
-//        mBinding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
-//            (requireActivity() as MainActivity).animateBottomNavigationView(scrollY < 800 && oldScrollY > scrollY)
-//        }
+        mBinding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
+            (requireActivity() as MainActivity).animateBottomNavigationView(scrollY < 800 && oldScrollY > scrollY)
+        }
     }
 
     override fun lazyLoadData() {

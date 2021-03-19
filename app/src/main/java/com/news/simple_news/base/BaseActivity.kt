@@ -14,10 +14,13 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
 
     val appViewModel by lazy { getAppViewModel() }
 
+    override fun onStart() {
+        super.onStart()
+        initWindow()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        initWindow()
         initViewBinding()
         initView(savedInstanceState)
         observe()

@@ -5,6 +5,24 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug{
+            storeFile file("../config/debug.keystore")
+        }
+        release{
+            storeFile file("../config/simple.jks")
+        }
+        config {
+            storeFile file('E:\\SimpleNews\\app\\src\\main\\simple.jks')
+            storePassword '123456'
+            keyAlias 'Aron'
+            keyPassword '123456'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -20,10 +38,28 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    File propFile = file('../config/signing.properties');
+    if (propFile.exists()) {
+        def Properties props = new Properties()
+        props.load(new FileInputStream(propFile))
+        if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
+                props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+            android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+            android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+            android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+            android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+        } else {
+            android.buildTypes.release.signingConfig = null
+        }
+    } else {
+        android.buildTypes.release.signingConfig = null
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -101,6 +137,7 @@ dependencies {
 
     implementation 'androidx.work:work-runtime-ktx:2.3.4'
 
-    implementation 'com.jeremyliao:live-event-bus-x:1.7.3'
+    implementation 'com.amap.api:search:7.7.0'
+    implementation 'com.amap.api:location:latest.integration'
 
 }

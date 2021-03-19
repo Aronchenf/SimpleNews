@@ -10,7 +10,6 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.news.simple_news.adapter.video.VideoAdapter
-import com.news.simple_news.ui.MainActivity
 import com.news.simple_news.ui.video.search.VideoSearchActivity
 import com.news.simple_news.util.startActivity
 import com.news.simple_news.R

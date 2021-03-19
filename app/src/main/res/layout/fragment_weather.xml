@@ -25,7 +25,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:titleTextColor="@color/black"
                 app:titleTextAppearance="@style/title"
                 tools:title="福州"
                 app:menu="@menu/weather_toolbar">

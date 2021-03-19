@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import com.jeremyliao.liveeventbus.LiveEventBus
 
 class App : Application(),ViewModelStoreOwner {
     companion object {
@@ -20,16 +19,8 @@ class App : Application(),ViewModelStoreOwner {
         super.onCreate()
         instance =this
         context = applicationContext
-        initEventBus()
         mAppViewModelStore = ViewModelStore()
     }
-
-     private fun initEventBus(){
-         LiveEventBus
-             .config()
-             .lifecycleObserverAlwaysActive(true)
-             .autoClear(true)
-     }
 
     /**
      * 获取一个全局的ViewModel

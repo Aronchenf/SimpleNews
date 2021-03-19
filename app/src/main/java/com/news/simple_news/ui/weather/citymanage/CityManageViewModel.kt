@@ -19,16 +19,15 @@ class CityManageViewModel : BaseViewModel() {
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
-    init {
-        getCityList()
-    }
      fun getCityList() {
+         loge("getCityList","CityManageViewModel")
         launch({
             _cityList.value = RoomHelper.getCityList()
         })
     }
 
     fun deleteCity(position: Int) {
+        loge("deleteCity","CityManageViewModel")
         val cityName = cityList.value!![position].city
         launch({
             RoomHelper.deleteCity(cityName)

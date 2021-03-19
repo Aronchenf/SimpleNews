@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,89 +10,105 @@
             type="com.news.simple_news.model.bean.CityManageBean" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10">
+        android:layout_height="@dimen/dp_100"
+        android:layout_margin="@dimen/dp_10"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        app:cardElevation="@dimen/dp_10">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_drag"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/menu" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_weather"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="@dimen/dp_10"
-            android:src="@drawable/question"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_drag"
-            app:layout_constraintTop_toTopOf="parent"
-            app:weatherImg="@{bean.wea}" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_15"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_weather"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@drawable/bg_item_city_manage">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_weather"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@drawable/empty_wea"
+                android:layout_marginStart="@dimen/dp_40"
+                app:layout_constraintBottom_toBottomOf="@id/tv_weather"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@id/tv_weather"
+                app:weatherImg="@{bean.wea}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@{bean.wea}"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                app:isGone="@{bean.wea}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="多云" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_tem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bean.tem}"
+                android:textSize="25sp"
+                app:isGone="@{bean.wea}"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/tv_city"
+                app:layout_constraintStart_toStartOf="@id/tv_city"
+                app:layout_constraintTop_toBottomOf="@id/guideline1"
+                tools:ignore="RtlSymmetry"
+                tools:text="15°" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:text="@{bean.city}"
+                android:textColor="@color/white"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_weather"
-                app:layout_constraintStart_toEndOf="@id/iv_weather"
-                app:layout_constraintTop_toTopOf="@id/iv_weather"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline1"
+                android:layout_marginBottom="@dimen/dp_5"
                 tools:text="巴音郭楞市" />
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
-                android:id="@+id/tv_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_weather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp_5"
-                    android:text="@{bean.wea}"
-                    app:isGone="@{bean.wea}"
-                    tools:text="多云" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_tem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dp_5"
-                    android:text="@{bean.tem}"
-                    app:isGone="@{bean.wea}"
-                    tools:ignore="RtlSymmetry"
-                    tools:text="15°" />
+                android:id="@+id/linear_clear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/dim_gray"
+                android:visibility="gone"
+                android:gravity="center">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_clear"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:src="@drawable/ic_clear"/>
             </LinearLayout>
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_city_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_15"
-            android:src="@drawable/ic_clear"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

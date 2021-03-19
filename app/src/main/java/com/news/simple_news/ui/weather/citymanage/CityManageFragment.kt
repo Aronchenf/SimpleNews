@@ -1,19 +1,16 @@
 package com.news.simple_news.ui.weather.citymanage
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import com.jeremyliao.liveeventbus.LiveEventBus
 import com.news.simple_news.R
 import com.news.simple_news.adapter.CityManageAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityManagerBinding
-import com.news.simple_news.ui.MainActivity
 import com.news.simple_news.ui.weather.CityManagerActivity
-import com.news.simple_news.util.getEventViewModel
-import com.news.simple_news.util.loge
+import com.news.simple_news.util.*
+
 class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
     companion object{
@@ -26,43 +23,62 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
+        mViewModel.getCityList()
         mBinding.toolbar.run {
             setNavigationIcon(R.drawable.arrow_left_black)
             setNavigationOnClickListener {
-
                 (requireActivity() as CityManagerActivity).onBackPressed()
+            }
+            setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.add_city->{
+                        findNavController().navigate(R.id.action_cityManageFragment_to_cityChooseFragment)
+                    }
+                    R.id.setting_city->{
+
+                    }
+                }
+                true
             }
             title = getString(R.string.city_manage)
         }
         mBinding.viewModel = mViewModel
         mBinding.adapter = mAdapter
-        mBinding.btnAddCity.setOnClickListener {
-            findNavController().navigate(R.id.action_cityManageFragment_to_cityChooseFragment)
+
+        mAdapter.setOnItemClickListener { _, _, position ->
+            appViewModel.changeCurrentCity(position)
+            (requireActivity() as CityManagerActivity).onBackPressed()
         }
 
-        mAdapter.addChildClickViewIds(R.id.btn_city_delete)
+        mAdapter.addChildClickViewIds(R.id.iv_clear)
+        mAdapter.setOnItemLongClickListener { adapter, view, position ->
+            mAdapter.getViewByPosition(position,R.id.linear_clear)?.visible()
+            true
+        }
         mAdapter.setOnItemChildClickListener { _, _, position ->
             mViewModel.deleteCity(position)
-            mAdapter.removeAt(position)
             requireActivity().getEventViewModel().deleteCity.postValue(true)
+            mAdapter.notifyItemChanged(position)
+            mAdapter.getViewByPosition(position,R.id.linear_clear)?.gone()
         }
     }
+
+
+
 
     override fun observe() {
         requireActivity().getEventViewModel().addChooseCity.observe(this){
             it.let {
                 mViewModel.getCityList()
-                loge("整个列表的长度为${mAdapter.data.size}","CityManageFragment")
-//                appViewModel.changeCurrentCity(mAdapter.data.size)
             }
         }
-//        mViewModel.cityList.observe(this){
-//            appViewModel.changeCurrentCity(it.size-1)
-//        }
-//        appViewModel.mCurrentCity.observe(this){
-//            requireActivity().getEventViewModel().changeCurrentCity.postValue(true)
-//        }
+        appViewModel.mCurrentCity.observe(this){
+            it.let {
+                requireActivity().getEventViewModel().changeCurrentCity.postValue(true)
+            }
+
+        }
     }
+
 
 }

@@ -50,4 +50,5 @@
     <string name="personal_page">个人主页</string>
     <string name="web_host">https://github.com/Aronchenf/MyKotlin</string>
     <string name="city_manage">城市管理</string>
+    <string name="setting">设置</string>
 </resources>

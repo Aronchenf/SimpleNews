@@ -5,9 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.news.simple_news.application.App
 import com.news.simple_news.application.AppEventViewModel
 import com.news.simple_news.application.AppViewModel
-import com.news.simple_news.ui.MainActivity
+import com.news.simple_news.ui.main.MainActivity
 
 fun launchMainActivity() {
     val intent = Intent(getInstance(), MainActivity::class.java).apply {
@@ -39,6 +40,10 @@ fun AppCompatActivity.getAppViewModel(): AppViewModel =
 fun Fragment.getAppViewModel(): AppViewModel = getInstance().getAppViewModelProvider().get(AppViewModel::class.java)
 
 fun Activity.getEventViewModel(): AppEventViewModel {
+    return getInstance().getAppViewModelProvider().get(AppEventViewModel::class.java)
+}
+
+fun App.getEventViewModel():AppEventViewModel{
     return getInstance().getAppViewModelProvider().get(AppEventViewModel::class.java)
 }
 

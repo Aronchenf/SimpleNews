@@ -29,6 +29,7 @@
 
     <style name="title" parent="Widget.AppCompat.Toolbar">
         <item name="android:textSize">25sp</item>
+        <item name="titleTextColor">@color/black</item>
     </style>
 
     <style name="CityManage" parent="Theme.MaterialComponents.DayNight.NoActionBar" >

@@ -23,13 +23,9 @@ class WeatherViewModel : BaseViewModel() {
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
-    init {
-        getCityList()
-    }
-
      fun getCityList() {
         launch({
-            loge("我获取了整个列表","WeatherViewModel")
+            loge("getCityList","WeatherViewModel")
             _cityList.value = RoomHelper.getCityList()
         })
     }
