@@ -36,7 +36,7 @@
     <string name="center_vertical"> | </string>
     <string name="add_city">添加城市</string>
     <string name="hot_city">热门城市</string>
-    <string name="city_choose">选择城市</string>
+    <string name="city_search">搜索城市</string>
 
     <string name="type_symbol">#</string>
 

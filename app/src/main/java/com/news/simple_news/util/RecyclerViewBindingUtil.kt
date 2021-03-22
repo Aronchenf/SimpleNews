@@ -78,3 +78,8 @@ fun watchRecordList(recyclerView: RecyclerView,list:List<Data>?){
 fun cityList(recyclerView: RecyclerView,list:List<CityManageBean>?){
     (recyclerView.adapter as? CityManageAdapter)?.setList(list)
 }
+
+@BindingAdapter("searchCityList")
+fun searchCityList(recyclerView: RecyclerView,list:List<Place>?){
+    (recyclerView.adapter as? CityChooseAdapter)?.setList(list)
+}

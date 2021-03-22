@@ -16,17 +16,30 @@ class MainViewModel :BaseViewModel(){
         get() = _mChooseCityInsertResult
 
     fun addCityToDatabase(cityName: String) {
-        loge("addCityToDatabase", "CityChooseViewModel")
-        val weatherDeffer =
-            async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
+        loge("addCityToDatabase", "MainViewModel")
         launch({
-            val weather = weatherDeffer.await()
-            val dataBean = weather.data!![0]
-            val bean = CityManageBean(cityName, dataBean.wea_day, dataBean.tem, weather.toJson())
-            _mChooseCityInsertResult.value= RoomHelper.addCity(bean)
-        }, {
-            val bean = CityManageBean(city = cityName)
-            _mChooseCityInsertResult.value= RoomHelper.addCity(bean)
+            val bean=RoomHelper.getLocationCity()
+            if (bean.locationCity==true){
+                val weatherBean=repository.getData(API.weatherType,cityName,API.appId,API.appSecret)
+            }
+
         })
+        if (!cityName.isNullOrEmpty()){
+            val weatherDeffer =
+                    async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
+            launch({
+                val weather = weatherDeffer.await()
+                val dataBean = weather.data!![0]
+                val bean = CityManageBean(cityName, dataBean.wea_day, dataBean.tem, weather.toJson(),true)
+                _mChooseCityInsertResult.value= RoomHelper.addCity(bean)
+            }, {
+                val bean = CityManageBean(city = cityName)
+                _mChooseCityInsertResult.value= RoomHelper.addCity(bean)
+            })
+        }else{
+            val bean=CityManageBean(city="",locationCity = true)
+
+        }
+
     }
 }

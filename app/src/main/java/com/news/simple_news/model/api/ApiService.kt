@@ -19,6 +19,9 @@ interface ApiService {
         @Query("appid") appId: String, @Query("appsecret") appSecret: String
     ): WeatherBean
 
+    @GET("place?token=${API.CAIYUN_TOKEN}&lang=zh_CN")
+    suspend fun getCityList(@Query("query") city:String):SearchCityBean
+
     //视频精选
     @GET("v2/feed?num=1")
     suspend fun getVideoData(): VideoBean

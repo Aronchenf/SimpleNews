@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleNews"
         tools:targetApi="n">
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.weather.CityManagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,8 +46,8 @@
         </activity>
 <!--        <activity android:name=".ui.MainActivity"/>-->
         <activity android:name=".ui.news.NewsDetailActivity"/>
-        <activity android:name=".ui.weather.CityManagerActivity"
-            android:theme="@style/CityManage"/>
+<!--        <activity android:name=".ui.weather.CityManagerActivity"-->
+<!--            android:theme="@style/CityManage"/>-->
         <activity android:name=".ui.video.search.VideoSearchActivity"/>
         <activity android:name=".ui.setting.record.WatchHistoryActivity"/>
         <activity android:name=".ui.setting.about.AboutActivity"/>

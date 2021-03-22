@@ -93,7 +93,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),GeocodeSearch.OnGeocode
             if (location.errorCode==0){
                 reGeoCoder(location.latitude,location.longitude)
             }else{
-                toast("定位失败")
+                toast("定位失败,请检查网络")
             }
         }
     }
@@ -125,7 +125,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),GeocodeSearch.OnGeocode
 
     override fun observe() {
         viewModel.mChooseCityInsertResult.observe(this){
-            it?.let {
+            it.let {
                 getEventViewModel().addChooseCity.postValue(true)
             }
         }
@@ -172,6 +172,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),GeocodeSearch.OnGeocode
         bottomNavigationViewAnimator?.cancel()
         mBinding.bottomView.clearAnimation()
         bottomNavigationViewAnimator=null
+        stopLocation()
         super.onDestroy()
         locationClient.onDestroy()
     }

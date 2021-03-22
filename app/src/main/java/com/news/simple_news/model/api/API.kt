@@ -8,11 +8,16 @@ object API {
     //天气api appSecret
     const val appSecret = "Kb4iRkaY"
 
+    const val CAIYUN_TOKEN="mMitGCZ1h0WCHOec"
+
     //新浪新闻主页
     val NEWS_SINA = "https://interface.sina.cn/"
 
     //天气api
     val WEATHER_HOST = "https://www.tianqiapi.com/"
+
+    //彩云天气api
+    val CAIYUN_HOST="https://api.caiyunapp.com/v2/"
 
     /**
      * 开眼视频首页精选

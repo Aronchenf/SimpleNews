@@ -1,5 +1,6 @@
 package com.news.simple_news.model.repository
 
+import com.news.simple_news.model.api.API.CAIYUN_HOST
 import com.news.simple_news.model.api.API.NEWS_SINA
 import com.news.simple_news.model.api.API.PIC_NATURE_URL
 import com.news.simple_news.model.api.API.PIC_URL
@@ -28,6 +29,13 @@ class Repository {
         appsecret: String
     ): WeatherBean {
         return getRetrofit(WEATHER_HOST).getWeather(version, city, appid, appsecret)
+    }
+
+    /**
+     * 获取城市列表
+     */
+    suspend fun getCityListByQuery(key:String):SearchCityBean{
+        return getRetrofit(CAIYUN_HOST).getCityList(key)
     }
 
     /**

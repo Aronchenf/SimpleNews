@@ -15,5 +15,7 @@ data class CityManageBean(
     @ColumnInfo(name = "tem")
     val tem:String?=null,
     @ColumnInfo(name = "info")
-    val data:String?=null
+    val data:String?=null,
+    @ColumnInfo(name = "location")
+    val locationCity:Boolean?=false
 )
