@@ -101,7 +101,4 @@ object RoomHelper {
     //获取定位城市数据
     suspend fun getLocationCity() = cityDao.getLocationCity()
 
-    //更新定位城市数据
-    suspend fun updateLocation(cityName: String, cityWea: String, cityTem: String, cityJson: String, isLocation: Boolean)
-            = cityDao.updateLocationCity(cityName, cityWea, cityTem, cityJson, isLocation)
 }

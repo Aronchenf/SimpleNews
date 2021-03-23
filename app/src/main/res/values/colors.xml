@@ -28,4 +28,8 @@
     <color name="half_gray">#80696969</color>
     <color name="history_time">#8A000000</color>
     <color name="blue">#369BF4</color>
+
+    <color name="weather_blue">#87CEFF</color>
+    <color name="weather_rain">#204C4C</color>
+    <color name="weather_sand">#855E24</color>
 </resources>

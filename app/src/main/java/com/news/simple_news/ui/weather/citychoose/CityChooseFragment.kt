@@ -6,12 +6,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import com.amap.api.services.core.AMapException
-import com.amap.api.services.core.PoiItem
-import com.amap.api.services.poisearch.PoiResult
-import com.amap.api.services.poisearch.PoiSearch
-import com.cretin.tools.cityselect.callback.OnCitySelectListener
-import com.cretin.tools.cityselect.model.CityModel
 import com.news.simple_news.R
 import com.news.simple_news.adapter.CityChooseAdapter
 import com.news.simple_news.base.BaseFragment

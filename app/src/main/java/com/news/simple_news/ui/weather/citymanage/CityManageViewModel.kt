@@ -2,16 +2,10 @@ package com.news.simple_news.ui.weather.citymanage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.blankj.utilcode.util.ResourceUtils
-import com.cretin.tools.cityselect.CityResponse
-import com.cretin.tools.cityselect.model.CityModel
 import com.news.simple_news.base.BaseViewModel
-import com.news.simple_news.model.api.API
 import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.model.room.RoomHelper
 import com.news.simple_news.util.loge
-import com.news.simple_news.util.toBean
-import com.news.simple_news.util.toJson
 
 class CityManageViewModel : BaseViewModel() {
 
@@ -22,7 +16,14 @@ class CityManageViewModel : BaseViewModel() {
      fun getCityList() {
          loge("getCityList","CityManageViewModel")
         launch({
-            _cityList.value = RoomHelper.getCityList()
+            val list=RoomHelper.getCityList()
+            val noNullCityList= mutableListOf<CityManageBean>()
+            for (bean in list){
+                if (bean.city.isNotEmpty()){
+                    noNullCityList.add(bean)
+                }
+            }
+            _cityList.value = noNullCityList
         })
     }
 

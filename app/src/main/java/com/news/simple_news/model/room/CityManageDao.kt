@@ -12,6 +12,7 @@ interface CityManageDao {
     @Update(entity = CityManageBean::class,onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCityInfo(cityManageBean: CityManageBean)
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select city from city_list where city = (:cityName)")
     suspend fun getCity(cityName: String): CityManageBean
 
@@ -25,7 +26,7 @@ interface CityManageDao {
     suspend fun deleteCity(cityManageBean: CityManageBean)
 
     @Query("select * from city_list where location=:isLocation")
-    suspend fun getLocationCity(isLocation:Boolean?=true):CityManageBean
+    suspend fun getLocationCity(isLocation:Boolean?=true):CityManageBean?
 
     //更新location
     @Query("update city_list set city=:cityName,wea=:cityWea,tem=:cityTem,info=:jsonData where location=:isLocation")

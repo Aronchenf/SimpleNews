@@ -83,7 +83,7 @@ class WeatherChildViewModel : BaseViewModel() {
         }, {
             refreshStatus.set(false)
             val weather = RoomHelper.getCityInfoByName(city)
-            setData(weather)
+            setData(weather!!)
         })
     }
 

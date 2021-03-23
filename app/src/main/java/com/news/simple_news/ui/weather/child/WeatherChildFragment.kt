@@ -1,6 +1,7 @@
 package com.news.simple_news.ui.weather.child
 
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,8 @@ import com.news.simple_news.adapter.WeatherWeekListAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentWeatherChildBinding
 import com.news.simple_news.ui.main.MainActivity
+import com.news.simple_news.util.getColor
+import com.news.simple_news.util.getWeaTextColor
 
 class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
 
@@ -58,6 +61,9 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
 //            reloadStatus.observe(viewLifecycleOwner) {
 //                mBinding.reloadView.root.isVisible=it
 //            }
+            wea.observe(viewLifecycleOwner){
+                mBinding.wea.setTextColor(ContextCompat.getColor(requireContext(), getWeaTextColor(it)))
+            }
             emptyStatus.observe(viewLifecycleOwner) {
 //                mBinding.emptyView.root.isVisible=it
                 mBinding.line.isGone=it

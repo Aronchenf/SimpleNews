@@ -111,6 +111,37 @@ fun getWeatherVideo(wea:String?):String{
         "中雪" -> R.raw.snow
         else -> R.raw.cloud
     }
-
     return "android.resource://${getInstance().packageName}/$resourceId"
+}
+
+fun getWeaTextColor(wea:String):Int{
+    return when(wea){
+        "多云" -> R.color.weather_blue
+        "多云转阴" -> R.color.weather_blue
+        "多云转晴" -> R.color.weather_blue
+        "中雨" -> R.color.weather_rain
+        "中到大雨" ->R.color.weather_rain
+        "雷阵雨" -> R.color.weather_rain
+        "阵雨" -> R.color.weather_rain
+        "阵雨转多云" -> R.color.weather_blue
+        "暴雪" -> R.color.weather_rain
+        "暴雨" -> R.color.weather_rain
+        "大暴雨" -> R.color.weather_rain
+        "大雪" -> R.color.weather_blue
+        "大雨" -> R.color.weather_rain
+        "大雨转中雨" -> R.color.weather_rain
+        "雷阵雨冰雹" -> R.color.weather_rain
+        "晴" -> R.color.weather_blue
+        "沙尘暴" -> R.color.weather_sand
+        "特大暴雨" -> R.color.weather_rain
+        "雾" -> R.color.weather_blue
+        "雾霾" -> R.color.weather_blue
+        "小雪" -> R.color.weather_blue
+        "小雨" -> R.color.weather_rain
+        "阴" -> R.color.weather_blue
+        "雨夹雪" -> R.color.weather_blue
+        "阵雪" -> R.color.weather_blue
+        "中雪" -> R.color.weather_blue
+        else -> R.raw.cloud
+    }
 }

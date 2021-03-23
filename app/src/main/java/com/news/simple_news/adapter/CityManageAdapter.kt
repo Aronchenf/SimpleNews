@@ -12,6 +12,7 @@ import com.news.simple_news.R
 import com.news.simple_news.databinding.ItemCityManageBinding
 import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.util.getWeatherVideo
+import com.news.simple_news.util.visible
 
 class CityManageAdapter :BaseQuickAdapter<CityManageBean,BaseDataBindingHolder<ItemCityManageBinding>>(
     R.layout.item_city_manage),DraggableModule {
@@ -22,6 +23,9 @@ class CityManageAdapter :BaseQuickAdapter<CityManageBean,BaseDataBindingHolder<I
     ) {
         val dataBinding=holder.dataBinding
         dataBinding?.bean=item
+        if (item.locationCity==true){
+            dataBinding?.ivLocation?.visible()
+        }
         dataBinding?.executePendingBindings()
     }
 

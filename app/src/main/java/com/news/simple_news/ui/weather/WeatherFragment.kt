@@ -61,6 +61,9 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     override fun observe() {
         mViewModel.cityList.observe(viewLifecycleOwner) {
+            if (it.isEmpty()){
+                startActivity<CityManagerActivity>()
+            }
             cityList = it
             initViewPager(it)
             setOnPageChangeCallback()
@@ -76,8 +79,9 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             }
         }
         requireActivity().getEventViewModel().deleteCity.observe(this) {
-            mViewModel.getCityList()
-
+            it.let {
+                mViewModel.getCityList()
+            }
         }
     }
 
@@ -89,7 +93,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         val mAdapter = ViewPagerAdapter(requireActivity(), fragments)
         mBinding.viewpager.apply {
             adapter = mAdapter
-            offscreenPageLimit = list.size
+            offscreenPageLimit = 2
         }
         mBinding.indicator.setSliderColor(
                 getColor(R.color.gray),

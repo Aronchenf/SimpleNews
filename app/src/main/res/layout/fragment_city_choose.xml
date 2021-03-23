@@ -33,8 +33,6 @@
             android:id="@+id/citySearchView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_10"
             android:hint="@string/city_search"
             android:background="@drawable/bg_search"
             android:layout_marginStart="@dimen/dp_15"
