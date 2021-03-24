@@ -2,7 +2,8 @@ package com.news.simple_news.ui
 
 import android.Manifest
 import android.os.Bundle
-import android.view.animation.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityWelcomeBinding
@@ -30,7 +31,8 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.ACCESS_WIFI_STATE,
                 Manifest.permission.CHANGE_WIFI_STATE,
-                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             ).onExplainRequestReason { scope, deniedList ->
                 scope.showRequestReasonDialog(
                     deniedList,
@@ -56,6 +58,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
                             launchMainActivity()
                             overridePendingTransition(0, 0)
                         }
+
                         override fun onAnimationStart(p0: Animation?) {}
                     })
                 }else{
