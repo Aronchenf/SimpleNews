@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.news.simple_news.base.BaseViewModel
 import com.news.simple_news.model.api.API
+import com.news.simple_news.model.bean.CityBean
 import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.model.bean.Place
 import com.news.simple_news.model.room.RoomHelper
@@ -12,8 +13,8 @@ import com.news.simple_news.util.toJson
 
 class CityChooseViewModel : BaseViewModel() {
 
-    private val _cityList = MutableLiveData<List<Place>>()
-    val cityList: LiveData<List<Place>>
+    private val _cityList = MutableLiveData<List<CityBean>>()
+    val cityList: LiveData<List<CityBean>>
         get() = _cityList
     private val _mChooseCityInsertResult = MutableLiveData<Long>()
     val mChooseCityInsertResult: LiveData<Long>
@@ -24,29 +25,29 @@ class CityChooseViewModel : BaseViewModel() {
         get() = _hasExist
 
 
-    fun getCityList(query: String) {
-        launch({
-            val bean = repository.getCityListByQuery(query)
-            _cityList.value = bean.places
-        })
-    }
+//    fun getCityList(query: String) {
+//        launch({
+//            val bean = repository.getCityListByQuery(query)
+//            _cityList.value = bean.places
+//        })
+//    }
 
-    fun getCityByName(cityName: String) {
+    fun checkCityHasExist(cityName: String){
         launch({
-            val bean = RoomHelper.getCityInfoByName(cityName)
-            if (bean == null) {
+            if (!RoomHelper.checkCityHasExist(cityName)){
                 _hasExist.value = false
                 addCityToDatabase(cityName)
-            } else {
+            }else{
                 _hasExist.value = true
             }
         })
     }
 
-    fun addCityToDatabase(cityName: String) {
+    private fun addCityToDatabase(cityName: String) {
         loge("addCityToDatabase", "CityChooseViewModel")
+        val city=cityName.substring(0,cityName.length-1)
         val weatherDeffer =
-            async { repository.getData(API.weatherType, cityName, API.appId, API.appSecret) }
+            async { repository.getData(API.weatherType, city, API.appId, API.appSecret) }
         launch({
             val weather = weatherDeffer.await()
             val dataBean = weather.data!![0]

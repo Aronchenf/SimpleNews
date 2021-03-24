@@ -21,6 +21,7 @@ object RoomHelper {
     private val searchDao by lazy { appDatabase.search() }
     private val watchDao by lazy { appDatabase.watch() }
     private val cityDao by lazy { appDatabase.cityManage() }
+    private val cityChooseDao by lazy { appDatabase.cityChoose() }
 
     /*视频搜索记录*/
     suspend fun queryAllSearchHistory(): MutableList<SearchHistoryBean> {
@@ -89,9 +90,10 @@ object RoomHelper {
         return WeatherBean(city = cityName)
     }
 
+
     //删除单个城市数据
     suspend fun deleteCity(city: String) {
-        val bean = cityDao.getCity(city)
+        val bean = cityDao.getInfoByName(city)
         cityDao.deleteCity(bean)
     }
 
@@ -100,5 +102,26 @@ object RoomHelper {
 
     //获取定位城市数据
     suspend fun getLocationCity() = cityDao.getLocationCity()
+
+    //确定城市是否已经存在  null false
+    suspend fun checkCityHasExist(cityName: String):Boolean{
+        val city= cityDao.getCityHasExist(cityName)
+        return !city.isNullOrEmpty()
+    }
+
+    /**
+     * CityChoose
+     */
+
+    //插入城市数据
+    suspend fun insertAllCity(cityBean: CityBean)= cityChooseDao.insertAllCity(cityBean)
+
+    //查询符合条件数据
+    suspend fun getLikeCityList(query:String):List<CityBean>{
+        return cityChooseDao.getCityList(query)
+    }
+
+    //删除所有城市数据
+    suspend fun deleteAllCity()= cityChooseDao.deleteAllCity()
 
 }

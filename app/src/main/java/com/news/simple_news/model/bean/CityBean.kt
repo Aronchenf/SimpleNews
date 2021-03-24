@@ -1,3 +1,14 @@
 package com.news.simple_news.model.bean
 
-data class CityBean(var name:String,var key:String,var pinyin:String,var first:String)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "city_choose")
+data class CityBean(
+    @PrimaryKey
+    @ColumnInfo(name = "district")
+    val district:String,
+    @ColumnInfo(name = "province")
+    val province:String
+)

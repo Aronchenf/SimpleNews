@@ -5,8 +5,14 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import com.baidu.mapapi.CoordType
+import com.news.simple_news.service.LocationService
+import com.baidu.mapapi.SDKInitializer
+import com.news.simple_news.util.getInstance
+
 
 class App : Application(),ViewModelStoreOwner {
+    lateinit var locationService: LocationService
     companion object {
         lateinit var context: Context
         lateinit var instance: App
@@ -20,6 +26,14 @@ class App : Application(),ViewModelStoreOwner {
         instance =this
         context = applicationContext
         mAppViewModelStore = ViewModelStore()
+        initLocation()
+    }
+
+    private fun initLocation(){
+        locationService= LocationService(getInstance())
+        SDKInitializer.initialize(getInstance())
+        SDKInitializer.setCoordType(CoordType.BD09LL)
+
     }
 
     /**

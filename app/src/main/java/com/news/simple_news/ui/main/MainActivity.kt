@@ -9,32 +9,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
-import com.amap.api.location.AMapLocationListener
-import com.amap.api.services.core.AMapException
-import com.amap.api.services.core.LatLonPoint
-import com.amap.api.services.geocoder.GeocodeResult
-import com.amap.api.services.geocoder.GeocodeSearch
-import com.amap.api.services.geocoder.RegeocodeQuery
-import com.amap.api.services.geocoder.RegeocodeResult
+import com.baidu.location.BDAbstractLocationListener
+import com.baidu.location.BDLocation
+import com.baidu.location.Poi
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.android.material.animation.AnimationUtils
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityMainBinding
-import com.news.simple_news.model.bean.Place
+import com.news.simple_news.service.LocationService
 import com.news.simple_news.util.*
 
-class MainActivity : BaseActivity<ActivityMainBinding>(), GeocodeSearch.OnGeocodeSearchListener{
+class MainActivity : BaseActivity<ActivityMainBinding>(){
 
     private lateinit var fragments: Map<Int, Fragment>
 
-    private val locationClient by lazy { ALocationFactory.createLocationClient(
-        getInstance(),
-        ALocationFactory.createOnceOption(),
-        locationListener
-    ) }
-
-    private val geocodeSearch by lazy { GeocodeSearch(getInstance()) }
+    private lateinit var locationService: LocationService
     private val viewModel by lazy { ViewModelProvider(this)[MainViewModel::class.java] }
 
     private val navGraphIds by lazy {
@@ -55,9 +45,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), GeocodeSearch.OnGeocod
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-
-        geocodeSearch.setOnGeocodeSearchListener(this)
-        initLocation()
         initBottomView()
         mBinding.bottomView.setupWithNavController(
             navGraphIds, supportFragmentManager,
@@ -68,46 +55,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), GeocodeSearch.OnGeocod
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_main_fragment).navigateUp()
-    }
-
-    private fun initLocation() {
-        stopLocation()
-        startLocation()
-    }
-
-    private val locationListener = AMapLocationListener { location ->
-        if (location != null) {
-            if (location.errorCode == 0) {
-                reGeoCoder(location.latitude, location.longitude)
-            } else {
-                toast("定位失败,请检查网络")
-            }
-        }
-    }
-    private fun reGeoCoder(lat: Double, lng: Double) {
-        val query = RegeocodeQuery(LatLonPoint(lat, lng), 200f, GeocodeSearch.AMAP)
-        geocodeSearch.getFromLocationAsyn(query)
-    }
-
-    private fun startLocation() {
-        locationClient.startLocation()
-    }
-
-    private fun stopLocation() {
-        locationClient.stopLocation()
-    }
-
-    override fun onRegeocodeSearched(result: RegeocodeResult?, code: Int) {
-        if (code == AMapException.CODE_AMAP_SUCCESS) {
-            if (result?.regeocodeAddress != null && result.regeocodeAddress.formatAddress != null) {
-                val place=result.regeocodeAddress.district.substring(0,result.regeocodeAddress.district.length-1)
-                loge(place,"LocationAddress")
-                toast(place)
-                viewModel.addCityToDatabase(place)
-            }
-        }
-    }
-    override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
     }
 
 
@@ -158,14 +105,43 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), GeocodeSearch.OnGeocod
         bottomNavigationViewAnimator?.cancel()
         mBinding.bottomView.clearAnimation()
         bottomNavigationViewAnimator = null
-        stopLocation()
         super.onDestroy()
-        locationClient.onDestroy()
+
     }
 
     override fun onStart() {
         super.onStart()
         ActivityUtils.finishOtherActivities(javaClass)
+        initLocation()
+    }
+
+    override fun onStop() {
+        locationService.unregisterListener(mListener)
+        locationService.stop()
+        super.onStop()
+    }
+
+    private fun initLocation(){
+        locationService=getInstance().locationService
+        locationService.registerListener(mListener)
+        locationService.setLocationOption(locationService.getDefaultLocationClientOption())
+        locationService.start()
+    }
+    private val mListener =object :BDAbstractLocationListener(){
+        override fun onReceiveLocation(location: BDLocation?) {
+            if (null != location && location.locType != BDLocation.TypeServerError) {
+                if (!location.district.isNullOrEmpty()){
+                    locationService.stop()
+                    loge(location.district,"区")
+                    return
+                }
+                if (!location.city.isNullOrEmpty()){
+                    locationService.stop()
+                    loge(location.city,"市")
+                    return
+                }
+            }
+        }
     }
 
     private var mExitTime: Long = 0

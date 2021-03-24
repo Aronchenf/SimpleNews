@@ -12,9 +12,8 @@ interface CityManageDao {
     @Update(entity = CityManageBean::class,onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCityInfo(cityManageBean: CityManageBean)
 
-    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select city from city_list where city = (:cityName)")
-    suspend fun getCity(cityName: String): CityManageBean
+    suspend fun getCityHasExist(cityName: String): String?
 
     @Query("select * from city_list where city=(:cityName)")
     suspend fun getInfoByName(cityName: String):CityManageBean

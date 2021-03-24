@@ -6,7 +6,6 @@ import com.news.simple_news.base.BaseViewModel
 import com.news.simple_news.model.api.API
 import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.model.room.RoomHelper
-import com.news.simple_news.util.GeoCoderSearchUtil
 import com.news.simple_news.util.loge
 import com.news.simple_news.util.toJson
 
@@ -16,9 +15,9 @@ class MainViewModel : BaseViewModel() {
     val mChooseCityInsertResult: LiveData<Long>
         get() = _mChooseCityInsertResult
 
-    init {
-        createLocationCity()
-    }
+//    init {
+//        createLocationCity()
+//    }
 
     //打开应用先创建一个LocationCity
     private fun createLocationCity() {

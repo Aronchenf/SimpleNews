@@ -2,6 +2,8 @@ package com.news.simple_news.ui.weather.citychoose
 
 import android.media.MediaRouter2
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -34,16 +36,34 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>(){
 
         mBinding.citySearchView.doAfterTextChanged {
             val key=it.toString().trim()
-            if (key.isNotEmpty()){
-               viewModel.getCityByName(key)
-            }
+//            if (key.isNotEmpty()){
+//                viewModel.getCityList(key)
+//            }
         }
 
-        mAdapter.setOnItemClickListener { _, _, position ->
-            val place=mAdapter.getItem(position)
-            viewModel.addCityToDatabase(place.name)
-        }
+//        mAdapter.setOnItemClickListener { _, _, position ->
+//            val address=mAdapter.getItem(position)
+//            val place=getCityNameByAddress(address.formatted_address)
+//            toast(place)
+//            viewModel.checkCityHasExist(place)
+//        }
     }
+
+    //从地址中取到区域名称
+    private fun getCityNameByAddress(address:String):String{
+        val requireString=mBinding.citySearchView.text.toString()
+        val arrays=address.split(" ")
+        for (string in arrays){
+            if (string.contains(requireString)){
+                return string
+            }
+        }
+        return  ""
+    }
+
+//    private fun isPlace(placeName:String):Boolean{
+//        if (placeName.contains("市")||placeName.contains("县")||placeName.contains("区"))
+//    }
 
 
     override fun observe() {

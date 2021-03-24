@@ -38,7 +38,7 @@
                 android:layout_marginStart="@dimen/dp_40"
                 app:layout_constraintBottom_toBottomOf="@id/tv_weather"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline"
+                android:layout_marginEnd="@dimen/dp_15"
                 app:layout_constraintTop_toTopOf="@id/tv_weather"
                 app:weatherImg="@{bean.wea}" />
 
@@ -48,13 +48,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
                 android:text="@{bean.wea}"
-                android:textSize="18sp"
                 android:textColor="@color/white"
+                android:textSize="18sp"
                 app:isGone="@{bean.wea}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/iv_weather"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="多云" />
+                android:layout_marginEnd="@dimen/dp_15"
+                tools:text="沙尘暴" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_tem"
@@ -75,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.4" />
+                app:layout_constraintGuide_percent="0.6" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline1"
