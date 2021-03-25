@@ -4,11 +4,17 @@ import android.graphics.Color
 import android.graphics.PixelFormat
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.R
 import com.news.simple_news.adapter.ViewPagerAdapter
@@ -16,8 +22,10 @@ import com.news.simple_news.databinding.FragmentWeatherBinding
 import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.ui.weather.child.WeatherChildFragment
 import com.news.simple_news.util.*
+import com.news.simple_news.work_manage.WeatherWorkManager
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
+import java.util.concurrent.TimeUnit
 
 class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
@@ -29,6 +37,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         super.onCreate(savedInstanceState)
         requireActivity().window.setFormat(PixelFormat.TRANSLUCENT)
     }
+
     private val mViewModel by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
 
     private lateinit var cityList: List<CityManageBean>
@@ -40,6 +49,24 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             startActivity<CityManagerActivity>()
             true
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onStart() {
+        super.onStart()
+        setWorkManager()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun setWorkManager() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresDeviceIdle(true)
+            .build()
+        val updateWeatherWorkRequest =
+            PeriodicWorkRequestBuilder<WeatherWorkManager>(7, TimeUnit.DAYS)
+                .setConstraints(constraints).build()
+        WorkManager.getInstance(getInstance()).enqueue(updateWeatherWorkRequest)
     }
 
 
@@ -60,7 +87,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     override fun observe() {
         mViewModel.cityList.observe(viewLifecycleOwner) {
-            if (it.isEmpty()){
+            if (it.isEmpty()) {
                 startActivity<CityManagerActivity>()
             }
             cityList = it
@@ -95,14 +122,14 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             offscreenPageLimit = 2
         }
         mBinding.indicator.setSliderColor(
-                getColor(R.color.gray),
-                getColor(R.color.dim_gray)
+            getColor(R.color.gray),
+            getColor(R.color.dim_gray)
         )
-                .setSliderWidth(resources.getDimension(R.dimen.dp_8))
-                .setSliderHeight(resources.getDimension(R.dimen.dp_8))
-                .setSlideMode(IndicatorSlideMode.WORM)
-                .setIndicatorStyle(IndicatorStyle.CIRCLE)
-                .setupWithViewPager(mBinding.viewpager)
+            .setSliderWidth(resources.getDimension(R.dimen.dp_8))
+            .setSliderHeight(resources.getDimension(R.dimen.dp_8))
+            .setSlideMode(IndicatorSlideMode.WORM)
+            .setIndicatorStyle(IndicatorStyle.CIRCLE)
+            .setupWithViewPager(mBinding.viewpager)
     }
 
     private fun setOnPageChangeCallback() {

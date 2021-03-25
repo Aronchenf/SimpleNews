@@ -7,6 +7,7 @@ import com.news.simple_news.util.loge
 import com.news.simple_news.util.toast
 import com.google.gson.JsonParseException
 import com.news.simple_news.R
+import com.news.simple_news.model.repository.AppRepository
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -25,6 +26,7 @@ typealias Error = suspend (e:Exception)->Unit
 open class BaseViewModel :ViewModel(){
 
     protected val repository by lazy { Repository() }
+    protected val mAppRepository by lazy { AppRepository() }
 
     /**
      * 创建并执行协程 同步

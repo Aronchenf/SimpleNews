@@ -60,10 +60,10 @@ class CityChooseViewModel : BaseViewModel() {
         launch({
             val weather = weatherDeffer.await()
             val dataBean = weather.data!![0]
-            val bean = CityManageBean(2,cityName, dataBean.wea_day, dataBean.tem, weather.toJson(),locationCity = false)
+            val bean = CityManageBean(0,cityName, dataBean.wea_day, dataBean.tem, weather.toJson(),locationCity = false)
             _mChooseCityInsertResult.value = RoomHelper.addCity(bean)
         }, {
-            val bean = CityManageBean(city = cityName,id = 2,locationCity = false)
+            val bean = CityManageBean(city = cityName,id = 0,locationCity = false)
             _mChooseCityInsertResult.value = RoomHelper.addCity(bean)
         })
     }

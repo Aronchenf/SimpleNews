@@ -143,7 +143,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(){
     private fun initLocation(){
         locationService=getInstance().locationService
         locationService.registerListener(mListener)
-        locationService.setLocationOption(locationService.getDefaultLocationClientOption())
+        locationService.setLocationOption(locationService.getOnceLocationClientOption())
         locationService.start()
     }
     private val mListener =object :BDAbstractLocationListener(){

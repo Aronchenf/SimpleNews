@@ -10,10 +10,7 @@ import com.news.simple_news.R
 import com.news.simple_news.adapter.CityChooseAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityChooseBinding
-import com.news.simple_news.util.getEventViewModel
-import com.news.simple_news.util.gone
-import com.news.simple_news.util.toast
-import com.news.simple_news.util.visible
+import com.news.simple_news.util.*
 
 
 class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
@@ -45,6 +42,7 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
             val address = mAdapter.getItem(position)
             val district = address.district
             viewModel.checkCityHasExist(district)
+            mBinding.citySearchView.hideSoftInput()
         }
     }
 

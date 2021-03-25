@@ -10,12 +10,12 @@ import com.chad.library.adapter.base.loadmore.LoadMoreStatus
 import com.news.simple_news.adapter.NewsAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.R
-import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.databinding.FragmentNewsChildBinding
+import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.ui.main.MainActivity
 
 @Suppress("LABEL_NAME_CLASH")
-class NewsChildFragment : BaseFragment<FragmentNewsChildBinding>(),ScrollToTop {
+class NewsChildFragment : BaseFragment<FragmentNewsChildBinding>(), ScrollToTop {
 
     companion object {
         const val TYPE="type"

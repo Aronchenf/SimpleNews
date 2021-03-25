@@ -27,7 +27,7 @@ class MainViewModel : BaseViewModel() {
         launch({
             val bean = RoomHelper.getLocationCity()
             if (bean == null) {
-                RoomHelper.addCity(CityManageBean(id = 1, locationCity = true,city = ""))
+                RoomHelper.addCity(CityManageBean(id = 0, locationCity = true,city = ""))
             }
         })
     }
@@ -38,7 +38,7 @@ class MainViewModel : BaseViewModel() {
         launch({
             _mChooseCityInsertResult.value=RoomHelper.updateCityInfo(
                 CityManageBean(
-                   id = 1,city = cityName,locationCity = true
+                   id = 0,city = cityName,locationCity = true
                 )
             )
 //            val weatherBean =

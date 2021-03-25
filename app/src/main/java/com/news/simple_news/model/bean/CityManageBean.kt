@@ -1,15 +1,14 @@
 package com.news.simple_news.model.bean
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//已选择城市
 @Entity(tableName = "city_list")
 data class CityManageBean(
-    @NonNull
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
+    var id:Int,
     @ColumnInfo(name = "city")
     val city:String,
     @ColumnInfo(name = "wea")
