@@ -2,13 +2,10 @@ package com.news.simple_news.model.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.news.simple_news.model.bean.CityBean
-import com.news.simple_news.model.bean.CityManageBean
-import com.news.simple_news.model.bean.SearchHistoryBean
-import com.news.simple_news.model.bean.WatchRecordBean
+import com.news.simple_news.model.bean.*
 
 @Database(
-    entities = [SearchHistoryBean::class, WatchRecordBean::class, CityManageBean::class, CityBean::class],
+    entities = [SearchHistoryBean::class, WatchRecordBean::class, CityManageBean::class, ChinesePlaceBean::class],
     version = 1,
     exportSchema = false
 )

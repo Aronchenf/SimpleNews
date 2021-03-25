@@ -10,7 +10,7 @@ interface CityManageDao {
     suspend fun insertCityManage(cityManageBean: CityManageBean):Long
 
     @Update(entity = CityManageBean::class,onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateCityInfo(cityManageBean: CityManageBean)
+    suspend fun updateCityInfo(cityManageBean: CityManageBean):Int
 
     @Query("select city from city_list where city = (:cityName)")
     suspend fun getCityHasExist(cityName: String): String?

@@ -62,7 +62,7 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
 //                mBinding.reloadView.root.isVisible=it
 //            }
             wea.observe(viewLifecycleOwner){
-                mBinding.wea.setTextColor(ContextCompat.getColor(requireContext(), getWeaTextColor(it)))
+                mBinding.currentTem.setTextColor(ContextCompat.getColor(requireContext(), getWeaTextColor(it)))
             }
             emptyStatus.observe(viewLifecycleOwner) {
 //                mBinding.emptyView.root.isVisible=it

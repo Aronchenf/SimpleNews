@@ -1,11 +1,14 @@
 package com.news.simple_news.model.bean
 
-data class ChinesePlaceBean(
-    val name: String, // 吉林
-    val city: List<City>
-)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class City(
-    val name: String, // 长春
-    val area: List<String>
+@Entity(tableName = "city_choose")
+data class ChinesePlaceBean(
+    @PrimaryKey
+    @ColumnInfo(name = "district")
+    val district:String,
+    @ColumnInfo(name = "province")
+    val province:String
 )

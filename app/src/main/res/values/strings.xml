@@ -38,6 +38,7 @@
     <string name="hot_city">热门城市</string>
     <string name="city_search">搜索城市</string>
     <string name="city_hint">输入 市/县/区</string>
+    <string name="comma">,</string>
 
     <string name="type_symbol">#</string>
 

@@ -76,7 +76,7 @@ object RoomHelper {
     suspend fun addCity(bean: CityManageBean): Long? = cityDao.insertCityManage(bean)
 
     //更新城市数据
-    suspend fun updateCityInfo(bean: CityManageBean) = cityDao.updateCityInfo(bean)
+    suspend fun updateCityInfo(bean: CityManageBean):Int = cityDao.updateCityInfo(bean)
 
     //根据城市名获取城市数据
     suspend fun getCityInfoByName(cityName: String): WeatherBean?{
@@ -90,6 +90,15 @@ object RoomHelper {
         return WeatherBean(city = cityName)
     }
 
+    //根据城市名获取id从而更新城市数据
+    suspend fun getCityIdByCityName(cityName: String):Int{
+        return cityDao.getInfoByName(cityName).id
+    }
+
+    //根据城市名获取是否定位城市从而更新城市数据
+    suspend fun getIsLocationCityByCityName(cityName: String):Boolean{
+        return cityDao.getInfoByName(cityName).locationCity
+    }
 
     //删除单个城市数据
     suspend fun deleteCity(city: String) {
@@ -114,10 +123,15 @@ object RoomHelper {
      */
 
     //插入城市数据
-    suspend fun insertAllCity(cityBean: CityBean)= cityChooseDao.insertAllCity(cityBean)
+    suspend fun insertAllCity(list: List<ChinesePlaceBean>)= cityChooseDao.insertAllCity(list)
 
+    //检查是否已经插入所有城市数据  null true
+    suspend fun checkCityHasInserted(cityName: String):Boolean{
+        val bean= cityChooseDao.checkHasInsertList(cityName)
+        return bean==null
+    }
     //查询符合条件数据
-    suspend fun getLikeCityList(query:String):List<CityBean>{
+    suspend fun getLikeCityList(query:String):List<ChinesePlaceBean>{
         return cityChooseDao.getCityList(query)
     }
 

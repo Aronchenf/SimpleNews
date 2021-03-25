@@ -4,14 +4,19 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.loadmore.LoadMoreStatus
 import com.news.simple_news.adapter.NewsAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.R
+import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.databinding.FragmentNewsChildBinding
+import com.news.simple_news.ui.main.MainActivity
 
 @Suppress("LABEL_NAME_CLASH")
-class NewsChildFragment : BaseFragment<FragmentNewsChildBinding>() {
+class NewsChildFragment : BaseFragment<FragmentNewsChildBinding>(),ScrollToTop {
+
     companion object {
         const val TYPE="type"
         fun newInstance(type:String) : NewsChildFragment {
@@ -31,14 +36,19 @@ class NewsChildFragment : BaseFragment<FragmentNewsChildBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
         mBinding.viewModel = mViewModel
         mBinding.adapter = mAdapter
-
+        val layoutManager=mBinding.rvNews.layoutManager as LinearLayoutManager
+        mBinding.rvNews.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val firstItem=layoutManager.findFirstVisibleItemPosition()
+                (requireActivity() as MainActivity).animateBottomNavigationView(firstItem<8||dy<0)
+            }
+        })
     }
 
     override fun lazyLoadData() {
-        super.lazyLoadData()
         val type=arguments?.getString(TYPE)
         mViewModel.getNewsList(type)
         mBinding.run {
@@ -65,6 +75,10 @@ class NewsChildFragment : BaseFragment<FragmentNewsChildBinding>() {
         mViewModel.emptyStatus.observe(viewLifecycleOwner) {
             mBinding.emptyView.root.isVisible=it
         }
+    }
+
+    override fun scrollToTop() {
+        mBinding.rvNews.smoothScrollToPosition(0)
     }
 
 }

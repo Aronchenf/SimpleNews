@@ -23,7 +23,6 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mViewModel.getCityList()
         mBinding.toolbar.run {
             setNavigationIcon(R.drawable.arrow_left_black)
             setNavigationOnClickListener {

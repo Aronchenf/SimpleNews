@@ -145,3 +145,13 @@ fun getWeaTextColor(wea:String):Int{
         else -> R.raw.cloud
     }
 }
+
+//处理城市名，保证能获取到天气
+fun returnCityName(cityName: String): String {
+    if (cityName.length > 5) {
+        return cityName.substring(0, 2)
+    }else if (cityName.length<3){
+        return cityName
+    }
+    return cityName.substring(0,cityName.length-1)
+}

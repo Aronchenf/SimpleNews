@@ -40,7 +40,6 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             startActivity<CityManagerActivity>()
             true
         }
-        mViewModel.getCityList()
     }
 
 

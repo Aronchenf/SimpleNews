@@ -13,11 +13,13 @@ import com.news.simple_news.adapter.video.VideoAdapter
 import com.news.simple_news.ui.video.search.VideoSearchActivity
 import com.news.simple_news.util.startActivity
 import com.news.simple_news.R
+import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.databinding.FragmentVideoBinding
+import com.news.simple_news.ui.main.MainActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class VideoFragment : BaseFragment<FragmentVideoBinding>() {
+class VideoFragment : BaseFragment<FragmentVideoBinding>(),ScrollToTop {
 
     companion object {
         fun newInstance() = VideoFragment()
@@ -85,9 +87,9 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
         mBinding.rvVideo.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             val layoutManager = mBinding.rvVideo.layoutManager as LinearLayoutManager
             val currentVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-//            (requireActivity() as MainActivity).animateBottomNavigationView(
-//                currentVisibleItemPosition <= 3 || oldScrollY > scrollY
-//            )
+            (requireActivity() as MainActivity).animateBottomNavigationView(
+                currentVisibleItemPosition <= 3 || oldScrollY > scrollY
+            )
         }
 
         mBinding.ivSearch.setOnClickListener { startActivity<VideoSearchActivity>() }
@@ -103,6 +105,10 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>() {
                 mBinding.reloadView.root.isVisible = it
             }
         }
+    }
+
+    override fun scrollToTop() {
+        mBinding.rvVideo.smoothScrollToPosition(0)
     }
 
 

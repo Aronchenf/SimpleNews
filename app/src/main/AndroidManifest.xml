@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.news.simple_news">
-    <!-- 允许获取Wi-Fi网络状态改变信息 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- SD 卡读写权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--用于进行网络定位-->
@@ -25,8 +23,6 @@
     <!--用于申请获取蓝牙信息进行室内定位-->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 
     <application
@@ -38,8 +34,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SimpleNews"
-        tools:targetApi="n">
-        <activity android:name=".ui.weather.CityManagerActivity">
+        tools:targetApi="n"
+        tools:ignore="AllowBackup">
+        <activity android:name=".ui.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,9 +45,9 @@
         </activity>
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.news.NewsDetailActivity" />
-<!--        <activity-->
-<!--            android:name=".ui.weather.CityManagerActivity"-->
-<!--            android:theme="@style/CityManage" />-->
+        <activity
+            android:name=".ui.weather.CityManagerActivity"
+            android:theme="@style/CityManage" />
         <activity android:name=".ui.video.search.VideoSearchActivity" />
         <activity android:name=".ui.setting.record.WatchHistoryActivity" />
         <activity android:name=".ui.setting.about.AboutActivity" />

@@ -8,16 +8,19 @@ import android.view.ViewPropertyAnimator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.findNavController
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
-import com.baidu.location.Poi
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.android.material.animation.AnimationUtils
 import com.news.simple_news.R
+import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityMainBinding
 import com.news.simple_news.service.LocationService
+import com.news.simple_news.ui.news.NewsFragment
+import com.news.simple_news.ui.setting.SettingFragment
+import com.news.simple_news.ui.video.VideoFragment
+import com.news.simple_news.ui.weather.WeatherFragment
 import com.news.simple_news.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>(){
@@ -27,14 +30,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(){
     private lateinit var locationService: LocationService
     private val viewModel by lazy { ViewModelProvider(this)[MainViewModel::class.java] }
 
-    private val navGraphIds by lazy {
-        listOf(
-            R.navigation.news,
-            R.navigation.weather,
-            R.navigation.video,
-            R.navigation.mine
-        )
-    }
     private var bottomNavigationViewAnimator: ViewPropertyAnimator? = null
     private var currentBottomNavigationState = true
 
@@ -45,35 +40,59 @@ class MainActivity : BaseActivity<ActivityMainBinding>(){
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        initBottomView()
-        mBinding.bottomView.setupWithNavController(
-            navGraphIds, supportFragmentManager,
-            R.id.nav_main_fragment
+        initFragment()
+        initNavigationBar()
+        if (savedInstanceState==null){
+            setDefaultFragment()
+        }
+    }
+
+    private fun setDefaultFragment(){
+        val initialItemId=R.id.news
+        mBinding.bottomView.selectedItemId=initialItemId
+        showFragment(initialItemId)
+    }
+    private fun initFragment(){
+        fragments= mapOf(
+            R.id.news to NewsFragment.newInstance(),
+            R.id.weather to WeatherFragment.newInstance(),
+            R.id.video to VideoFragment.newInstance(),
+            R.id.mine to SettingFragment.newInstance()
         )
     }
 
-
-    override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.nav_main_fragment).navigateUp()
+    private fun showFragment(menuItemId:Int){
+        val currentFragment = supportFragmentManager.fragments.find {
+            it.isVisible && it in fragments.values
+        }
+        val targetFragment = fragments.entries.find { it.key == menuItemId }?.value
+        supportFragmentManager.beginTransaction().apply {
+            currentFragment?.let { if (it.isVisible) hide(it) }
+            targetFragment?.let {
+                if (it.isAdded) show(it) else add(R.id.container, it)
+            }
+        }.commit()
     }
 
+    private fun initNavigationBar(){
+        mBinding.bottomView.run {
+            setOnNavigationItemSelectedListener { menuItem ->
+                showFragment(menuItem.itemId)
+                true
+            }
+            setOnNavigationItemReselectedListener { menuItem ->
+                val fragment = fragments.entries.find { it.key == menuItem.itemId }?.value
+                if (fragment is ScrollToTop) {
+                    fragment.scrollToTop()
+                }
+            }
+        }
+    }
 
     override fun observe() {
         viewModel.mChooseCityInsertResult.observe(this) {
             it.let {
                 getEventViewModel().addCity.postValue(true)
-            }
-        }
-    }
-
-    //初始化BottomView
-    private fun initBottomView() {
-        mBinding.bottomView.run {
-            setOnNavigationItemReselectedListener { item ->
-                val fragment = fragments.entries.find { it.key == item.itemId }?.value
-                if (fragment is ScrollToTop) {
-                    fragment.scrollToTop()
-                }
             }
         }
     }
@@ -133,11 +152,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(){
                 if (!location.district.isNullOrEmpty()){
                     locationService.stop()
                     loge(location.district,"区")
+                    viewModel.addCityToDatabase(location.district)
                     return
                 }
                 if (!location.city.isNullOrEmpty()){
                     locationService.stop()
                     loge(location.city,"市")
+                    viewModel.addCityToDatabase(location.city)
                     return
                 }
             }

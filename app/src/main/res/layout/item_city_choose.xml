@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="bean"
-            type="com.news.simple_news.model.bean.CityBean" />
+            type="com.news.simple_news.model.bean.ChinesePlaceBean" />
     </data>
 
     <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
         android:foreground="?android:attr/selectableItemBackground"
         android:theme="@style/Theme.MaterialComponents.DayNight"
         app:cardBackgroundColor="@color/white"
-        android:layout_marginTop="@dimen/dp_5"
         app:cardCornerRadius="@dimen/dp_10"
-        app:cardElevation="@dimen/dp_5">
+        app:cardElevation="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,15 +26,26 @@
             android:padding="@dimen/dp_10">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cityName"
+                android:id="@+id/tv_district"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{bean.district}"
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:textSize="@dimen/sp_20"
-                android:text="@{bean.district}"
-                tools:text="厦门"/>
+                tools:text="孟连带租库拉族佤族自治县" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/comma+bean.province}"
+                android:textSize="@dimen/sp_15"
+                app:layout_constraintBottom_toBottomOf="@id/tv_district"
+                app:layout_constraintStart_toEndOf="@id/tv_district"
+                app:layout_constraintTop_toTopOf="@id/tv_district"
+                tools:text=",厦门市" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

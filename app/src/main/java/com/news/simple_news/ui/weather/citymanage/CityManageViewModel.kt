@@ -13,6 +13,9 @@ class CityManageViewModel : BaseViewModel() {
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
+    init {
+        getCityList()
+    }
      fun getCityList() {
          loge("getCityList","CityManageViewModel")
         launch({

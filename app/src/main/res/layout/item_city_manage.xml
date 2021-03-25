@@ -17,113 +17,122 @@
         android:layout_margin="@dimen/dp_10"
         android:foreground="?android:attr/selectableItemBackground"
         android:theme="@style/Theme.MaterialComponents.DayNight"
-        app:cardElevation="@dimen/dp_10"
-        app:cardCornerRadius="@dimen/dp_10">
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_item_city_manage">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_item_city_manage">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_weather"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_40"
-                android:src="@drawable/empty_wea"
-                android:layout_marginStart="@dimen/dp_40"
-                app:layout_constraintBottom_toBottomOf="@id/tv_weather"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/dp_15"
-                app:layout_constraintTop_toTopOf="@id/tv_weather"
-                app:weatherImg="@{bean.wea}" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_weather"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="@dimen/dp_40"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:src="@drawable/empty_wea"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:weatherImg="@{bean.wea}"
+                    tools:src="@drawable/weather_sun"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_weather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:text="@{bean.wea}"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:isGone="@{bean.wea}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/iv_weather"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="@dimen/dp_15"
-                tools:text="沙尘暴" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{bean.wea}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_15"
+                    app:isGone="@{bean.wea}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_tem"
+                    app:layout_constraintStart_toEndOf="@id/guideline2"
+                    app:layout_constraintTop_toTopOf="@id/tv_tem"
+                    tools:text="沙尘暴" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_tem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{bean.tem}"
-                android:textSize="25sp"
-                app:isGone="@{bean.wea}"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@id/tv_city"
-                app:layout_constraintStart_toStartOf="@id/tv_city"
-                app:layout_constraintTop_toBottomOf="@id/guideline1"
-                tools:ignore="RtlSymmetry"
-                tools:text="15°" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_tem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{bean.tem}"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:isGone="@{bean.wea}"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline1"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry"
+                    tools:text="15°" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.6" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.8" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.45" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_city"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{bean.city}"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:maxWidth="@dimen/dp_100"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/guideline1"
-                android:layout_marginBottom="@dimen/dp_5"
-                tools:text="翔安机场(地铁站)" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.4" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_location"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/location"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_city"
-                app:layout_constraintTop_toTopOf="@id/tv_city"
-                app:layout_constraintBottom_toBottomOf="@id/tv_city"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:singleLine="true"
+                    android:maxWidth="120dp"
+                    android:text="@{bean.city}"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/guideline1"
+                    tools:text="孟连傣族拉枯族佤族自治县" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/location"
+                    android:visibility="gone"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_city"
+                    app:layout_constraintEnd_toStartOf="@id/tv_city"
+                    app:layout_constraintTop_toTopOf="@id/tv_city" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <LinearLayout
                 android:id="@+id/linear_clear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/dim_gray"
-                android:visibility="gone"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="gone">
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_clear"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
-                    android:src="@drawable/ic_clear"/>
+                    android:src="@drawable/ic_clear" />
             </LinearLayout>
         </FrameLayout>
     </com.google.android.material.card.MaterialCardView>

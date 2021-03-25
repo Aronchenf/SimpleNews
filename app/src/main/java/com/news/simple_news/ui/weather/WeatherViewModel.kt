@@ -23,13 +23,16 @@ class WeatherViewModel : BaseViewModel() {
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
+    init {
+        getCityList()
+    }
      fun getCityList() {
         launch({
             loge("getCityList","WeatherViewModel")
             val list=RoomHelper.getCityList()
             val noNullList= mutableListOf<CityManageBean>()
             for (bean in list){
-                if (bean.city.isNotEmpty()){
+                if (!bean.city.isNullOrEmpty()){
                    noNullList.add(bean)
                 }
             }

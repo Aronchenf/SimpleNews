@@ -35,6 +35,9 @@
     <style name="CityManage" parent="Theme.MaterialComponents.DayNight.NoActionBar" >
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowEnableSplitTouch">true</item>
+        <item name="android:splitMotionEvents">false</item>
     </style>
 
 </resources>

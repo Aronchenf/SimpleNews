@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chad.library.adapter.base.loadmore.LoadMoreStatus
 import com.news.simple_news.base.BaseViewModel
 import com.news.simple_news.model.bean.NewsData
+import com.news.simple_news.util.loge
 
 class NewsChildViewModel : BaseViewModel() {
 
@@ -26,6 +27,7 @@ class NewsChildViewModel : BaseViewModel() {
     private var type=TYPE_ENT
 
     fun getNewsList(type:String?) {
+        loge("getNewsList$type", "NewsChildViewModel")
         isRefresh.set(true)
         this.type=type!!
         launch({

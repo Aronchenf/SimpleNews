@@ -1,6 +1,6 @@
 package com.news.simple_news.model.api
 
-import com.news.simple_news.util.formatJson
+import com.blankj.utilcode.util.JsonUtils.formatJson
 import com.news.simple_news.util.logd
 import com.news.simple_news.util.loge
 import okhttp3.OkHttpClient
@@ -27,7 +27,6 @@ private val interceptor = Interceptor { chain ->
     loge("----------------------Request End:$duration 毫秒----------------------")
 
     response.newBuilder()
-        .addHeader("Accept-Encoding","")
         .body(ResponseBody.create(mediaType, content!!))
         .build()
 }

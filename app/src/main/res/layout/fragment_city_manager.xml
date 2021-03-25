@@ -34,6 +34,7 @@
             app:adapter="@{adapter}"
             app:cityList="@{viewModel.cityList}"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="2"/>
+            app:spanCount="2"
+            tools:listitem="@layout/item_city_manage"/>
     </LinearLayout>
 </layout>

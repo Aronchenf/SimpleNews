@@ -80,6 +80,6 @@ fun cityList(recyclerView: RecyclerView,list:List<CityManageBean>?){
 }
 
 @BindingAdapter("searchCityList")
-fun searchCityList(recyclerView: RecyclerView,list:List<CityBean>?){
+fun searchCityList(recyclerView: RecyclerView,list:List<ChinesePlaceBean>?){
     (recyclerView.adapter as? CityChooseAdapter)?.setList(list)
 }

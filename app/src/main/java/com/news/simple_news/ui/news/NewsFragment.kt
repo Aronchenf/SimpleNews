@@ -9,11 +9,10 @@ import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.ui.news.child.NewsChildFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.news.simple_news.R
+import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.databinding.FragmentNewsBinding
-import com.news.simple_news.util.toast
 
-
-class NewsFragment : BaseFragment<FragmentNewsBinding>(){
+class NewsFragment : BaseFragment<FragmentNewsBinding>(), ScrollToTop {
     companion object {
         const val TYPE_ENT = "ent"
         const val TYPE_FASHION = "fashion"
@@ -24,22 +23,23 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(){
         }
     }
 
+    private lateinit var fragments:List<Fragment>
+
     override fun initLayout(): Int = R.layout.fragment_news
 
     override fun initView(savedInstanceState: Bundle?) {
-        val titles = listOf("娱乐", "时尚", "体育", "科技")
-        val fragments = listOf<Fragment>(
+        fragments= listOf(
             NewsChildFragment.newInstance(TYPE_ENT),
             NewsChildFragment.newInstance(TYPE_FASHION),
             NewsChildFragment.newInstance(TYPE_SCIENCE),
             NewsChildFragment.newInstance(TYPE_SPORTS),
         )
+        val titles = listOf("娱乐", "时尚", "体育", "科技")
 
         val mAdapter = ViewPagerAdapter(requireActivity(), fragments)
         setSlop()
         mBinding.viewpager.apply {
             adapter = mAdapter
-            currentItem = 0
         }
 
         TabLayoutMediator(mBinding.tabLayout, mBinding.viewpager) { tab, position ->
@@ -62,6 +62,14 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(){
             ) //6 is empirical value
         } catch (ignore: Exception) {
             ignore.printStackTrace()
+        }
+    }
+
+    override fun scrollToTop() {
+        if (!this::fragments.isInitialized) return
+        val currentFragment=fragments[mBinding.viewpager.currentItem]
+        if (currentFragment is ScrollToTop && currentFragment.isVisible){
+            currentFragment.scrollToTop()
         }
     }
 

@@ -8,9 +8,7 @@ import com.news.simple_news.base.BaseViewModel
 import com.news.simple_news.model.api.API
 import com.news.simple_news.model.bean.*
 import com.news.simple_news.model.room.RoomHelper
-import com.news.simple_news.util.NetUtil
-import com.news.simple_news.util.getString
-import com.news.simple_news.util.toJson
+import com.news.simple_news.util.*
 
 class WeatherChildViewModel : BaseViewModel() {
     val refreshStatus = ObservableBoolean(false)
@@ -65,17 +63,22 @@ class WeatherChildViewModel : BaseViewModel() {
         emptyStatus.value = true
     }
 
-    fun getCityData(city: String = "福州") {
+    fun getCityData(city: String) {
         refreshStatus.set(true)
+        val idDeffer=async { RoomHelper.getCityIdByCityName(city) }
+        val isLocationCity=async { RoomHelper.getIsLocationCityByCityName(city) }
+        loge(returnCityName(city))
         launch({
-            val weather = repository.getData(API.weatherType, city, API.appId, API.appSecret)
+            val weather = repository.getData(API.weatherType, returnCityName(city), API.appId, API.appSecret)
             val dataBean = weather.data!![0]
             RoomHelper.updateCityInfo(
                 CityManageBean(
+                    idDeffer.await(),
                     city,
                     dataBean.wea_day,
                     dataBean.tem,
-                    weather.toJson()
+                    weather.toJson(),
+                    isLocationCity.await()
                 )
             )
             setData(weather)

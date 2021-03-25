@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -37,15 +38,27 @@
             android:background="@drawable/bg_search"
             android:layout_marginStart="@dimen/dp_15"
             android:layout_marginEnd="@dimen/dp_15"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_15"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:adapter="@{adapter}"
-            app:searchCityList="@{viewModel.cityList}"/>
+            android:layout_height="match_parent">
+            <include
+                android:id="@+id/emptyView"
+                layout="@layout/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_15"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:adapter="@{adapter}"
+                app:searchCityList="@{viewModel.cityList}"
+                tools:listitem="@layout/item_city_choose"/>
+        </FrameLayout>
+
     </LinearLayout>
 </layout>

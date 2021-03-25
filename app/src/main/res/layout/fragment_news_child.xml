@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -38,7 +39,8 @@
                     app:entData="@{viewModel}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:newsData="@{viewModel.newsList}" />
+                    app:newsData="@{viewModel.newsList}"
+                    tools:listitem="@layout/item_news"/>
 
                 <include
                     android:id="@+id/reloadView"
