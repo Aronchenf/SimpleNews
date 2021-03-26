@@ -51,7 +51,7 @@ fun BottomNavigationView.setupWithNavController(
                             R.anim.nav_default_pop_enter_anim,
                             R.anim.nav_default_pop_exit_anim
                         )
-                        .add(containerId, newlySelectedFragment!!, newlySelectedTag)
+                        .add(containerId, newlySelectedFragment, newlySelectedTag)
                         .commitNowAllowingStateLoss()
                 } else {
                     fragmentTransaction.show(newlySelectedFragment).commitNowAllowingStateLoss()

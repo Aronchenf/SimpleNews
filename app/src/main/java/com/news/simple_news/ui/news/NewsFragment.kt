@@ -31,8 +31,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(), ScrollToTop {
         fragments= listOf(
             NewsChildFragment.newInstance(TYPE_ENT),
             NewsChildFragment.newInstance(TYPE_FASHION),
-            NewsChildFragment.newInstance(TYPE_SCIENCE),
             NewsChildFragment.newInstance(TYPE_SPORTS),
+            NewsChildFragment.newInstance(TYPE_SCIENCE),
         )
         val titles = listOf("娱乐", "时尚", "体育", "科技")
 

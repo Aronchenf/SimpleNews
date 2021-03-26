@@ -61,7 +61,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         locationService.registerListener(mListener)
         locationService.setLocationOption(locationService.getDefaultLocationClientOption())
         locationService.start()
-        toast("正在定位中，请稍后......")
+        toast("正在定位中，请稍后......",time = longTime)
     }
     private val mListener =object : BDAbstractLocationListener(){
         override fun onReceiveLocation(location: BDLocation?) {
@@ -69,11 +69,13 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
                 if (!location.district.isNullOrEmpty()){
                     locationService.stop()
                     mViewModel.addCityToDatabase(location.district)
+                    toast("当前位置为:${location.district}")
                     return
                 }
                 if (!location.city.isNullOrEmpty()){
                     locationService.stop()
                     mViewModel.addCityToDatabase(location.city)
+                    toast("当前位置为:${location.city}")
                     return
                 }
             }

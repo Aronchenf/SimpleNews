@@ -5,6 +5,7 @@ import com.news.simple_news.util.logd
 import com.news.simple_news.util.loge
 import okhttp3.OkHttpClient
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,30 +32,60 @@ private val interceptor = Interceptor { chain ->
         .build()
 }
 
-private val httpLoggingInterceptor =HttpLoggingInterceptor().apply {
-    object :HttpLoggingInterceptor.Logger{
-        override fun log(message: String) {
-            logd(formatJson(message))
+
+class ApiServer {
+    companion object {
+        private val instance by lazy {
+            ApiServer()
         }
+
+        fun getRetrofit(): ApiService {
+            return instance.retrofit.create(ApiService::class.java)
+        }
+
     }
-    setLevel(HttpLoggingInterceptor.Level.BODY)
-}
 
-private val okHttpClient = OkHttpClient.Builder()
-    .addInterceptor(httpLoggingInterceptor)
-    .retryOnConnectionFailure(true)
-    .connectTimeout(5, TimeUnit.SECONDS)
-    .readTimeout(5, TimeUnit.SECONDS)
-    .writeTimeout(5, TimeUnit.SECONDS)
-    .build()
+     private val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        object : HttpLoggingInterceptor.Logger {
+            override fun log(message: String) {
+                logd(formatJson(message))
+            }
+        }
+        setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
 
-fun getRetrofit(url: String): ApiService {
-    return Retrofit.Builder()
-        .client(okHttpClient)
-        .baseUrl(url)
+   private  val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .retryOnConnectionFailure(true)
+        .connectTimeout(5, TimeUnit.SECONDS)
+        .readTimeout(5, TimeUnit.SECONDS)
+        .writeTimeout(5, TimeUnit.SECONDS)
+        .build()
+
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(API.NEWS_SINA)
+        .callFactory(object : CustomFactory(okHttpClient) {
+            override fun getNewUrl(baseUrlName: String, request: Request): HttpUrl? {
+                when (baseUrlName) {
+                    "weather" -> {
+                        val oldUrl = request.url.toString()
+                        val newUrl = oldUrl.replace(API.NEWS_SINA, API.WEATHER_HOST)
+                        return newUrl.toHttpUrl()
+                    }
+                    "video" -> {
+                        val oldUrl = request.url.toString()
+                        val newUrl = oldUrl.replace(API.NEWS_SINA, API.VIDEO_URL)
+                        return newUrl.toHttpUrl()
+                    }
+                }
+                return null
+            }
+
+        })
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(ApiService::class.java)
+
 }
 
 

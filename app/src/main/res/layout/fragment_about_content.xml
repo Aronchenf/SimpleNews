@@ -27,16 +27,6 @@
                 style="@style/content_text"
                 android:text="@string/introduce_one" />
 
-            <TextView
-                android:id="@+id/text2"
-                style="@style/content_text"
-                android:text="@string/introduce_two" />
-
-            <TextView
-                android:id="@+id/text3"
-                style="@style/content_text"
-                android:textSize="@dimen/sp_14"
-                android:text="@string/introduce_three"/>
         </LinearLayout>
 
 

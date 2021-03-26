@@ -1,5 +1,6 @@
 package com.news.simple_news.util
 
+import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
 import android.view.WindowManager
@@ -20,9 +21,11 @@ fun Context.sp2px(spValue: Float): Int = (spValue * fontScale() + 0.5f).toInt()
 /**
  * 获取屏幕宽度
  */
+@Suppress("DEPRECATION")
 fun getScreenWidth(): Int {
     val wm= getInstance().getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val dm= DisplayMetrics()
+    getInstance().resources.configuration.densityDpi
     wm.defaultDisplay.getMetrics(dm)
     return dm.widthPixels
 }
@@ -30,6 +33,7 @@ fun getScreenWidth(): Int {
 /**
  * 获取屏幕高度
  */
+@Suppress("DEPRECATION")
 fun getScreenHeight(): Int {
     val wm= App.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val dm=DisplayMetrics()

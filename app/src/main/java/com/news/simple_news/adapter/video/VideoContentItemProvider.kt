@@ -40,9 +40,12 @@ class VideoContentItemProvider : BaseItemProvider<VideoType>() {
     }
 
     override fun onClick(helper: BaseViewHolder, view: View, data: VideoType, position: Int) {
+        super.onClick(helper, view, data, position)
         VideoDetailActivity.gotoVideoPlayer(
             mContext as Activity,
-            data.item?.data!!
+            data.item!!.data
         )
     }
+
+
 }

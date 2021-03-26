@@ -2,7 +2,9 @@ package com.news.simple_news.util
 
 import android.Manifest
 import android.content.Context
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.news.simple_news.R
 import com.news.simple_news.application.App
@@ -168,6 +170,7 @@ fun returnCityName(cityName: String): String {
     Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
     Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
+@RequiresApi(Build.VERSION_CODES.Q)
 val androidQPermissions= arrayOf(
     Manifest.permission.INTERNET,
     Manifest.permission.ACCESS_NETWORK_STATE,

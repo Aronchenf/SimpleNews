@@ -58,8 +58,7 @@
         <activity android:name=".ui.setting.minehost.MineHostActivity" />
         <activity
             android:name=".ui.video.detail.VideoDetailActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/video" />
+            android:configChanges="orientation|screenSize" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

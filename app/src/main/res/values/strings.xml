@@ -15,12 +15,10 @@
     <string name="search_result_count">一〖%1$s〗搜索结果共☞%2$d个 一</string>
 
     <string name="copy_right_notice">内容部分数据归原公司《开眼Eyepetizer》、新浪新闻 版权所有</string>
-    <string name="not_use_commercial">本APP只供学习交流和研究之用，\n请勿用作商业用途！</string>
+    <string name="not_use_commercial">本APP仅作为练习MVVM+Kotlin，略显粗陋，不足之处，请多指教</string>
     <string name="since">copyright ©2021 CC.</string>
 
-    <string name="introduce_one">1.此app使用kotlin语言进行编写</string>
-    <string name="introduce_two">2.今日美图中点击悬浮按钮可以设置壁纸与保存图片</string>
-    <string name="introduce_three">（从上往下为设置壁纸与保存图片）</string>
+    <string name="introduce_one">1.此app使用kotlin语言进行编写，使用到了MVVM+Room+Databinding</string>
     <string name="introduce_four">4.查看新闻详情时，若遇到问题，请返回再重新打开</string>
 
     <string name="network_not_available">网络似乎出了点问题</string>
@@ -53,4 +51,5 @@
     <string name="web_host">https://github.com/Aronchenf/MyKotlin</string>
     <string name="city_manage">城市管理</string>
     <string name="setting">设置</string>
+    <string name="clearCache">清理缓存</string>
 </resources>

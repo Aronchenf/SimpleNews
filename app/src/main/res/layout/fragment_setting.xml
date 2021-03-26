@@ -68,8 +68,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/video_record"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
             android:text="@string/watch_history"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_14"
@@ -77,6 +77,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

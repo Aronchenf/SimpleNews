@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ly_about"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/change_content"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/dp_20"
-                android:background="@color/white"
-                android:drawableStart="@drawable/ic_about"
-                android:drawableEnd="@drawable/arrow_right_black"
-                android:drawablePadding="@dimen/dp_15"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/about"
-                android:textSize="@dimen/sp_15" />
-        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/change_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@color/white"
+            android:drawableStart="@drawable/ic_about"
+            android:drawableEnd="@drawable/arrow_right_black"
+            android:drawablePadding="@dimen/dp_15"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/about"
+            android:textSize="@dimen/sp_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_not_use_commercial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_since"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="@string/not_use_commercial"
+            android:textColor="@color/dim_gray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_text1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/tv_not_use_commercial"
             android:gravity="center"
+            android:layout_marginTop="@dimen/dp_5"
             android:text="@string/copy_right_notice"
             android:textColor="@color/dim_gray"
-            android:textSize="12sp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_not_use_commercial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/tv_since"
-            android:layout_marginTop="@dimen/dp_10"
-            android:gravity="center"
-            android:text="@string/not_use_commercial"
-            android:textColor="@color/dim_gray"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_since" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_since"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="20dp"
-            android:gravity="center"
             android:text="@string/since"
             android:textColor="@color/dim_gray"
-            android:textSize="12sp" />
-    </RelativeLayout>
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

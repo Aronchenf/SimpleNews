@@ -84,7 +84,7 @@ class VideoDetailViewModel : BaseViewModel() {
 
     private fun getRecentRelatedVideoInfo() {
         refreshStatus.set(true)
-        val id = itemInfo.id ?: 0
+        val id = itemInfo.id
         launch({
             val bean = repository.requestRelatedData(id)
             bean.itemList.forEach {

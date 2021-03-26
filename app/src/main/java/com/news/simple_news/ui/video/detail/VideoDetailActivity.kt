@@ -3,6 +3,7 @@ package com.news.simple_news.ui.video.detail
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.transition.Transition
@@ -37,16 +38,6 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
         /**
          * 跳转到视频详情页面播放
          */
-        fun gotoVideoPlayer(activity: Activity, view: View, itemData: Data) {
-            val intent = Intent(activity, VideoDetailActivity::class.java).apply {
-                putExtra(BUNDLE_VIDEO_DATA, itemData)
-                putExtra(TRANSITION, true)
-            }
-            val activityOptions =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, getString(R.string.transition_video_img))
-            ActivityCompat.startActivity(activity, intent, activityOptions.toBundle())
-
-        }
 
         fun gotoVideoPlayer(activity: Activity, itemData: Data) {
             val intent = Intent(activity, VideoDetailActivity::class.java).apply {
@@ -69,7 +60,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
     override fun initLayout(): Int = R.layout.activity_videodetail
 
     override fun initWindow() {
-        window.setWindowAnimations(R.style.video)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -80,7 +71,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
         }
 
 //        //过度动画
-//        initTransition()
+        initTransition()
 
         val itemData = intent.getSerializableExtra(BUNDLE_VIDEO_DATA) as Data
         mViewModel.setItemInfo(itemData)
@@ -165,7 +156,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
         //延迟动画执行
         postponeEnterTransition()
         //设置共用元素对应的View
-        ViewCompat.setTransitionName(mBinding.mVideoView, getString(R.string.transition_video_img))
+//        ViewCompat.setTransitionName(mBinding.mVideoView, getString(R.string.transition_video_img))
         //获取共享元素进入转场对象
         mTransition = window.sharedElementEnterTransition
         mTransition?.addListener(object : TransitionListenerAdapter() {
@@ -202,7 +193,6 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
                 //开始自动播放
                 mBinding.mVideoView.startPlayLogic()
             }
-
         }
     }
 
@@ -231,20 +221,18 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
         if (GSYVideoManager.backFromWindowFull(this)) {
             return
         }
-
         super.onBackPressed()
         //先返回正常状态
-//        if (orientationUtils?.screenType == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-//            orientationUtils?.screenType=ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//            mVideoView.fullscreenButton.performClick()
-//            return
-//        }
-//
-////        //释放所有
+        if (orientationUtils?.screenType == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            orientationUtils?.screenType=ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            mBinding.mVideoView.fullscreenButton.performClick()
+            return
+        }
+
+        //释放所有
         mBinding.mVideoView.setVideoAllCallBack(null)
         GSYVideoManager.releaseAllVideos()
-        finish()
-        overridePendingTransition(0,R.anim.video_exit)
+//        overridePendingTransition(0,R.anim.video_exit)
     }
 }
 

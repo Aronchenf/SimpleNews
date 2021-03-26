@@ -50,7 +50,7 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
         }
 
         mAdapter.addChildClickViewIds(R.id.iv_clear)
-        mAdapter.setOnItemLongClickListener { adapter, view, position ->
+        mAdapter.setOnItemLongClickListener { _, _, position ->
             mAdapter.getViewByPosition(position,R.id.linear_clear)?.visible()
             true
         }
@@ -66,12 +66,12 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
 
     override fun observe() {
-        requireActivity().getEventViewModel().addChooseCity.observe(this){
+        requireActivity().getEventViewModel().addChooseCity.observe(viewLifecycleOwner){
             it.let {
                 mViewModel.getCityList()
             }
         }
-        appViewModel.mCurrentCity.observe(this){
+        appViewModel.mCurrentCity.observe(viewLifecycleOwner){
             it.let {
                 requireActivity().getEventViewModel().changeCurrentCity.postValue(true)
             }

@@ -5,8 +5,8 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
-private val shortTime = Toast.LENGTH_SHORT
-private val longTime = Toast.LENGTH_LONG
+ val shortTime = Toast.LENGTH_SHORT
+ val longTime = Toast.LENGTH_LONG
 
 fun Fragment.toast(message: CharSequence, time: Int = shortTime)=
     Toast.makeText(requireActivity(),message,time).show()

@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.news.simplenews",
+  "applicationId": "com.news.simple_news",
   "variantName": "processReleaseResources",
   "elements": [
     {

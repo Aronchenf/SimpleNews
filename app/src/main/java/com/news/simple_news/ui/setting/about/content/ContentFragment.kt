@@ -23,11 +23,9 @@ class ContentFragment : BaseFragment<FragmentAboutContentBinding>() {
             findNavController().popBackStack()
         }
 
-        val tf1=Typeface.createFromAsset(getSystemAssets(),"fonts/SIMLI.TTF")
+        val tf1=Typeface.createFromAsset(getSystemAssets(),"fonts/FZLanTingHeiS-L-GB-Regular.TTF")
         mBinding.run {
             text1.typeface = tf1
-            text2.typeface = tf1
-            text3.typeface = tf1
         }
     }
 

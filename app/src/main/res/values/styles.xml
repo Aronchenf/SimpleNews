@@ -10,11 +10,6 @@
         <item name="android:layout_marginTop">@dimen/dp_20</item>
     </style>
 
-    <style name="video" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:activityOpenEnterAnimation">@anim/video_enter</item>
-        <item name="android:activityCloseExitAnimation">@anim/video_exit</item>
-    </style>
-
     <style name="about_fragment_animation" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:fragmentCloseEnterAnimation">@anim/slide_in_right</item>
         <item name="android:fragmentOpenEnterAnimation">@anim/slide_in_right</item>

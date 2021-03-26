@@ -19,7 +19,7 @@ import com.news.simple_news.ui.main.MainActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class VideoFragment : BaseFragment<FragmentVideoBinding>(),ScrollToTop {
+class VideoFragment : BaseFragment<FragmentVideoBinding>(), ScrollToTop {
 
     companion object {
         fun newInstance() = VideoFragment()
@@ -97,14 +97,13 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(),ScrollToTop {
     }
 
     override fun observe() {
-        mViewModel.run {
-            emptyStatus.observe(viewLifecycleOwner) {
-                mBinding.emptyView.root.isVisible = it
-            }
-            reloadStatus.observe(viewLifecycleOwner) {
-                mBinding.reloadView.root.isVisible = it
-            }
+        mViewModel.emptyStatus.observe(this) {
+            mBinding.emptyView.root.isVisible = it
         }
+        mViewModel.reloadStatus.observe(viewLifecycleOwner) {
+            mBinding.reloadView.root.isVisible = it
+        }
+
     }
 
     override fun scrollToTop() {

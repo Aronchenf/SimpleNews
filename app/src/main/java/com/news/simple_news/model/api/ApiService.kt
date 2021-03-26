@@ -13,6 +13,7 @@ interface ApiService {
 
     //天气
 
+    @Headers("BaseUrlName:weather")
     @GET("api/")
     suspend fun getWeather(
         @Query("version") v1: String, @Query("city") city: String,
@@ -20,10 +21,11 @@ interface ApiService {
     ): WeatherBean
 
     //彩云天气城市列表
-    @GET("place?token=${API.CAIYUN_TOKEN}&lang=zh_CN")
-    suspend fun getCityList(@Query("query") city:String):SearchCityBean
+//    @GET("place?token=${API.CAIYUN_TOKEN}&lang=zh_CN")
+//    suspend fun getCityList(@Query("query") city:String):SearchCityBean
 
     //视频精选
+    @Headers("BaseUrlName:video")
     @GET("v2/feed?num=1")
     suspend fun getVideoData(): VideoBean
 
@@ -32,6 +34,7 @@ interface ApiService {
     suspend fun getMoreVideoData(@Url url: String): VideoBean
 
     //根据item id 获取相关视频
+    @Headers("BaseUrlName:video")
     @GET("v4/video/related?")
     suspend fun getRelatedData(@Query("id") id: Long): Issue
 
@@ -43,12 +46,14 @@ interface ApiService {
     /**
      * 获取搜索信息
      */
+    @Headers("BaseUrlName:video")
     @GET("v1/search?&num=10&start=10")
     suspend fun getSearchData(@Query("query") query:String) : Issue
 
     /**
      * 热门搜索词
      */
+    @Headers("BaseUrlName:video")
     @GET("v3/queries/hot")
     suspend fun getHotWord():ArrayList<String>
 
