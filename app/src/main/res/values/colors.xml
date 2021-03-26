@@ -30,6 +30,6 @@
     <color name="blue">#369BF4</color>
 
     <color name="weather_blue">#106FB1</color>
-    <color name="weather_rain">#204C4C</color>
-    <color name="weather_sand">#855E24</color>
+    <color name="weather_rain">#424747</color>
+    <color name="weather_sand">#F1B503</color>
 </resources>
