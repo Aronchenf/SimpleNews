@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityWelcomeBinding
+import com.news.simple_news.util.androidQPermissions
+import com.news.simple_news.util.basicPermission
 import com.news.simple_news.util.launchMainActivity
 import com.permissionx.guolindev.PermissionX
 
@@ -22,22 +24,15 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         initPermission()
     }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
     private fun initPermission() {
+        val permissions=if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            androidQPermissions
+        }else{
+            basicPermission
+        }
         PermissionX.init(this)
             .permissions(
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.CHANGE_WIFI_STATE,
-                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+               *permissions
             ).onExplainRequestReason { scope, deniedList ->
                 scope.showRequestReasonDialog(
                     deniedList,
@@ -55,7 +50,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
                 )
             }
             .request { allGranted, _, _ ->
-                if (allGranted){
+                if (allGranted) {
                     mBinding.img.startAnimation(animation)
                     animation.setAnimationListener(object : Animation.AnimationListener {
                         override fun onAnimationRepeat(p0: Animation?) {}
@@ -66,7 +61,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
 
                         override fun onAnimationStart(p0: Animation?) {}
                     })
-                }else{
+                } else {
                     finish()
                 }
             }

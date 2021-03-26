@@ -72,9 +72,12 @@ object RoomHelper {
     /*
     天气模块城市数据
      */
+
     //添加城市数据
     suspend fun addCity(bean: CityManageBean): Long? = cityDao.insertCityManage(bean)
 
+    //更新定位城市数据
+    suspend fun updateLocationCityInfo(cityName: String):Int= cityDao.updateLocationCityInfo(cityName)
     //更新城市数据
     suspend fun updateCityInfo(bean: CityManageBean):Int = cityDao.updateCityInfo(bean)
 

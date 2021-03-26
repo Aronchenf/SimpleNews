@@ -1,5 +1,6 @@
 package com.news.simple_news.util
 
+import android.Manifest
 import android.content.Context
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -155,3 +156,28 @@ fun returnCityName(cityName: String): String {
     }
     return cityName.substring(0,cityName.length-1)
 }
+
+ val basicPermission= arrayOf( Manifest.permission.INTERNET,
+    Manifest.permission.ACCESS_NETWORK_STATE,
+    Manifest.permission.READ_EXTERNAL_STORAGE,
+    Manifest.permission.ACCESS_COARSE_LOCATION,
+    Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.READ_PHONE_STATE,
+    Manifest.permission.ACCESS_WIFI_STATE,
+    Manifest.permission.CHANGE_WIFI_STATE,
+    Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+val androidQPermissions= arrayOf(
+    Manifest.permission.INTERNET,
+    Manifest.permission.ACCESS_NETWORK_STATE,
+    Manifest.permission.READ_EXTERNAL_STORAGE,
+    Manifest.permission.ACCESS_COARSE_LOCATION,
+    Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.READ_PHONE_STATE,
+    Manifest.permission.ACCESS_WIFI_STATE,
+    Manifest.permission.CHANGE_WIFI_STATE,
+    Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+)

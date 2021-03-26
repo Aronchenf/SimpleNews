@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.ui.setting.about.AboutActivity
 import com.news.simple_news.ui.setting.minehost.MineHostActivity
-import com.news.simple_news.ui.setting.pic.PicActivity
 import com.news.simple_news.ui.setting.record.WatchHistoryActivity
 import com.news.simple_news.util.startActivity
 import com.news.simple_news.R
@@ -29,7 +28,9 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>(){
         }
         mBinding.ivAvatar.setOnClickListener { turnToMineHost() }
         mBinding.tvMine.setOnClickListener { turnToMineHost() }
-        mBinding.tvMinePic.setOnClickListener { startActivity<PicActivity>() }
+
+
+//        mBinding.tvMinePic.setOnClickListener { startActivity<PicActivity>() }
 
     }
 

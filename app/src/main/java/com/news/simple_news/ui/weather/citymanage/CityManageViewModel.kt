@@ -22,7 +22,7 @@ class CityManageViewModel : BaseViewModel() {
             val list=RoomHelper.getCityList()
             val noNullCityList= mutableListOf<CityManageBean>()
             for (bean in list){
-                if (bean.city.isNotEmpty()){
+                if (!bean.city.isNullOrEmpty()){
                     noNullCityList.add(bean)
                 }
             }
@@ -34,7 +34,7 @@ class CityManageViewModel : BaseViewModel() {
         loge("deleteCity","CityManageViewModel")
         val cityName = cityList.value!![position].city
         launch({
-            RoomHelper.deleteCity(cityName)
+            RoomHelper.deleteCity(cityName!!)
             getCityList()
         })
     }

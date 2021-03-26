@@ -20,7 +20,7 @@ class AppViewModel : BaseViewModel() {
         launch({
             val cityList = mAppRepository.queryAllChooseArea()
             for (bean in cityList) {
-                val city = returnCityName(bean.city)
+                val city = returnCityName(bean.city!!)
                 val idDeffer = async { RoomHelper.getCityIdByCityName(city) }
                 val isLocationCity = async { RoomHelper.getIsLocationCityByCityName(city) }
                 val weather = async { repository.getData(API.weatherType, city, API.appId, API.appSecret) }

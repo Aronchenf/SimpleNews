@@ -23,7 +23,32 @@ class WeatherViewModel : BaseViewModel() {
     val cityList: LiveData<List<CityManageBean>>
         get() = _cityList
 
+    private val _mChooseCityInsertResult = MutableLiveData<Int>()
+    val mChooseCityInsertResult: LiveData<Int>
+        get() = _mChooseCityInsertResult
+
+
+    //打开应用先创建一个LocationCity,占据位置
+    private fun createLocationCity() {
+        loge("createLocationCity","WeatherViewModel")
+        launch({
+            val bean = RoomHelper.getLocationCity()
+            if (bean == null) {
+                RoomHelper.addCity(CityManageBean(id = 0, locationCity = true))
+            }
+        })
+    }
+
+    //添加LocationCity
+    fun addCityToDatabase(cityName: String) {
+        loge("addCityToDatabase","WeatherViewModel")
+        launch({
+            _mChooseCityInsertResult.value = RoomHelper.updateLocationCityInfo(cityName)
+        })
+    }
+
     init {
+        createLocationCity()
         getCityList()
     }
      fun getCityList() {

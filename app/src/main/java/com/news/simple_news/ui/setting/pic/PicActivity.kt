@@ -12,6 +12,7 @@ import com.news.simple_news.R
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityPicBinding
 
+//今日美图(功能还未完善，且不确定要不要使用)
 class PicActivity : BaseActivity<ActivityPicBinding>(){
 
     private val handler = Handler()

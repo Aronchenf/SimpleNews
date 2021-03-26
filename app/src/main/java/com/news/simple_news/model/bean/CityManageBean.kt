@@ -10,7 +10,7 @@ data class CityManageBean(
     @PrimaryKey(autoGenerate = true)
     var id:Int,
     @ColumnInfo(name = "city")
-    val city:String,
+    val city:String?="",
     @ColumnInfo(name = "wea")
     val wea:String?="",
     @ColumnInfo(name = "tem")

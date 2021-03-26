@@ -6,17 +6,12 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewPropertyAnimator
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
-import com.baidu.location.BDAbstractLocationListener
-import com.baidu.location.BDLocation
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.android.material.animation.AnimationUtils
 import com.news.simple_news.R
 import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityMainBinding
-import com.news.simple_news.service.LocationService
 import com.news.simple_news.ui.news.NewsFragment
 import com.news.simple_news.ui.setting.SettingFragment
 import com.news.simple_news.ui.video.VideoFragment
@@ -26,9 +21,6 @@ import com.news.simple_news.util.*
 class MainActivity : BaseActivity<ActivityMainBinding>(){
 
     private lateinit var fragments: Map<Int, Fragment>
-
-    private lateinit var locationService: LocationService
-    private val viewModel by lazy { ViewModelProvider(this)[MainViewModel::class.java] }
 
     private var bottomNavigationViewAnimator: ViewPropertyAnimator? = null
     private var currentBottomNavigationState = true
@@ -89,14 +81,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(){
         }
     }
 
-    override fun observe() {
-        viewModel.mChooseCityInsertResult.observe(this) {
-            it.let {
-                getEventViewModel().addCity.postValue(true)
-            }
-        }
-    }
-
     //BottomView动画
     fun animateBottomNavigationView(show: Boolean) {
         if (currentBottomNavigationState == show) {
@@ -131,38 +115,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(){
     override fun onStart() {
         super.onStart()
         ActivityUtils.finishOtherActivities(javaClass)
-        initLocation()
-    }
 
-    override fun onStop() {
-        locationService.unregisterListener(mListener)
-        locationService.stop()
-        super.onStop()
-    }
-
-    private fun initLocation(){
-        locationService=getInstance().locationService
-        locationService.registerListener(mListener)
-        locationService.setLocationOption(locationService.getOnceLocationClientOption())
-        locationService.start()
-    }
-    private val mListener =object :BDAbstractLocationListener(){
-        override fun onReceiveLocation(location: BDLocation?) {
-            if (null != location && location.locType != BDLocation.TypeServerError) {
-                if (!location.district.isNullOrEmpty()){
-                    locationService.stop()
-                    loge(location.district,"区")
-                    viewModel.addCityToDatabase(location.district)
-                    return
-                }
-                if (!location.city.isNullOrEmpty()){
-                    locationService.stop()
-                    loge(location.city,"市")
-                    viewModel.addCityToDatabase(location.city)
-                    return
-                }
-            }
-        }
     }
 
     private var mExitTime: Long = 0

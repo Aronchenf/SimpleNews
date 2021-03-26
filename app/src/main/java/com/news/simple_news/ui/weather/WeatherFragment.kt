@@ -15,11 +15,14 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.baidu.location.BDAbstractLocationListener
+import com.baidu.location.BDLocation
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.R
 import com.news.simple_news.adapter.ViewPagerAdapter
 import com.news.simple_news.databinding.FragmentWeatherBinding
 import com.news.simple_news.model.bean.CityManageBean
+import com.news.simple_news.service.LocationService
 import com.news.simple_news.ui.weather.child.WeatherChildFragment
 import com.news.simple_news.util.*
 import com.news.simple_news.work_manage.WeatherWorkManager
@@ -32,6 +35,8 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     companion object {
         fun newInstance() = WeatherFragment()
     }
+
+    private lateinit var locationService: LocationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +54,50 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
             startActivity<CityManagerActivity>()
             true
         }
+    }
+
+    private fun initLocation(){
+        locationService=getInstance().locationService
+        locationService.registerListener(mListener)
+        locationService.setLocationOption(locationService.getDefaultLocationClientOption())
+        locationService.start()
+        toast("正在定位中，请稍后......")
+    }
+    private val mListener =object : BDAbstractLocationListener(){
+        override fun onReceiveLocation(location: BDLocation?) {
+            if (null != location && location.locType != BDLocation.TypeServerError) {
+                if (!location.district.isNullOrEmpty()){
+                    locationService.stop()
+                    mViewModel.addCityToDatabase(location.district)
+                    return
+                }
+                if (!location.city.isNullOrEmpty()){
+                    locationService.stop()
+                    mViewModel.addCityToDatabase(location.city)
+                    return
+                }
+            }
+        }
+
+        override fun onLocDiagnosticMessage(locType:Int, diagnosticType:Int, diagnosticMessage:String?) {
+            super.onLocDiagnosticMessage(locType, diagnosticType, diagnosticMessage)
+            when(diagnosticType){
+                3->toast("定位失败，请您检查您的网络状态")
+                8->toast("定位失败，请确认您定位的开关打开状态，是否赋予APP定位权限")
+                4->toast("定位失败，无法获取任何有效定位依据")
+            }
+        }
+    }
+
+    override fun lazyLoadData() {
+        super.lazyLoadData()
+        initLocation()
+    }
+
+    override fun onStop() {
+        locationService.unregisterListener(mListener)
+        locationService.stop()
+        super.onStop()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -87,13 +136,14 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
 
     override fun observe() {
         mViewModel.cityList.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                startActivity<CityManagerActivity>()
-            }
             cityList = it
             initViewPager(it)
             setOnPageChangeCallback()
         }
+        mViewModel.mChooseCityInsertResult.observe(this){
+            mViewModel.getCityList()
+        }
+
         requireActivity().getEventViewModel().changeCurrentCity.observe(this) {
             it.let {
                 mBinding.viewpager.setCurrentItem(appViewModel.mCurrentCity.value!!, true)
@@ -114,7 +164,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     private fun initViewPager(list: List<CityManageBean>) {
         val fragments = mutableListOf<Fragment>()
         for (bean in list) {
-            fragments.add(WeatherChildFragment.newInstance(bean.city))
+            fragments.add(WeatherChildFragment.newInstance(bean.city!!))
         }
         val mAdapter = ViewPagerAdapter(requireActivity(), fragments)
         mBinding.viewpager.apply {
@@ -143,7 +193,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             if (cityList.isNotEmpty()) {
-                setTitle(cityList[position].city)
+                setTitle(cityList[position].city!!)
                 setVideoStart(cityList[position].wea)
             }
         }

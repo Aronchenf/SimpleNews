@@ -11,6 +11,10 @@ interface CityManageDao {
     suspend fun insertCityManage(cityManageBean: CityManageBean): Long?
 
     @Transaction
+    @Query("update city_list set city=(:cityName) where location=1")
+    suspend fun updateLocationCityInfo(cityName: String):Int
+
+    @Transaction
     @Update(entity = CityManageBean::class,onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCityInfo(cityManageBean: CityManageBean):Int
 
