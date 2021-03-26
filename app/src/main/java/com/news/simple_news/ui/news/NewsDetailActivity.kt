@@ -2,6 +2,7 @@ package com.news.simple_news.ui.news
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.core.content.ContextCompat
@@ -76,7 +77,7 @@ class NewsDetailActivity : BaseActivity<ActivityNewsdetailBinding>() {
     private fun customJs():String{
         val js= StringBuilder()
         js.append("javascript:(function(){")
-        js.append("var tops=document.getElementsByClassName('sw_c0 fix_top');")
+        js.append("var tops=document.getElementsByClassName('sw_c0 qweasd');")
         js.append("if(tops){tops[0].parentNode.removeChild(tops[0]);}")
         js.append("var titles=document.getElementsByClassName('page_main fl_padding');")
         js.append("if(titles) titles[0].style.padding=0;")
@@ -106,13 +107,13 @@ class NewsDetailActivity : BaseActivity<ActivityNewsdetailBinding>() {
         return js.toString()
     }
 
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        return if (agentWeb.handleKeyEvent(keyCode,event)){
-//            return true
-//        }else{
-//            super.onKeyDown(keyCode, event)
-//        }
-//    }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return if (agentWeb.handleKeyEvent(keyCode,event)){
+            return true
+        }else{
+            super.onKeyDown(keyCode, event)
+        }
+    }
 
     override fun onPause() {
         agentWeb.webLifeCycle.onPause()
