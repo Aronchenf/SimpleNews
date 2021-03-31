@@ -1,9 +1,6 @@
 package com.news.simple_news.base
 
 import android.os.Bundle
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -33,18 +30,13 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity() {
     }
 
     open fun initWindow() {
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+//        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     open fun initLayout() = 0
     open fun initView(savedInstanceState: Bundle?) {}
     open fun observe() {}
 
-    override fun onBackPressed() {
-        finishAfterTransition()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-        super.onBackPressed()
-    }
 
 
 }

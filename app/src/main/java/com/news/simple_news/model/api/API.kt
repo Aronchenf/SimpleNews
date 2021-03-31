@@ -35,8 +35,6 @@ object API {
 
     //随机图片
     val PIC_SUM = "https://picsum.photos/"
-    val GetCity = 0x000001
-
 
     //新浪新闻去广告
 //    var tops=document.getElementsByClassName('sw_c0 qweasd');

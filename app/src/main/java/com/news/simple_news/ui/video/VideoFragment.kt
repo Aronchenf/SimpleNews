@@ -10,12 +10,11 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.news.simple_news.adapter.video.VideoAdapter
-import com.news.simple_news.ui.video.search.VideoSearchActivity
 import com.news.simple_news.util.startActivity
 import com.news.simple_news.R
 import com.news.simple_news.scroll.ScrollToTop
 import com.news.simple_news.databinding.FragmentVideoBinding
-import com.news.simple_news.ui.main.MainActivity
+import com.news.simple_news.ui.main.MainFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -87,12 +86,14 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(), ScrollToTop {
         mBinding.rvVideo.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             val layoutManager = mBinding.rvVideo.layoutManager as LinearLayoutManager
             val currentVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-            (requireActivity() as MainActivity).animateBottomNavigationView(
+            (parentFragment as MainFragment).animateBottomNavigationView(
                 currentVisibleItemPosition <= 3 || oldScrollY > scrollY
             )
         }
 
-        mBinding.ivSearch.setOnClickListener { startActivity<VideoSearchActivity>() }
+        mBinding.ivSearch.setOnClickListener {
+            nav().navigate(R.id.action_mainFragment_to_hotWordFragment)
+        }
 
     }
 

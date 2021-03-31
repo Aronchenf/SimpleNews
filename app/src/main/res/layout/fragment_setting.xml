@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_about"
-            app:shapeAppearance="@style/roundedCornerStyle" />
+            app:shapeAppearance="@style/roundedAvatar" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_mine_name"

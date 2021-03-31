@@ -34,6 +34,7 @@
             android:text="@string/not_use_commercial"
             android:textColor="@color/dim_gray"
             android:textSize="12sp"
+            android:layout_marginBottom="@dimen/dp_10"
             app:layout_constraintBottom_toTopOf="@id/tv_text1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -44,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/tv_not_use_commercial"
             android:gravity="center"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_10"
             android:text="@string/copy_right_notice"
             android:textColor="@color/dim_gray"
             android:textSize="12sp"

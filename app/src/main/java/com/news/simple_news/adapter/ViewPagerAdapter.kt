@@ -2,12 +2,12 @@ package com.news.simple_news.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class ViewPagerAdapter(
-    fm: FragmentActivity,
-    private var fragments: List<Fragment>
-) : FragmentStateAdapter(fm) {
+class ViewPagerAdapter(private val fragments:List<Fragment>,fragment: Fragment) :
+    FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = fragments.size
 

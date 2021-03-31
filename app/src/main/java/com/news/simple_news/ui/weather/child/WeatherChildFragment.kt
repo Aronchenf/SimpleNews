@@ -12,8 +12,8 @@ import com.news.simple_news.adapter.WeatherTodayListAdapter
 import com.news.simple_news.adapter.WeatherWeekListAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentWeatherChildBinding
-import com.news.simple_news.ui.main.MainActivity
-import com.news.simple_news.util.getColor
+import com.news.simple_news.ui.main.MainFragment
+import com.news.simple_news.ui.weather.WeatherFragment
 import com.news.simple_news.util.getWeaTextColor
 
 class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
@@ -43,7 +43,7 @@ class WeatherChildFragment : BaseFragment<FragmentWeatherChildBinding>() {
             viewModel = mViewModel
         }
         mBinding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
-            (requireActivity() as MainActivity).animateBottomNavigationView(scrollY < 800 && oldScrollY > scrollY)
+            ((parentFragment as WeatherFragment).parentFragment as MainFragment).animateBottomNavigationView(scrollY < 800 && oldScrollY > scrollY)
         }
     }
 

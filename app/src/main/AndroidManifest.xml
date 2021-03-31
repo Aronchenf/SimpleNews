@@ -47,15 +47,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.news.NewsDetailActivity" />
-        <activity
-            android:name=".ui.weather.CityManagerActivity"
-            android:theme="@style/CityManage" />
-        <activity android:name=".ui.video.search.VideoSearchActivity" />
-        <activity android:name=".ui.setting.record.WatchHistoryActivity" />
-        <activity android:name=".ui.setting.about.AboutActivity" />
         <activity android:name=".ui.setting.pic.PicActivity" />
-        <activity android:name=".ui.setting.minehost.MineHostActivity" />
         <activity
             android:name=".ui.video.detail.VideoDetailActivity"
             android:configChanges="orientation|screenSize" />

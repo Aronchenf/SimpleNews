@@ -1,6 +1,5 @@
 package com.news.simple_news.ui.video.search.hotwords
 
-
 import android.os.Bundle
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
@@ -8,12 +7,13 @@ import androidx.lifecycle.observe
 import com.news.simple_news.adapter.HotKeywordsAdapter
 import com.news.simple_news.adapter.SearchHistoryAdapter
 import com.news.simple_news.base.BaseFragment
-import com.news.simple_news.ui.video.search.VideoSearchActivity
-import com.news.simple_news.ui.video.search.VideoSearchViewModel
 import com.google.android.flexbox.*
 import com.news.simple_news.R
 import com.news.simple_news.databinding.FragmentHotWordBinding
-
+import com.news.simple_news.util.getEventViewModel
+import com.news.simple_news.util.hideSoftInput
+import com.news.simple_news.util.loge
+import com.news.simple_news.util.toast
 
 class HotWordFragment : BaseFragment<FragmentHotWordBinding>() {
     companion object {
@@ -22,7 +22,7 @@ class HotWordFragment : BaseFragment<FragmentHotWordBinding>() {
 
     private val mHotWordAdapter by lazy { HotKeywordsAdapter() }
     private val mHistoryAdapter by lazy { SearchHistoryAdapter() }
-    private val mViewModel by lazy { ViewModelProvider(requireActivity())[VideoSearchViewModel::class.java] }
+    private val mViewModel by lazy { ViewModelProvider(this)[HotWordViewModel::class.java] }
 
     override fun initLayout(): Int = R.layout.fragment_hot_word
 
@@ -31,11 +31,28 @@ class HotWordFragment : BaseFragment<FragmentHotWordBinding>() {
         mBinding.apply {
             hotWordAdapter = mHotWordAdapter
             viewModel = mViewModel
-            historyAdapter=mHistoryAdapter
+            historyAdapter = mHistoryAdapter
         }
         mBinding.icDelete.setOnClickListener {
             mViewModel.deleteAllSearch()
         }
+        mBinding.ivBack.setOnClickListener { popBack() }
+        mBinding.tvSearch.setOnClickListener {
+            if (mBinding.etSearchView.text.toString().isEmpty()){
+                toast("请输入关键词")
+                return@setOnClickListener
+            }
+            getSearchResult()
+            mBinding.etSearchView.hideSoftInput()
+        }
+//        mBinding.toolbar.setNavigationOnClickListener { popBack() }
+//        mBinding.toolbar.setOnMenuItemClickListener {
+//            if (mBinding.etSearchView.text.toString().isNotEmpty()){
+//                getSearchResult()
+//            }
+//            mBinding.etSearchView.hideSoftInput()
+//            true
+//        }
         initHotWord()
         initSearchHistory()
     }
@@ -50,12 +67,11 @@ class HotWordFragment : BaseFragment<FragmentHotWordBinding>() {
         }
         mBinding.mRecyclerViewHot.layoutManager = flexBoxLayoutManager
         mHotWordAdapter.setOnItemClickListener { _, _, position ->
-            (activity as? VideoSearchActivity)?.setEditText(mHotWordAdapter.data[position])
+            setEditText(mHotWordAdapter.data[position])
         }
-
     }
 
-    private fun initSearchHistory(){
+    private fun initSearchHistory() {
         val flexBoxLayoutManager = FlexboxLayoutManager(requireActivity())
         flexBoxLayoutManager.apply {
             flexWrap = FlexWrap.WRAP
@@ -64,19 +80,36 @@ class HotWordFragment : BaseFragment<FragmentHotWordBinding>() {
             justifyContent = JustifyContent.FLEX_START
         }
         mBinding.searchHistory.layoutManager = flexBoxLayoutManager
-    }
-
-    override fun observe() {
-        mViewModel.run {
-            searchHistoryList.observe(viewLifecycleOwner) {
-                mBinding.history.isGone = it.isNullOrEmpty()
-                mBinding.icDelete.isGone=it.isNullOrEmpty()
-            }
+        mHistoryAdapter.setOnItemClickListener { _, _, position ->
+            setEditText(mHistoryAdapter.data[position].searchKey)
         }
     }
 
-    fun addSearchHistory(string: String) {
-        mViewModel.addSearchHistory(string)
+    override fun observe() {
+        mViewModel.searchHistoryList.observe(this) {
+            mBinding.history.isGone = it.isNullOrEmpty()
+            mBinding.icDelete.isGone = it.isNullOrEmpty()
+        }
+
+        requireActivity().getEventViewModel().addSearchKey.observe(this) {
+            it.let { mViewModel.getSearchListData() }
+        }
+
+        requireActivity().getEventViewModel().lastSearchKey.observe(this){
+            setEditText(it)
+        }
+    }
+
+    private fun setEditText(key: String) {
+        mBinding.etSearchView.setText(key)
+        mBinding.etSearchView.setSelection(key.length)
+    }
+
+    //转到结果界面
+    private fun getSearchResult() {
+        val searchKey = mBinding.etSearchView.text.toString()
+        val bundle = HotWordFragmentArgs.Builder().setSearchKey(searchKey).build().toBundle()
+        nav().navigate(R.id.action_hotWordFragment_to_resultFragment, bundle)
     }
 
 }

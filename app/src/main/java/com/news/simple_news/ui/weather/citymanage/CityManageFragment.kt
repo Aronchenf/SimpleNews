@@ -3,12 +3,10 @@ package com.news.simple_news.ui.weather.citymanage
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
 import com.news.simple_news.R
 import com.news.simple_news.adapter.CityManageAdapter
 import com.news.simple_news.base.BaseFragment
 import com.news.simple_news.databinding.FragmentCityManagerBinding
-import com.news.simple_news.ui.weather.CityManagerActivity
 import com.news.simple_news.util.*
 
 class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
@@ -26,12 +24,12 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
         mBinding.toolbar.run {
             setNavigationIcon(R.drawable.arrow_left_black)
             setNavigationOnClickListener {
-                (requireActivity() as CityManagerActivity).onBackPressed()
+                popBack()
             }
             setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.add_city->{
-                        findNavController().navigate(R.id.action_cityManageFragment_to_cityChooseFragment)
+                        nav().navigate(R.id.action_cityManageFragment_to_cityChooseFragment)
                     }
                     R.id.setting_city->{
 
@@ -46,7 +44,7 @@ class CityManageFragment : BaseFragment<FragmentCityManagerBinding>() {
 
         mAdapter.setOnItemClickListener { _, _, position ->
             appViewModel.changeCurrentCity(position)
-            (requireActivity() as CityManagerActivity).onBackPressed()
+            popBack()
         }
 
         mAdapter.addChildClickViewIds(R.id.iv_clear)

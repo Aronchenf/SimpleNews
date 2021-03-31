@@ -7,9 +7,7 @@ import com.news.simple_news.model.api.API
 import com.news.simple_news.model.bean.ChinesePlaceBean
 import com.news.simple_news.model.bean.CityManageBean
 import com.news.simple_news.model.room.RoomHelper
-import com.news.simple_news.util.loge
-import com.news.simple_news.util.returnCityName
-import com.news.simple_news.util.toJson
+import com.news.simple_news.util.*
 
 class CityChooseViewModel : BaseViewModel() {
 
@@ -26,6 +24,22 @@ class CityChooseViewModel : BaseViewModel() {
         get() = _hasExist
 
     val emptyStatus=MutableLiveData<Boolean>()
+
+    init {
+        getCityData()
+    }
+
+    //检查数据库是否已经添加了所有城市数据
+    private fun getCityData() {
+        launch({
+            val hasInsert=RoomHelper.checkCityHasInserted("北京市")
+            if (hasInsert){
+                val jsonString = getJsonStr("chineseCity.json")
+                val list = jsonString.toList<ChinesePlaceBean>()
+                RoomHelper.insertAllCity(list)
+            }
+        })
+    }
 
 
     fun getCityList(query: String) {

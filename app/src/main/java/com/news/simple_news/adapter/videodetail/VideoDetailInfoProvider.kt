@@ -4,9 +4,7 @@ import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.news.simple_news.R
-
 import com.news.simple_news.model.bean.Item
-import com.news.simple_news.adapter.videodetail.VideoDetailAdapter
 import com.news.simple_news.databinding.ItemVideoDetailInfoBinding
 
 class VideoDetailInfoProvider:BaseItemProvider<Item>() {

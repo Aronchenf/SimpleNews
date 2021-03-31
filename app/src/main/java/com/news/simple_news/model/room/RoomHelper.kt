@@ -34,8 +34,8 @@ object RoomHelper {
     }
 
     //添加搜索新数据
-    suspend fun addSearchHistory(searchHistoryBean: SearchHistoryBean) {
-        searchDao.insertSearchHistory(searchHistoryBean)
+    suspend fun addSearchHistory(searchHistoryBean: SearchHistoryBean) :Long?{
+       return searchDao.insertSearchHistory(searchHistoryBean)
     }
 
     //删除全部搜索记录

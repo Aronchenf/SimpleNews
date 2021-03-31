@@ -47,8 +47,8 @@
     <string name="mine_host"><![CDATA[查看个人主页>]]></string>
     <string name="version">V 1.0</string>
     <string name="about">关于</string>
-    <string name="personal_page">个人主页</string>
-    <string name="web_host">https://github.com/Aronchenf/MyKotlin</string>
+    <string name="personal_page">项目主页</string>
+    <string name="web_host">https://github.com/Aronchenf/SimpleNews</string>
     <string name="city_manage">城市管理</string>
     <string name="setting">设置</string>
     <string name="clearCache">清理缓存</string>

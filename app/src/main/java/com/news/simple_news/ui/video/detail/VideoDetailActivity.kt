@@ -7,11 +7,8 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.transition.Transition
-import android.view.View
 import android.widget.ImageView
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
@@ -21,7 +18,6 @@ import com.news.simple_news.model.bean.Data
 import com.news.simple_news.R
 import com.news.simple_news.base.BaseActivity
 import com.news.simple_news.databinding.ActivityVideodetailBinding
-import com.news.simple_news.util.getString
 import com.news.simple_news.util.visible
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
@@ -71,7 +67,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
         }
 
 //        //过度动画
-        initTransition()
+//        initTransition()
 
         val itemData = intent.getSerializableExtra(BUNDLE_VIDEO_DATA) as Data
         mViewModel.setItemInfo(itemData)
@@ -221,6 +217,8 @@ class VideoDetailActivity : BaseActivity<ActivityVideodetailBinding>() {
         if (GSYVideoManager.backFromWindowFull(this)) {
             return
         }
+        finishAfterTransition()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         super.onBackPressed()
         //先返回正常状态
         if (orientationUtils?.screenType == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {

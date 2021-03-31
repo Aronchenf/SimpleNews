@@ -51,7 +51,8 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mBinding.toolbar.setOnMenuItemClickListener {
-            startActivity<CityManagerActivity>()
+            nav().navigate(R.id.action_mainFragment_to_cityManageFragment)
+//            startActivity<CityManagerActivity>()
             true
         }
     }
@@ -108,6 +109,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         setWorkManager()
     }
 
+    //设置后台定时任务
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setWorkManager() {
         val constraints = Constraints.Builder()
@@ -121,6 +123,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     }
 
 
+    //设置videoView播放
     fun setVideoStart(wea: String? = "多云") {
         mBinding.videoView.setVideoURI(Uri.parse(getWeatherVideo(wea)))
         mBinding.videoView.setOnPreparedListener {
@@ -151,7 +154,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
                 mBinding.viewpager.setCurrentItem(appViewModel.mCurrentCity.value!!, true)
             }
         }
-        requireActivity().getEventViewModel().addCity.observe(this) {
+        requireActivity().getEventViewModel().addChooseCity.observe(this) {
             it.let {
                 mViewModel.getCityList()
             }
@@ -168,7 +171,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
         for (bean in list) {
             fragments.add(WeatherChildFragment.newInstance(bean.city!!))
         }
-        val mAdapter = ViewPagerAdapter(requireActivity(), fragments)
+        val mAdapter = ViewPagerAdapter(fragments,this)
         mBinding.viewpager.apply {
             adapter = mAdapter
             offscreenPageLimit = 2
@@ -204,5 +207,6 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding>() {
     private fun setTitle(title: String) {
         mBinding.toolbar.title = title
     }
+
 
 }

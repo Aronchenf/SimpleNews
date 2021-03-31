@@ -11,7 +11,7 @@ import com.news.simple_news.model.bean.SearchHistoryBean
 @Dao
 interface SearchDao {
     @Insert(entity = SearchHistoryBean::class,onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSearchHistory(@NonNull searchHistoryBean: SearchHistoryBean)
+    suspend fun insertSearchHistory(@NonNull searchHistoryBean: SearchHistoryBean):Long?
 
     @Query("select word from search")
     suspend fun queryAllSearch():MutableList<SearchHistoryBean>

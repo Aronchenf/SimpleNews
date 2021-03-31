@@ -36,7 +36,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(), ScrollToTop {
         )
         val titles = listOf("娱乐", "时尚", "体育", "科技")
 
-        val mAdapter = ViewPagerAdapter(requireActivity(), fragments)
+        val mAdapter = ViewPagerAdapter(fragments,this)
         setSlop()
         mBinding.viewpager.apply {
             adapter = mAdapter

@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/city_manage"
+            android:layout_marginTop="@dimen/dp_15"
             app:titleTextAppearance="@style/title"
             tools:title="城市管理"/>
 

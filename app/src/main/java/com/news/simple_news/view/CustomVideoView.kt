@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.VideoView
 
+//自定义VideoView，解决不能全屏播放
 class CustomVideoView(context: Context,attrs:AttributeSet?,defStyleAttr:Int) :VideoView(context, attrs, defStyleAttr){
     constructor(context: Context,attrs: AttributeSet?):this(context,attrs,0)
     constructor(context: Context):this(context,null)

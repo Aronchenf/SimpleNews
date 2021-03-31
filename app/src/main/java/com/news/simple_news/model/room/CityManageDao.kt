@@ -2,7 +2,6 @@ package com.news.simple_news.model.room
 
 import androidx.room.*
 import com.news.simple_news.model.bean.CityManageBean
-import com.news.simple_news.model.bean.WeatherBean
 
 @Dao
 interface CityManageDao {

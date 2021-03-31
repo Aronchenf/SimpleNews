@@ -49,7 +49,6 @@ class CityChooseFragment : BaseFragment<FragmentCityChooseBinding>() {
     override fun observe() {
         viewModel.mChooseCityInsertResult.observe(this) {
             it.let {
-                requireActivity().getEventViewModel().addCity.postValue(true)
                 requireActivity().getEventViewModel().addChooseCity.postValue(true)
                 findNavController().popBackStack()
             }

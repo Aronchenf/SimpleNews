@@ -7,5 +7,6 @@ class AppEventViewModel : ViewModel() {
     val addChooseCity = MutableLiveData<Boolean>()
     val changeCurrentCity = MutableLiveData<Boolean>()
     val deleteCity = MutableLiveData<Boolean>()
-    val addCity = MutableLiveData<Boolean>()
+    val addSearchKey = MutableLiveData<Boolean>()
+    val lastSearchKey=MutableLiveData<String>()
 }
