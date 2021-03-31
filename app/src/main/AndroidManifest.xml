@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
 
     <application
@@ -51,7 +52,6 @@
         <activity
             android:name=".ui.video.detail.VideoDetailActivity"
             android:configChanges="orientation|screenSize" />
-
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="4x7YzIMqV2bYCLC7lIO64LsTnaRGKbOG"/>
@@ -59,6 +59,18 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
+        <!--桌面小部件-->
+        <receiver android:name=".ui.widget.WeatherWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/weather_widget"/>
+        </receiver>
+        <service android:name=".ui.widget.WeatherService"/>
+
     </application>
 
 </manifest>

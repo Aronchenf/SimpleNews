@@ -1,6 +1,7 @@
 package com.news.simple_news.model.api
 
 import com.news.simple_news.model.bean.*
+import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.Url
 
@@ -19,6 +20,12 @@ interface ApiService {
         @Query("version") v1: String, @Query("city") city: String,
         @Query("appid") appId: String, @Query("appsecret") appSecret: String
     ): WeatherBean
+
+    @GET("api/")
+    fun getLocationCityWeather(
+        @Query("version") v1: String, @Query("city") city: String,
+        @Query("appid") appId: String, @Query("appsecret") appSecret: String
+    ): Call<WeatherBean>
 
     //彩云天气城市列表
 //    @GET("place?token=${API.CAIYUN_TOKEN}&lang=zh_CN")
@@ -43,19 +50,20 @@ interface ApiService {
      */
     @GET
     suspend fun getIssueData(@Url url: String): Issue
+
     /**
      * 获取搜索信息
      */
     @Headers("BaseUrlName:video")
     @GET("v1/search?&num=10&start=10")
-    suspend fun getSearchData(@Query("query") query:String) : Issue
+    suspend fun getSearchData(@Query("query") query: String): Issue
 
     /**
      * 热门搜索词
      */
     @Headers("BaseUrlName:video")
     @GET("v3/queries/hot")
-    suspend fun getHotWord():ArrayList<String>
+    suspend fun getHotWord(): ArrayList<String>
 
     //随机图片
     @GET
