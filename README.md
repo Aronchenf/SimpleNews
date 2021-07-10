@@ -16,3 +16,4 @@ SimpleNews——一款用来练习MVVM+kotlin的app，
 
 ## 待添加内容
 - 通知栏提醒
+- 使用组件化完成
